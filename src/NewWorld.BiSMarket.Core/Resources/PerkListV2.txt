@@ -1,0 +1,351 @@
+Empowering Whirling Blade
+Empowering Leaping Strike
+Bleeding Sweep
+Sundering Javeli
+Leeching Cyclone
+Fortifying Perforate
+Enfeebling Skewer
+Keen Vault Kick
+Voracious Blade
+Nullifying Oblivion
+Putrefying Scream
+Diminishing Orb
+Slowing Tether
+Refreshing Rupture
+Empowering Armor Breaker
+Refreshing Mighty Gavel
+Penetrating Wrecking Ball
+Sundering Shockwave
+Repulsing Clear Out
+Leeching Path Of Destiny
+Sturdy
+Sure Footing
+Refreshing
+Refreshing Ward
+Refreshing Evasi
+Keen
+Enchanted
+Ruinous
+Strike Shield Ward
+Flame Shield Ward
+Frozen Shield Ward
+Nature Shield Ward
+Void Shield Ward
+Thrust Shield Ward
+Slash Shield Ward
+Arcane Shield Ward
+Lightning Shield Ward
+Luck
+Mortal Lifesteal
+Mortal Siphoning
+Mortal Energy
+Mortal Fortification
+Mortal Power
+Mortal Refreshment
+Keenly Fortified
+Keenly Empowered
+Keen Speed
+Weaponsmith Expertise
+Stonecutting Accumulation
+Leatherworking Accumulation
+Smelting Accumulation
+Weaving Accumulation
+Woodworking Accumulation
+Plentiful Ammo
+Azoth Attuned
+Loyalty
+Extra Pockets
+Gourmand's Burden
+Prospector's Burden
+Quarryman's Burden
+Weaver's Burden
+Tanner's Burden
+Mercenary's Burden
+Quartermaster's Burden
+Alchemist's Burden
+Lumberjack's Burden
+Lasting Consumption
+Sturdy Energy
+Empowering Breaker
+Sturdy Fortification
+Flame Conditioning
+Frost Conditioning
+Arboreal Conditioning
+Abyssal Con
+Repulsing Shield Bash
+Fortifying Shield Rush
+Accelerated Defiant Stance
+Hated
+Kind
+Ancient Ward
+Angry Earth Ward
+Beast Ward
+Corrupted Ward
+Lost Ward
+Accuracy
+Vorpal
+Sturdy
+Sure Footing
+Fractured Rend
+Rogue
+Blessed
+Thwarting
+Counter
+Thwarting Strikes
+Trenchant Strikes
+Trenchant Crits
+Alacritous
+Punishment
+Penetrating
+Headshot
+Backstab
+Ancient Bane
+Angry Earth Bane
+Beast Bane
+Corrupted Bane
+Human Bane
+Lost Bane
+Mortal Siphoning
+Siphoning Blow
+Plagued Crits
+Plagued Strikes
+Shirking Flames
+Shirking Nature
+Shirking Frost
+Contagious Reverse Stab
+Nullifying Oblivion
+Diminishing Orb
+Sundering Shockwave
+Abyssal Conditioning
+Exhaustive Net Shot
+Leeching Shrapnel Blast
+Venturing Claw Shot
+Plagued Splitting Grenade
+Resupplying Mortar Charge
+Crippling Blast Shot
+Enfeebling Poison Shot
+Energizing Evade Shot
+Lasting Rain of Arrows
+Penetrating Rapid Shot
+Refreshing Penetrating Shot
+Empowering Explosive Arrow
+Refreshing PIIIar of Fi
+Empowering Meteor Shower
+Empowering Fireball
+Stable Incinerate
+Accelerating Flamethrower
+Efficient Burnout
+Refreshing Charge
+Crippling Reap
+Mending Execute
+Fortifying Whirlwind
+Enfeebling Maelstrom
+Insatiable Gravity Well
+Relentless Freedom
+Leeching Crosscut
+Skyward Nullification
+Energizing Counter
+Steadfast Purification
+Slowing Rupture
+Crippling Feral Rush
+Alacrity
+Empowered
+Fortified
+Refreshing Evasion
+Shirking DoT Cleanse
+Arcane Protection
+Flame Protection
+Frozen Protection
+Lightning Protection
+Nature Protection
+Slash Protection
+Strike Protection
+Thrust Protection
+Void Protection
+Adored Harvesting Luck
+Adored Logging Luck
+Adored Mining Luck
+Adored Skinning Luck
+Divine
+Health
+Stamina Recovery
+Shirking Empower
+Venturing Claw Shot
+Refreshing PIIIar of Fire
+Crippling Feral Rush
+Keen Berserk
+Refreshing Torrent
+Empowering Rending Throw
+Refreshing Distancing Throw
+Exhausting Infected Throw
+Sturdy III
+Lucky Day I
+Lucky Day II
+Lucky Day III
+Lucky Night I
+Lucky Night I
+Lucky Night III
+Freshwaters Brawn I
+Freshwaters Brawn II
+Freshwaters Brawn II
+Saltwaters Brawn I
+Saltwaters Brawn II
+Saltwaters Brawn III
+Lumberjack's Discipline
+Logging Efficiency
+Logging Luck
+Logging Yield
+Prospector's Discipline
+Mining Efficiency
+Mining Luck
+Mining Yield
+Horticulture Discipline
+Harvesting Efficiency
+Harvesting Luck
+Harvesting Yield
+Tanner's Discipline
+Skinning Efficiency
+Skinning Luck
+Skinning Yield
+Unbroken Winds
+Unending Thaw
+Iced Refresh
+Deadly Frost
+Pylon Burst
+Healing Tomb
+Refreshing Divine Embrace
+Fortifying Sacred Ground
+Purity of Light
+Mending Protecti
+Accelerating Light's Embrace
+Revitalizing Beacon
+Crippling Powder Burn
+Refreshing Power Shot
+Empowering Shooter's Stance
+Repulsing Stopping Power
+Accelerating Traps
+Mending Sticky Bombs
+Keen Tondo
+Deadly Flourish
+Leeching Flurry
+Sundering Riposte
+Omnidirectional Evade
+Refreshing Fleche
+Diminishing Shield Bash
+Regenerating
+Focused
+Nimble
+Despised
+Beloved
+Evasive
+Healthy Toast
+Mana Toast
+Purifying Toast
+Duplicating Toast
+Refreshing Toast
+Arcanist Mastery
+Armorer Mastery
+Cooking Mastery
+Engineer Mastery
+Jewelcrafter Mastery
+Weaponsmith Mastery
+Azoth Extraction
+Durable
+Gathering Recovery
+Gathering Alacrity
+Fire Alignment
+Earth Alignment
+Air Alignment
+Water Alignment
+Spirit Alignment
+Life Alignment
+Death Alignment
+Suns Reach I
+Suns Reach II
+Suns Reach III
+Moons Reach I
+Moons Reach II
+Moons Reach III
+Daytime Colossus I
+Daytime Colossus I
+Daytime Colossus III
+Freshwater Colossus I
+Freshwater Colossus II
+Freshwater Colossus III
+Nighttime Colossus I
+Nighttime Colossus II
+Nighttime Colossus III
+Saltwater Colossus I
+Saltwater Colossus II
+Saltwater Colossus III
+Sturdy I
+Sturdy II
+Sturdy III
+Mending Protection
+Repulsing Stopping Power
+Omnidirectional Evade
+Diminishing Shield Bash
+Contagious Reverse Stab
+Fishing Reach I
+Fishing Reach II
+Fishing Reach III
+Lucky Waters I
+Lucky Waters II
+Lucky Waters III
+Fishing Colossus I
+Fishing Colossus II
+Fishing Colossus III
+Corruption Resistance
+Human Ward
+Physical Aversion
+Elemental Aversion
+Shirking Fortification
+Siege Ward
+Freedom
+Vigor
+Invigorated
+Reinforced
+Reinforced Logging Luck
+Reinforced Harvesting Luck
+Reinforced Mining Luck
+Reinforced Skinning Luck
+Shirking Heals
+Critical Retribution
+Shirking Energy
+Fire Damage
+Ice damage
+Nature damage
+Lightning Damage
+Void Damage
+Arcane Damage
+Thrust Damage
+Slash Damage
+Strike Damage
+Keen Awareness
+Mortal Empowerment
+Invigorated Punishment
+Poisoning
+Blood Letting
+Burning
+Crippling
+Enfeebling
+Infected
+Sacred
+Brilliant
+Leeching
+Siphoning
+Hearty
+Opening Act
+Second Chance
+Busker's Blessing
+Fanfare
+Ensemble
+Spotlight
+Chain Void
+Chain Ice
+Chain Nature
+Chain Fire
+Chain Lightning
+Exhausted
+Exploitation
+Purifying Crits
