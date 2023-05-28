@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using NewWorld.BiSMarket.Core
+@using NewWorld.BiSMarket.Core.Constants
+@model List<NewWorld.BiSMarket.Core.Entity.Character>
+@{
+    ViewData["Title"] = "Characters";
+}
+
+
+<div class="container">
+    <h1 class="text-light text-center p-3">My Characters (@Model.Count / @ConstMgr.DefaultCharacterLimit)</h1>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Register Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Region</th>
+            <th scope="col">Server</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RegisterDate</td>
+                <td>@item.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>Not Verified</td>
+                <td>
+                    <a class="btn btn-success">Verify</a>
+                    <a class="btn btn-danger">Remove</a>
+                </td>
+
+            </tr>
+        }
+            
+
+        </tbody>
+    </table>
+
+</div>

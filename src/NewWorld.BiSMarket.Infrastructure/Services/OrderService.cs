@@ -8,6 +8,8 @@ using NewWorld.BiSMarket.Core.Models;
 using System.Net.Http.Headers;
 using EasMe.Extensions;
 using NewWorld.BiSMarket.Core;
+using System.Drawing;
+using Image = NewWorld.BiSMarket.Core.Entity.Image;
 
 namespace NewWorld.BiSMarket.Infrastructure.Services;
 
@@ -20,14 +22,45 @@ public class OrderService : IOrderService
         _unitOfWork = unitOfWork;
     }
 
-    public ResultData<List<Order>> GetOrdersMainPage(byte type, int region, int server, int page)
+
+    public ResultData<List<Order>> GetMainPageSellOrders(int region = -1, int server = -1, int page = 1)
     {
+        if (region > 0)
+        {
+            return _unitOfWork.OrderRepository.GetPaging(
+                                   page,
+                                                      ConstMgr.PageSize,
+                                                      x => x.Type == 1 && x.Region == region && x.Server == server,
+                                                      x => x.OrderByDescending(y => y.RegisterDate))
+                .ToList();
+        }
+
         return _unitOfWork.OrderRepository.GetPaging(
                 page,
                 ConstMgr.PageSize,
-                x => x.Type == type && x.Region == region && x.Server == server,
+                x => x.Type == 1,
                 x => x.OrderByDescending(y => y.RegisterDate))
             .ToList();
+    }
+
+    public ResultData<List<Order>> GetMainPageBuyOrders(int region = -1, int server = -1, int page = 1)
+    {
+        if (region > 0)
+        {
+            return _unitOfWork.OrderRepository.GetPaging(
+                    page,
+                    ConstMgr.PageSize,
+                    x => x.Type == 0 && x.Region == region && x.Server == server,
+                    x => x.OrderByDescending(y => y.RegisterDate))
+                .ToList();
+        }
+        return _unitOfWork.OrderRepository.GetPaging(
+                           page,
+                                          ConstMgr.PageSize,
+                                          x => x.Type == 0,
+                                          x => x.OrderByDescending(y => y.RegisterDate))
+            .ToList();
+       
     }
 
     public ResultData<List<Order>> GetOrdersByUsername(byte type, string username, int page)
@@ -39,25 +72,24 @@ public class OrderService : IOrderService
         return _unitOfWork.OrderRepository.GetPaging(
                 page,
                 ConstMgr.PageSize,
-                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid),
+                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid.Value),
                 x => x.OrderByDescending(y => y.RegisterDate))
             .ToList();
     }
 
-    public ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid, int page)
+    public ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid)
     {
         var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == userGuid);
         if (user is null)
             return Result.Error("User not found");
         var characterGuidList = user.Characters.Select(x => x.Guid).ToList();
-        return _unitOfWork.OrderRepository.GetPaging(
-                page,
-                ConstMgr.PageSize,
-                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid),
+        return _unitOfWork.OrderRepository.GetOrdered(
+                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid.Value),
                 x => x.OrderByDescending(y => y.RegisterDate))
             .ToList();
-
     }
+
+   
 
     public ResultData<Order> GetOrderById(Guid orderGuid)
     {
@@ -80,6 +112,8 @@ public class OrderService : IOrderService
                 x => x.OrderByDescending(y => y.RegisterDate))
             .ToList();
     }
+
+
 
     public Result CreateOrder(CreateOrder request)
     {
@@ -178,7 +212,7 @@ public class OrderService : IOrderService
         if (requesterUser == null)
             return Result.Warn("User not found.");
         var characters = requesterUser.Characters.Select(x => x.Guid).ToList();
-        var isSelfList = characters.Contains(order.CharacterGuid);
+        var isSelfList = characters.Contains(order.CharacterGuid.Value);
         if (isSelfList)
             return Result.Warn("You cannot create request for your own order.");
         if (order.IsLimitedToVerifiedUsers && !requesterUser.IsVerifiedAccount)

@@ -30,8 +30,8 @@ public class Order : IEntity
     public int EstimatedDeliveryTimeHour { get; set; } 
     public float Price { get; set; }
 
-    public Guid CharacterGuid { get; set; }
-    public Character Character { get; set; } = null!;
+    public Guid? CharacterGuid { get; set; }
+    public Character Character { get; set; } 
 
     public Guid ImageGuid { get; set; }
     public Image Image { get; set; } = null!;

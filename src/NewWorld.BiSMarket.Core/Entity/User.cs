@@ -8,20 +8,28 @@ public class User : IEntity
 {
     [Key]
     public Guid Guid { get; set; }
+    [Display(Name = "Register Date")]
     public DateTime RegisterDate { get; set; } = DateTime.Now;
-    public DateTime? LastUpdateDate { get; set; }
-    public DateTime? LastLoginDate { get; set; }
 
+    [Display(Name = "Last Update Date")]
+    public DateTime? LastUpdateDate { get; set; }
+
+    [Display(Name = "Last Login Date")]
+    public DateTime? LastLoginDate { get; set; }
+    
     public bool IsValid { get; set; } = true;
     [MaxLength(32)]
     public string Username { get; set; }
 
     [MaxLength(512)]
+    [Display(Name = "Password")]
     public string PasswordHash { get; set; }
 
     [MaxLength(512)]
     [EmailAddress]
+    [Display(Name = "Email Address")]
     public string Email { get; set; }
+
     public bool IsEmailVerified { get; set; } = false;
     public bool IsVerifiedAccount { get; set; } = false;
 

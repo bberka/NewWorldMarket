@@ -1,4 +1,5 @@
-﻿using NewWorld.BiSMarket.Core.Models;
+﻿using System.Text;
+using NewWorld.BiSMarket.Core.Models;
 using NewWorld.BiSMarket.Core.Properties;
 
 namespace NewWorld.BiSMarket.Core;
@@ -44,5 +45,23 @@ public class PerkMgr
     {
         var nameTrim = name.Trim();
         return _list.FirstOrDefault(x => x.EnglishName.Equals(nameTrim,StringComparison.OrdinalIgnoreCase));
+    }
+
+    public string ParsePerkFormattedText(string text)
+    {
+        var split = text.Split(",");
+        var sb = new StringBuilder();
+        foreach (var s in split)
+        {
+            var perkId = int.Parse(s);
+            var perk = GetPerk(perkId);
+            if (perk == null)
+            {
+                continue;
+            }
+            sb.Append($"{perk.EnglishName}");
+            sb.Append("<br/>");
+        }
+        return sb.ToString();
     }
 }

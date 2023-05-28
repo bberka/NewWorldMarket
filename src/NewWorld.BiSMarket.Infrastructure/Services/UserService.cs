@@ -18,21 +18,38 @@ public class UserService : IUserService
     {
         _unitOfWork = unitOfWork;
     }
-    public ResultData<Guid> Register(RegisterRequest request)
+    public ResultData<Guid> Register(Register request)
     {
+        if (!request.Password.Equals(request.PasswordConfirm, StringComparison.Ordinal))
+        {
+            return Result.Error("Passwords do not match");
+        }
+        if (request.Email.Contains(" "))
+        {
+            return Result.Error("Email cannot contain spaces");
+        }
+        if (request.Username.Contains(" "))
+        {
+            return  Result.Error("Username cannot contain spaces");
+        }
+        var isAllLetterAndNumber = request.Username.All(x => char.IsLetter(x) || char.IsNumber(x));
+        if (!isAllLetterAndNumber)
+        {
+            return  Result.Error("Username can only contain letters and numbers");
+        }
+
+
+
+
         var emailExists = _unitOfWork.UserRepository.Any(x => x.Email == request.Email);
         if (emailExists)
         {
-            return Result.Warn("Email already used by another account");
-        }
-        if (!request.Password.Equals(request.PasswordConfirm, StringComparison.Ordinal))
-        {
-            return Result.Warn("Passwords do not match");
+            return Result.Error("Email already used by another account");
         }
         var usernameExists = _unitOfWork.UserRepository.Any(x => x.Username == request.Username);
         if (usernameExists)
         {
-            return Result.Warn("Username already used by another account");
+            return Result.Error("Username already used by another account");
         }
         //var isValidRegion = ServerMgr.This.IsValidServer(request.Region, request.Server);
         //if (!isValidRegion)

@@ -7,7 +7,7 @@ namespace NewWorld.BiSMarket.Core.Abstract;
 
 public interface IUserService
 {
-    ResultData<Guid> Register(RegisterRequest request);
+    ResultData<Guid> Register(Register request);
     ResultData<Guid> AddCharacter(AddCharacter request);
     Result RemoveCharacter(RemoveCharacter request);
     ResultData<User> Login(string username, string password);

@@ -7,15 +7,15 @@ namespace NewWorld.BiSMarket.Core.Abstract;
 
 public interface IOrderService
 {
-    ResultData<List<Order>> GetOrdersMainPage(byte type,int region, int server,int page);
+    ResultData<List<Order>> GetMainPageSellOrders(int region = -1, int server = -1,int page = 1);
+    ResultData<List<Order>> GetMainPageBuyOrders(int region = -1, int server = -1,int page = 1);
     ResultData<List<Order>> GetOrdersByUsername(byte type, string username, int page);
-    ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid, int page);
+    ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid);
 
     ResultData<Order> GetOrderById(Guid orderGuid);
     ResultData<List<Order>> GetOrderByHash(string hash);
     ResultData<List<Order>> GetOrderByHash(Guid userGuid,string hash);
 
-    
 
     ResultData<Item> UploadItemImageAndGetItemData(IFormFile file);
 

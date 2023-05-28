@@ -52,6 +52,36 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("BlockedUsers");
                 });
 
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("Region")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Server")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Guid");
+
+                    b.HasIndex("UserGuid");
+
+                    b.ToTable("Character");
+                });
+
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.ErrorLog", b =>
                 {
                     b.Property<Guid>("Guid")
@@ -169,6 +199,10 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime?>("CancelledDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CharacterGuid")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("CompletedDate")
                         .HasColumnType("datetime2");
 
@@ -242,14 +276,11 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<byte>("Type")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UserGuid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Guid");
 
-                    b.HasIndex("ImageGuid");
+                    b.HasIndex("CharacterGuid");
 
-                    b.HasIndex("UserGuid");
+                    b.HasIndex("ImageGuid");
 
                     b.ToTable("Orders");
                 });
@@ -263,6 +294,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime?>("CancelDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CharacterGuid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsCompletionVerifiedByOrderOwner")
                         .HasColumnType("bit");
 
@@ -275,14 +309,11 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserGuid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Guid");
 
-                    b.HasIndex("OrderGuid");
+                    b.HasIndex("CharacterGuid");
 
-                    b.HasIndex("UserGuid");
+                    b.HasIndex("OrderGuid");
 
                     b.ToTable("OrderRequests");
                 });
@@ -337,11 +368,6 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<string>("InGameName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
 
@@ -362,14 +388,8 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<int>("Region")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Server")
-                        .HasColumnType("int");
 
                     b.Property<string>("SteamId")
                         .HasMaxLength(512)
@@ -396,6 +416,17 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
+                {
+                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                        .WithMany("Characters")
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.LoginLog", b =>
                 {
                     b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
@@ -409,40 +440,40 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
 
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Order", b =>
                 {
+                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Character", "Character")
+                        .WithMany("Orders")
+                        .HasForeignKey("CharacterGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NewWorld.BiSMarket.Core.Entity.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserGuid")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
+                    b.Navigation("Character");
 
                     b.Navigation("Image");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.OrderRequest", b =>
                 {
+                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Character", "Character")
+                        .WithMany("OrderRequests")
+                        .HasForeignKey("CharacterGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NewWorld.BiSMarket.Core.Entity.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
-                        .WithMany("OrderRequests")
-                        .HasForeignKey("UserGuid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Character");
 
                     b.Navigation("Order");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.SecurityLog", b =>
@@ -456,11 +487,16 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
                 {
                     b.Navigation("OrderRequests");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
+                {
+                    b.Navigation("Characters");
                 });
 #pragma warning restore 612, 618
         }

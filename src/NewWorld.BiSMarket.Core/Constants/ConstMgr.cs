@@ -1,7 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using IronOcr;
 using NewWorld.BiSMarket.Core.Models;
+using NewWorld.BiSMarket.Core.Properties;
+using Color = IronSoftware.Drawing.Color;
+using Region = NewWorld.BiSMarket.Core.Models.Region;
 
 namespace NewWorld.BiSMarket.Core.Constants;
 
@@ -29,24 +33,39 @@ public static class ConstMgr
     }
 
     internal const string ApiKey = "K82989277388957";
-    public const string OcrIgnoredCharacters = "[]{}()@\\";
+    public const string OcrIgnoredCharacters = "[]{}()@\\-—_=";
     public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
     public const int PageSize = 20;
     public const int MaxImageSize = 1048576;
     public const int DefaultExpirationTimeInHours = 24 * 14; //14 days
     public const int PremiumExpirationTimeInHours = 24 * 30; //30 days
 
-    public const int DefaultOrderCountLimit = 5;
-    public const int VerifiedOrderCountLimit = 10;
-    public const int PremiumOrderCountLimit = 25;
+    public const int DefaultOrderCountLimit = 10;
+    public const int VerifiedOrderCountLimit = 20;
+    public const int PremiumOrderCountLimit = 50;
 
-    public const int DefaultOrderRequestCountLimit = 1;
-    public const int VerifiedOrderRequestCountLimit = 3;
-    public const int PremiumOrderRequestCountLimit = 5;
+    public const int DefaultOrderRequestCountLimit = 2;
+    public const int VerifiedOrderRequestCountLimit = 5;
+    public const int PremiumOrderRequestCountLimit = 10;
 
     public const int DefaultCharacterLimit = 2;
     public const int PremiumCharacterLimit = 5;
 
+    public const float MaxPriceLimit = 500_000.000F;
+
+    public const int MaxDeliveryTime = 48;
+    public static IReadOnlyCollection<IronSoftware.Drawing.Color> ItemTooltipTextColorList = new List<Color>()
+    {
+        new Color(14,127,201), //Blue - Perks and attribute color
+        new Color(255,255,255), //White - Desc
+        new Color(169,169,169), //Gray - Some of the texts in desc
+        new Color(255,255,113), //Bright Yellow - Legendary text
+        new Color(255,174,60), // Orange - Legendary item name text
+        new Color(255,106,106), // Red-ish - When GearScore is lower than equipped item
+        new Color(250,186,250), // Bright Pink - Epic text
+        new Color(255,73,255), // Pink  - Epic item name text
+        new Color(60,243,184), // Bright Green - When GearScore is higher than equipped item
+    };
 
 
 

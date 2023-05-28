@@ -11,13 +11,23 @@ namespace NewWorld.BiSMarket.Core;
 
 public class ItemImageOcr
 {
+    /*
+    Epic
+     input.AdaptiveThreshold(1.8F);
+        input.DeNoise();
+     
+     */
 
     private OcrInput _ocrInput;
     private ItemImageOcr(OcrInput input)
     {
         _ocrInput = input;
-        input.Scale(200);
-        input.Contrast(1.6F);
+        //input.Contrast(1.4F);
+        input.AdaptiveThreshold(1.65F);
+        //input.DeNoise();
+
+        input.SaveAsImages(@"C:\Users\kkass\OneDrive\Masaüstü\test.png");
+        //input.SelectTextColors(ConstMgr.ItemTooltipTextColorList,20);
     }
 
     public static ItemImageOcr Create(string filePath)
@@ -59,11 +69,13 @@ public class ItemImageOcr
             Configuration =
             {
                 BlackListCharacters = ConstMgr.OcrIgnoredCharacters,
+                //TesseractVariables = 
             }
         };
         var result = ocr.Read(_ocrInput);
         if (!ConstMgr.IsDevelopment)
         {
+            //Or check if text ocr has Bind on Equip in it, this will prevent screenshots from marketplace to be listed
             if (result.Text.Contains("Bind On Pickup", StringComparison.OrdinalIgnoreCase))
                 return Result.Error("This item can not be traded because it is bind on pickup");
             if (result.Text.Contains("Bound To Player", StringComparison.OrdinalIgnoreCase))
@@ -80,17 +92,35 @@ public class ItemImageOcr
     private static Item FromOcrResult(OcrResult ocrResult)
     {
         var item = new Item();
-        ImportPerks(ocrResult.Lines, ocrResult.Text, ref item);
-        ImportAttributes(ocrResult.Lines, ref item);
-        ImportGemData(ocrResult.Text, ocrResult.Lines, ref item);
-        ImportItemType(ocrResult.Text, ref item);
-        ImportRarity(ocrResult.Text, ref item);
-        ImportLevelRequirement(ocrResult.Lines, ref item);
-        ImportTier(ocrResult.Lines, ref item);
+        var results = new List<Result>()
+        {
+            ImportPerks(ocrResult.Lines, ocrResult.Text, ref item),
+            ImportAttributes(ocrResult.Lines, ref item),
+            ImportGemData(ocrResult.Text, ocrResult.Lines, ref item),
+            ImportItemType(ocrResult.Text, ref item),
+            ImportRarity(ocrResult.Text, ref item),
+            ImportLevelRequirement(ocrResult.Lines, ref item),
+            ImportTier(ocrResult.Lines, ref item),
+            ImportGearScore(ocrResult.Lines,ref item)
+        };
+        var errors = results.Where(x => x.IsFailure).ToList();
+
         item.IsNamed = IsNamed(ocrResult.Text);
         return item;
     }
 
+    private static Result ImportGearScore(IEnumerable<Line> lines, ref Item item)
+    {
+        var gsLine = lines.FirstOrDefault(x => x.Text.StartsWith("®", StringComparison.OrdinalIgnoreCase));
+        if (gsLine is null)
+            return Result.Warn("Gear score not found");
+        var gsText = gsLine.Text.Trim().Replace("®","");
+        var tryParse = int.TryParse(gsText, out var gs);
+        if (!tryParse)
+            return Result.Warn("Gear score not found");
+        item.GearScore = gs;
+        return true;
+    }
     private static Result ImportGemData(string ocrTextResult, IEnumerable<Line> lines, ref Item item)
     {
         var isEmptySocket = ocrTextResult.Contains("Empty Socket", StringComparison.OrdinalIgnoreCase);
@@ -142,7 +172,7 @@ public class ItemImageOcr
             var value = int.Parse(split[0]);
             listAttributes.Add((int)attributeType + ":" + value);
         }
-        if (listAttributes.Count == 0) Result.Error("No attribute is found");
+        if (listAttributes.Count == 0) return Result.Error("No attribute is found");
         item.Attributes = string.Join(",", listAttributes);
         return true;
     }

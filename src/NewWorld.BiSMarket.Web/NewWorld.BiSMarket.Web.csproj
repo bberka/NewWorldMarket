@@ -6,4 +6,37 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
+    <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
+    <PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NewWorld.BiSMarket.Core\NewWorld.BiSMarket.Core.csproj" />
+    <ProjectReference Include="..\NewWorld.BiSMarket.Infrastructure\NewWorld.BiSMarket.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EasMe">
+      <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.dll</HintPath>
+    </Reference>
+    <Reference Include="EasMe.Logging">
+      <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="EasMe.Result">
+      <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Result.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

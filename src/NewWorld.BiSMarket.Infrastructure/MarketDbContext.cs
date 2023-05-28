@@ -17,15 +17,34 @@ namespace NewWorld.BiSMarket.Infrastructure
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Order>()
+                .Navigation(x => x.Character)
+                .AutoInclude();
+
+            modelBuilder.Entity<User>()
+                .Navigation(x => x.Characters)
+                .AutoInclude();
+            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
             //modelBuilder.Entity<User>()
             //    .HasMany(x => x.Characters)
             //    .WithOne(x => x.User)
-            //    .OnDelete(DeleteBehavior.ClientNoAction);
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Character>()
+            //    .HasMany(x => x.Orders)
+            //    .WithOne()
+            //    .HasForeignKey(x => x.CharacterGuid)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             //modelBuilder.Entity<Order>()
             //    .HasOne(x => x.Character)
-            //    .WithMany(x => x.Orders)
-            //    .OnDelete(DeleteBehavior.ClientNoAction);
+            //    .WithMany()
+            //    .HasForeignKey(x => x.CharacterGuid)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
         }
         public DbSet<Order> Orders { get; set; }

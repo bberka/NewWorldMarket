@@ -349,3 +349,5 @@ Chain Lightning
 Exhausted
 Exploitation
 Purifying Crits
+Vicious
+Keenly Jagged

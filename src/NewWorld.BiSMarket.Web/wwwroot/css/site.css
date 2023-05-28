@@ -16,3 +16,86 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.text-color-light {
+    color: white
+}
+.bg-color-dark {
+    background: rgb(23,25,26)
+}
+.bg-color-nav-top {
+    background: rgb(23,25,26)
+}
+.bg-color-nav-left {
+    background: rgb(23,25,26)
+}
+.text-color-green {
+    color: rgb(96,187,126)
+}
+.text-color-blue {
+    color: rgb(0,121,186)
+}
+.left-bar {
+    background: rgb(14, 15, 15);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+.right-bar {
+    background: rgb(14, 15, 15);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.main-container {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 2rem);
+    padding-left: var(--bs-gutter-x, 2rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+.btn-outline-info {
+    color: rgb(0, 100, 150);
+    border-color: rgb(0, 100, 150);
+}
+    .btn-outline-info:hover {
+        color: #fff;
+        background-color: rgb(0, 100, 150);
+        border-color: rgb(0, 100, 150);
+    }
+
+.btn-info {
+    color: #fff;
+    background-color: rgb(0, 100, 150);
+    border-color: rgb(0, 100, 150);
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: rgb(0, 80, 150);
+    border-color: rgb(0, 100, 150);
+}
+
+
+/*.input-dark {
+    color: #fff;
+    background-color: rgb(153, 153, 153);
+    border-color: rgb(30, 33, 34);
+}
+.input-dark:focus {
+color: #fff;
+    background-color: rgb(153, 153, 153);
+    border-color: rgb(30, 33, 34);
+}*/

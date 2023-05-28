@@ -1,0 +1,89 @@
+﻿@using NewWorld.BiSMarket.Core
+@using NewWorld.BiSMarket.Core.Constants
+@model NewWorld.BiSMarket.Core.Models.OrderData
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+
+<h1 class="text-light text-center p-3">My Orders (@(Model.BuyOrderList.Count + Model.SellOrderList.Count) / @ConstMgr.DefaultOrderCountLimit)</h1>
+
+<div class="container">
+    <h3 class="text-light text-center p-3">Sell Orders</h3>
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            <th scope="col">Delivery In</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in @Model.BuyOrderList)
+        {
+            <tr>
+                <td></td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedText(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedText(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+
+            </tr>
+
+        }
+               
+        </tbody>
+    </table>
+    <h3 class="text-light text-center p-3">Buy Orders</h3>
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            <th scope="col">Delivery In</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in @Model.BuyOrderList)
+        {
+            <tr>
+                <td></td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedText(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedText(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+
+            </tr>
+
+        }
+               
+        </tbody>
+    </table>
+
+</div>
