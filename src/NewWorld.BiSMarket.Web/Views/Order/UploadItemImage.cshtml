@@ -1,0 +1,25 @@
+﻿@model NewWorld.BiSMarket.Core.Models.UploadImage
+@{
+    ViewData["Title"] = "Upload Item Image";
+}
+
+<div class="container ">
+    <h1 class="text-light">Upload Item Image</h1>
+
+    <hr class=" text-light"/>
+    <div class="row">
+        <div class="col-md-4">
+            <form class="col-xs-12" method="post" asp-action="UploadItemImage" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <input type="file" asp-for="FormFile" class="form-control" />
+                </div>
+
+                <div class="form-group pt-3">
+                    <button type="submit" class="btn btn-primary col-xs-12">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -29,23 +29,6 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Bytes = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    OcrTextResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OcrItemDataResult = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Guid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -95,6 +78,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                 {
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Region = table.Column<int>(type: "int", nullable: false),
                     Server = table.Column<int>(type: "int", nullable: false),
@@ -105,6 +89,30 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     table.PrimaryKey("PK_Character", x => x.Guid);
                     table.ForeignKey(
                         name: "FK_Character_Users_UserGuid",
+                        column: x => x.UserGuid,
+                        principalTable: "Users",
+                        principalColumn: "Guid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Bytes = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    OcrTextResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OcrItemDataResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Guid);
+                    table.ForeignKey(
+                        name: "FK_Images_Users_UserGuid",
                         column: x => x.UserGuid,
                         principalTable: "Users",
                         principalColumn: "Guid",
@@ -166,7 +174,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     IsValid = table.Column<bool>(type: "bit", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CancelledDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsLimitedToVerifiedUsers = table.Column<bool>(type: "bit", nullable: false),
@@ -203,7 +211,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                         column: x => x.ImageGuid,
                         principalTable: "Images",
                         principalColumn: "Guid",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,6 +251,11 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Character_UserGuid",
                 table: "Character",
+                column: "UserGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_UserGuid",
+                table: "Images",
                 column: "UserGuid");
 
             migrationBuilder.CreateIndex(

@@ -4,6 +4,9 @@ namespace NewWorld.BiSMarket.Core.Models;
 
 public class OrderData
 {
-    public List<Order> SellOrderList { get; set; }
-    public List<Order> BuyOrderList { get; set; }
+    public List<Order> ActiveSellOrderList { get; set; }
+    public List<Order> ActiveBuyOrderList { get; set; }
+    public List<Order> ExpiredOrderList { get; set; }
+    public List<Order> CancelledOrderList { get; set; }
+    public List<Order> CompletedOrderList { get; set; }
 }

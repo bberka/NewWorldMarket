@@ -1,5 +1,87 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using NewWorld.BiSMarket.Core
+@using NewWorld.BiSMarket.Core.Constants
+@using EasMe.Extensions
+@model NewWorld.BiSMarket.Core.Models.AddCharacter
+
 @{
+    ViewData["Title"] = "Add Character";
 }
+
+<div class="container">
+    <h1 class="text-light">Add Character</h1>
+
+    <div class="row">
+        <div class="col-md-4 ">
+            <form asp-action="AddCharacter">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group py-2">
+                    <label asp-for="Region" class="control-label text-light"></label>
+                    <select onchange="LoadServersByRegion()" asp-for="Region"  class="form-select"  >
+                        <option selected disabled value="-1">Select Region</option>
+                        @foreach (var item in ServerMgr.This.GetRegionsAsDictionary())
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Region" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="Server" class="control-label text-light"></label>
+                    <select asp-for="Server" class="form-select" >
+                    </select>
+                    <span asp-validation-for="Server" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="Name" class="control-label text-light"></label>
+                    <input asp-for="Name" class="form-control"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group pt-2">
+                    <input type="submit" value="Add Character" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<script type="text/javascript">
+    const regionSelect = document.getElementById("Region");
+    const serverSelect = document.getElementById("Server");
+    var option = document.createElement("option");
+    option.text = "Select Region";
+    option.value = "-1";
+    option.selected = true;
+    option.disabled = true;
+    serverSelect.add(option);
+    const regionList = @Html.Raw(ConstMgr.Regions.ToJsonString());
+    function LoadServersByRegion() {
+        var regionId = regionSelect.value;
+        var regionName = regionSelect.options[regionSelect.selectedIndex].text;
+        console.log(regionId);
+        const region = regionList.find(x => x.Name === regionName);
+        //add servers to server select
+        console.log(region);
+        if (region != null) {
+            var servers = region.Servers;
+            console.log(servers);
+            //clear options
+serverSelect.options.length = 0;
+            for(var i = 0; i < servers.length; i++)
+            {
+                var option = document.createElement("option");
+                option.text = servers[i].Name;
+                option.value = servers[i].Id;
+                serverSelect.add(option);
+            }
+        }
+
+
+
+    }
+</script>

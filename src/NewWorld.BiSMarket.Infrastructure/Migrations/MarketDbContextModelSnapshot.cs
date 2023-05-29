@@ -58,6 +58,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -145,7 +148,12 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Guid");
+
+                    b.HasIndex("UserGuid");
 
                     b.ToTable("Images");
                 });
@@ -199,8 +207,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime?>("CancelledDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CharacterGuid")
-                        .IsRequired()
+                    b.Property<Guid>("CharacterGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CompletedDate")
@@ -209,7 +216,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<int>("EstimatedDeliveryTimeHour")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ExpirationDate")
+                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GearScore")
@@ -226,9 +233,6 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<Guid>("ImageGuid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsEmptySocket")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsGemChangeable")
                         .HasColumnType("bit");
 
@@ -241,8 +245,8 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("ItemType")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("ItemType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
@@ -273,8 +277,8 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<int>("Tier")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Guid");
 
@@ -427,6 +431,17 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Image", b =>
+                {
+                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                        .WithMany("Images")
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.LoginLog", b =>
                 {
                     b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
@@ -497,6 +512,8 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
                 {
                     b.Navigation("Characters");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

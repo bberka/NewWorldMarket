@@ -12,7 +12,7 @@ using NewWorld.BiSMarket.Infrastructure;
 namespace NewWorld.BiSMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20230527175059_mg1")]
+    [Migration("20230529160033_mg-1")]
     partial class mg1
     {
         /// <inheritdoc />
@@ -60,6 +60,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -148,7 +151,12 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Guid");
+
+                    b.HasIndex("UserGuid");
 
                     b.ToTable("Images");
                 });
@@ -212,7 +220,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<int>("EstimatedDeliveryTimeHour")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ExpirationDate")
+                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GearScore")
@@ -430,6 +438,17 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Image", b =>
+                {
+                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                        .WithMany("Images")
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.LoginLog", b =>
                 {
                     b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
@@ -500,6 +519,8 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
             modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
                 {
                     b.Navigation("Characters");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

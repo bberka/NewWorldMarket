@@ -14,20 +14,20 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 0px;
 }
 
 .text-color-light {
     color: white
 }
 .bg-color-dark {
-    background: rgb(23,25,26)
+    background: rgb(18,18,18)
 }
 .bg-color-nav-top {
-    background: rgb(23,25,26)
+    background: rgb(18,18,18)
 }
 .bg-color-nav-left {
-    background: rgb(23,25,26)
+    background: rgb(18,18,18)
 }
 .text-color-green {
     color: rgb(96,187,126)
@@ -39,7 +39,7 @@ body {
     background: rgb(14, 15, 15);
     border-radius: 10px;
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
 }
 .right-bar {
     background: rgb(14, 15, 15);
@@ -47,11 +47,30 @@ body {
     margin: 5px;
     padding: 5px;
 }
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.footer {
+    margin-top: auto;
+}
+.table {
+    /*border outline*/
+    border: 1px solid rgb(80,85,86);
+}
+.dropdown-item-custom {
+    color: white !important;
 
+}
+    .dropdown-item-custom:hover {
+        background: rgb(23, 25, 26) !important;
+    }
 .main-container {
     width: 100%;
-    padding-right: var(--bs-gutter-x, 2rem);
-    padding-left: var(--bs-gutter-x, 2rem);
+    padding-right: var(--bs-gutter-x, 3rem);
+    padding-left: var(--bs-gutter-x, 3rem);
     margin-right: auto;
     margin-left: auto;
 }
@@ -60,42 +79,10 @@ ul {
     margin: 0;
     padding: 0;
 }
-
-.btn-success {
-    color: #fff;
-    background-color: #198754;
-    border-color: #198754;
+.on-hover-custom {
+    background: black;
 }
-.btn-outline-info {
-    color: rgb(0, 100, 150);
-    border-color: rgb(0, 100, 150);
-}
-    .btn-outline-info:hover {
-        color: #fff;
-        background-color: rgb(0, 100, 150);
-        border-color: rgb(0, 100, 150);
-    }
-
-.btn-info {
-    color: #fff;
-    background-color: rgb(0, 100, 150);
-    border-color: rgb(0, 100, 150);
+.on-hover-custom:hover{
+    background: black;
 }
 
-.btn-info:hover {
-    color: #fff;
-    background-color: rgb(0, 80, 150);
-    border-color: rgb(0, 100, 150);
-}
-
-
-/*.input-dark {
-    color: #fff;
-    background-color: rgb(153, 153, 153);
-    border-color: rgb(30, 33, 34);
-}
-.input-dark:focus {
-color: #fff;
-    background-color: rgb(153, 153, 153);
-    border-color: rgb(30, 33, 34);
-}*/

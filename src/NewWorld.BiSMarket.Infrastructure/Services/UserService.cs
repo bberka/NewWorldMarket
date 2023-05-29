@@ -18,7 +18,7 @@ public class UserService : IUserService
     {
         _unitOfWork = unitOfWork;
     }
-    public ResultData<Guid> Register(Register request)
+    public ResultData<User> Register(Register request)
     {
         if (!request.Password.Equals(request.PasswordConfirm, StringComparison.Ordinal))
         {
@@ -68,7 +68,7 @@ public class UserService : IUserService
         {
             return Result.Error(ErrCode.InternalDbError.ToMessage());
         }
-        return userEntity.Guid;
+        return userEntity;
     }
 
     public ResultData<Guid> AddCharacter(AddCharacter request)
@@ -78,11 +78,21 @@ public class UserService : IUserService
         {
             return Result.Warn("Invalid user");
         }
+        var isValidServer = ServerMgr.This.IsValidServer(request.Region, request.Server);
+        if (!isValidServer)
+        {
+            return Result.Warn("Invalid region or server");
+        }
         var sameCharExist = _unitOfWork.CharacterRepository
             .Any(x => x.Name == request.Name && x.Server == request.Server && x.Region == request.Region);
         if (sameCharExist)
         {
             return Result.Warn("Same character already exists in our data, if you are the owner of this character contact us to verify your account.");
+        }
+        var characterCount = _unitOfWork.CharacterRepository.Count(x => x.UserGuid == request.UserGuid && !x.DeletedDate.HasValue);
+        if (characterCount >= ConstMgr.DefaultCharacterLimit)
+        {
+            return Result.Warn($"You can only add {ConstMgr.DefaultCharacterLimit} characters");
         }
         var character = new Character
         {
@@ -101,19 +111,30 @@ public class UserService : IUserService
         return character.Guid;
     }
 
-    public Result RemoveCharacter(RemoveCharacter request)
+    public Result RemoveCharacter(Guid userGuid, Guid characterGuid)
     {
-        var character = _unitOfWork.CharacterRepository.GetFirstOrDefault(x => x.Guid == request.CharacterGuid);
+        var character = _unitOfWork.CharacterRepository.GetFirstOrDefault(x => x.Guid == characterGuid);
         if (character == null)
         {
             return Result.Warn("Invalid character");
         }
-        var isOwner = character.UserGuid == request.UserGuid;
+        var isOwner = character.UserGuid == userGuid;
         if (!isOwner)
         {
-            return Result.Warn("You are not the owner of this character");
+            return Result.Unauthorized();
         }
-        _unitOfWork.CharacterRepository.Delete(character);
+        var orderList = _unitOfWork.OrderRepository.Get(x => x.CharacterGuid == characterGuid && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue).ToList();
+        //invalidate orders
+        if (orderList.Count > 0)
+        {
+            foreach (var order in orderList)
+            {
+                order.CancelledDate = DateTime.Now;
+            }
+            _unitOfWork.OrderRepository.UpdateRange(orderList);
+        }
+        character.DeletedDate = DateTime.Now;
+        _unitOfWork.CharacterRepository.Update(character);
         var result = _unitOfWork.Save();
         return result;
     }
@@ -149,6 +170,12 @@ public class UserService : IUserService
         }
         return user;
 
+    }
+
+    public ResultData<List<Character>> GetCharacters(Guid userGuid)
+    {
+        var characters = _unitOfWork.CharacterRepository.Get(x => x.UserGuid == userGuid && !x.DeletedDate.HasValue).ToList();
+        return characters;
     }
 
     public ResultData<User> GetUserByUsername(string username)

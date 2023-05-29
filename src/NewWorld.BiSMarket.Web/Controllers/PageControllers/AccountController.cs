@@ -1,5 +1,6 @@
 ﻿using EasMe;
 using EasMe.Extensions;
+using EasMe.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewWorld.BiSMarket.Core.Abstract;
@@ -55,13 +56,7 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
                 ModelState.AddModelError("", registerResult.ErrorCode);
                 return View(request);
             }
-            var loginResult = _userService.Login(request.Username, request.Password);
-            if (loginResult.IsFailure)
-            {
-                ModelState.AddModelError("", loginResult.ErrorCode);
-                return View(request);
-            }
-            SessionLib.This.SetUser(loginResult.Data);
+            SessionLib.This.SetUser(registerResult.Data);
             return RedirectToAction("Index", "Home"); //redirect to account page
 
         }
@@ -81,14 +76,8 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
         public IActionResult MyOrders()
         {
             var user = SessionLib.This.GetUser();
-            var buyOrders = _orderService.GetOrdersByUserGuid(0, user.Guid);
-            var sellOrders = _orderService.GetOrdersByUserGuid(1, user.Guid);
-            var model = new OrderData()
-            {
-                BuyOrderList = buyOrders,
-                SellOrderList = sellOrders
-            };
-            return View(model);
+            var orderData = _orderService.GetUserOrderData(user!.Guid);
+            return View(orderData.Data);
         }
         [HttpGet]
         public IActionResult ChangePassword()
@@ -104,7 +93,38 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
         public IActionResult Characters()
         {
             var user = SessionLib.This.GetUser();
-            return View(user.Characters);
+            var characters = _userService.GetCharacters(user!.Guid);
+            return View(characters.Data);
         }
+
+        [HttpGet]
+        public IActionResult AddCharacter()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddCharacter(AddCharacter request)
+        {
+            var user = SessionLib.This.GetUser();
+            request.UserGuid = user!.Guid;
+            var registerResult = _userService.AddCharacter(request);
+            if (registerResult.IsFailure)
+            {
+                ModelState.AddModelError("", registerResult.ErrorCode);
+                return View(request);
+            }
+            return RedirectToAction("Characters", "Account"); //redirect to account page
+
+        }
+        [HttpGet]
+        [Route("/[controller]/[action]/{guid}")]
+        public IActionResult RemoveCharacter(Guid guid)
+        {
+            var user = SessionLib.This.GetUser();
+            var registerResult = _userService.RemoveCharacter(user.Guid,guid);
+            return Ok(registerResult);
+
+        }
+
     }
 }

@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "mdbootstrap@4.20.0",
+      "destination": "wwwroot/lib/mdbootstrap/",
+      "files": [
+        "css/mdb.css",
+        "css/mdb.lite.css",
+        "css/mdb.lite.min.css",
+        "css/mdb.lite.min.css.map",
+        "css/mdb.min.css",
+        "css/mdb.min.css.map",
+        "img/overlays/01.png",
+        "img/overlays/02.png",
+        "img/overlays/03.png",
+        "img/overlays/04.png",
+        "img/overlays/05.png",
+        "img/overlays/06.png",
+        "img/overlays/07.png",
+        "img/overlays/08.png",
+        "img/overlays/09.png",
+        "img/svg/arrow_left.svg",
+        "img/svg/arrow_right.svg",
+        "img/svg/flags.png",
+        "js/mdb.js",
+        "js/mdb.lite.min.js.map",
+        "js/mdb.min.js",
+        "js/mdb.min.js.map"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "@sweetalert2/themes@5.0.15",
+      "destination": "wwwroot/lib/sweetalert2/themes/"
+    }
+  ]
+}

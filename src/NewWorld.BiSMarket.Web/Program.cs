@@ -17,10 +17,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddInfrastructureDependencies();
 builder.Services.AddBusinessDependencies();
 
+#if !DEBUG
 builder.Services.AddControllersWithViews(x =>
 {
     x.Filters.Add(new ExceptionHandleFilter());
 });
+#endif
 builder.Services.AddHttpContextAccessor();
 
 

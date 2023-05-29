@@ -4,92 +4,60 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - New World BiS Market</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/NewWorld.BiSMarket.Web.styles.css" asp-append-version="true"/>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <!-- Font Awesome -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@sweetalert2/theme-dark@@5/dark.css" />
+    @await RenderSectionAsync("Css", false)
+
 </head>
-<body class="bg-color-dark">
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-color-dark border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">New World BiS Market</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav flex-grow-0">
-                    @if (User.Identity?.IsAuthenticated == true)
-                    {
-                        <li class="nav-item px-2">
-                            
-                            <div class="dropdown dropstart">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   Hello @User.Identity.Name!
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark px-0 mx-0">
-                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Settings">My Account</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Characters">My Characters</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="MyOrders">My Orders</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        
-                    }
-                    else
-                    {
-                        <li class="nav-item px-2">
-                            <a class="nav-link text-light btn btn-success" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item px-2">
-                            <a class="nav-link text-light btn btn-outline-info" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="main-container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        <div class="row row-cols-4">
-            <div class="col-md-2">
+<body class="bg-color-dark flex-wrapper">
 
 
-                <div class="row">
-                    &copy; 2023 - New World Best in Slot Market
 
-                </div>
-            </div>
+<div>
+    <partial name="_Header"/>
 
-        </div>
+    <div class="main-container">
+        <main role="main" class="pb-3">
+           
+            @*<a class="tooltip-item">qwweq</a>*@
+
+            @RenderBody()
+            @*<img src="https://localhost:7217/api/Image/Get/7CBFC7A4-7998-4A48-9E97-4D798DF3BD36" id="tooltip-image" class="tooltip-effect"/>*@
+
+        </main>
 
     </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<partial name="_Footer"/>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+@*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
+></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <script src="~/js/account.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", false)

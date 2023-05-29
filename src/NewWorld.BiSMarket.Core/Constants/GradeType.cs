@@ -2,7 +2,6 @@
 
 public enum GradeType
 {
-    None,
     Uncommon,
     Rare,
     Epic,

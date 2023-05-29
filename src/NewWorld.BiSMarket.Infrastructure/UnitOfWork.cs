@@ -41,5 +41,9 @@ public class UnitOfWork : IUnitOfWork
 
             return Result.Fatal(ErrCode.InternalDbError.ToMessage());
         }
+        finally
+        {
+            _context.Dispose();
+        }
     }
 }

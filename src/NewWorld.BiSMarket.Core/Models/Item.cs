@@ -5,7 +5,7 @@ namespace NewWorld.BiSMarket.Core.Models;
 
 public class Item
 {
-    public byte ItemType { get; set; }
+    public int ItemType { get; set; } = -1;
     /// <summary>
     /// Format: (AttributeType:AttributeValue,AttributeType:AttributeValue)
     /// </summary>
@@ -14,8 +14,7 @@ public class Item
     /// <summary>
     /// GemList.txt GemLineNumber
     /// </summary>
-    public int GemId { get; set; } = 0;
-    public bool IsEmptySocket { get; set; } = false;
+    public int GemId { get; set; } = -1;
     /// <summary>
     /// This value can not be known by OCR, it is set by the user. Default is true. There are only few cases where this is false.
     /// </summary>
@@ -25,12 +24,12 @@ public class Item
     /// </summary>
     [MaxLength(12)]
     public string Perks { get; set; } = string.Empty;
-    public bool IsNamed { get; set; } = false;
-    public byte Rarity { get; set; } = 0;
-    public byte Tier { get; set; } = 0;
-    public int GearScore { get; set; } = 0;
-    public byte LevelRequirement { get; set; } = 0;
+    public bool? IsNamed { get; set; } = null;
+    public int Rarity { get; set; } = -1;
+    public int Tier { get; set; } = -1;
+    public int GearScore { get; set; } = -1;
+    public int LevelRequirement { get; set; } = -1;
 
-    public string UniqueHash => $"{ItemType}|{Attributes}|{GemId}|{IsEmptySocket}|{Perks}|{IsNamed}|{Rarity}|{Tier}|{GearScore}|{LevelRequirement}".XXHashAsHexString();
+    public string UniqueHash => $"{ItemType}|{Attributes}|{Perks}".XXHashAsHexString();
 
 }

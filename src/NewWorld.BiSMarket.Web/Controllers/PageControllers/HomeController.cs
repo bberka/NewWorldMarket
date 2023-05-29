@@ -23,13 +23,13 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             var sellOrders = _orderService.GetMainPageSellOrders();
             if (buyOrders.IsSuccess && sellOrders.IsSuccess)
             {
-                return View(new OrderData
+                return View(new ActiveOrderData
                 {
                     BuyOrderList = buyOrders.Data!,
                     SellOrderList = sellOrders.Data!
                 });
             }
-            return View(new OrderData());
+            return View(new ActiveOrderData());
         }
 
         [Route("/{statusCode}")]

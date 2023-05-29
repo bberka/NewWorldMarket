@@ -13,5 +13,7 @@ public class Image : IEntity
     public byte[] Bytes { get; set; }
     public string OcrTextResult { get; set; } = string.Empty;
     public string OcrItemDataResult { get; set; } = string.Empty;
+    public Guid UserGuid { get; set; }
+    public User User { get; set; }
 
 }

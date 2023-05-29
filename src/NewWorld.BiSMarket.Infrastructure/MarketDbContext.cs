@@ -18,13 +18,13 @@ namespace NewWorld.BiSMarket.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Order>()
-                .Navigation(x => x.Character)
-                .AutoInclude();
+            //modelBuilder.Entity<Order>()
+            //    .Navigation(x => x.Character)
+            //    .AutoInclude();
 
-            modelBuilder.Entity<User>()
-                .Navigation(x => x.Characters)
-                .AutoInclude();
+            //modelBuilder.Entity<User>()
+            //    .Navigation(x => x.Characters)
+            //    .AutoInclude();
             //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             //{
             //    relationship.DeleteBehavior = DeleteBehavior.Restrict;

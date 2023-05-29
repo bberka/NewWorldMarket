@@ -7,11 +7,12 @@ namespace NewWorld.BiSMarket.Core.Abstract;
 
 public interface IUserService
 {
-    ResultData<Guid> Register(Register request);
+    ResultData<User> Register(Register request);
     ResultData<Guid> AddCharacter(AddCharacter request);
-    Result RemoveCharacter(RemoveCharacter request);
+    Result RemoveCharacter(Guid userGuid,Guid characterGuid);
     ResultData<User> Login(string username, string password);
     ResultData<User> GetUserByGuid(Guid guid);
+    ResultData<List<Character>> GetCharacters(Guid userGuid);
     ResultData<User> GetUserByUsername(string username);
     ResultData<User> GetUserByEmail(string email);
     ResultData<User> GetUserByDiscordId(string discordId);

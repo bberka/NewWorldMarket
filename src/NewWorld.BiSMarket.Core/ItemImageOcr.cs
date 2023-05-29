@@ -126,7 +126,7 @@ public class ItemImageOcr
         var isEmptySocket = ocrTextResult.Contains("Empty Socket", StringComparison.OrdinalIgnoreCase);
         if (isEmptySocket)
         {
-            item.IsEmptySocket = true;
+            item.GemId = 0;
             return true;
         }
         var gemLineList = lines.Where(x => x.Text.Contains(":", StringComparison.OrdinalIgnoreCase))
@@ -178,35 +178,16 @@ public class ItemImageOcr
     }
     private static Result ImportPerks(IEnumerable<Line> lines, string ocrTextResult, ref Item item)
     {
-        //var perkLines = lines
-        //    .Where(x => x.Text.Contains(':') 
-        //                //&& !x.Text.Contains("Requirement: Level") 
-        //                //&& !x.Text.Contains("I:", StringComparison.OrdinalIgnoreCase) 
-        //                //&& !x.Text.Contains("II:", StringComparison.OrdinalIgnoreCase) 
-        //                //&& !x.Text.Contains("III:", StringComparison.OrdinalIgnoreCase) 
-        //                //&& !x.Text.Contains("IV:",StringComparison.OrdinalIgnoreCase) 
-        //                //&& !x.Text.Contains("V:", StringComparison.OrdinalIgnoreCase) 
-        //                )
-        //    .ToList();
-        //foreach (var perk in perkLines)
-        //{
-        //    var split = perk.Text.Split(':');
-        //    var perkOrGemName = split[0].Trim();
-        //    var splitName = perkOrGemName.Split(' ').ToList();
-        //    //splitName.RemoveAt(0);
-        //    var name = string.Join(' ', splitName);
-        //    if(name.IsNullOrEmpty() || name.Length < 2) continue;
-        //    if (!IsValidPerk(name))
-        //        continue;
-        //    list.Add(name);
-        //}
-
-        //var resourcePerkList = Resource.PerkListV2.Split(Environment.NewLine);
         var list = new List<int>();
         foreach (var perk in PerkMgr.This.Perks)
         {
             if (ocrTextResult.Contains(perk.EnglishName + ":", StringComparison.OrdinalIgnoreCase))
                 list.Add(perk.Id);
+        }
+
+        if (list.Count == 0)
+        {
+            return Result.Error("No perk is found");
         }
         item.Perks = string.Join(",", list);
         return true;
@@ -248,7 +229,6 @@ public class ItemImageOcr
         var line = lines.FirstOrDefault(x => x.Text.Contains("Requirement: Level ", StringComparison.OrdinalIgnoreCase));
         if (line == null)
         {
-            item.LevelRequirement = 0;
             return Result.Warn("Requirement level not found");
         }
         var textAfterLevel = line.Text.Split("Level ")[1];
@@ -264,7 +244,6 @@ public class ItemImageOcr
         var line = lines.FirstOrDefault(x => x.Text.Contains("Tier ", StringComparison.OrdinalIgnoreCase));
         if (line == null)
         {
-            item.Tier = 0;
             return Result.Warn("Tier text not found");
         }
         var textAfterTier = line.Text.Split("Tier ")[1];

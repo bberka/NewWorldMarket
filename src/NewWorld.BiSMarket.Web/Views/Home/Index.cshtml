@@ -1,30 +1,59 @@
 ﻿@using NewWorld.BiSMarket.Core
-@model NewWorld.BiSMarket.Core.Models.OrderData
+@model NewWorld.BiSMarket.Core.Models.ActiveOrderData
 @{
     ViewData["Title"] = "Home Page";
 }
 
 
 <div class="main-container">
-    <div class="row ">
-        <div class="col col-sm-2">
-            <div class="left-bar text-light">
-                <ul class="w-100">
-                    <li id="ctg-item-type-.Id" class="py-1 text-center fw-bold">
-                        <h5>All Supported Items</h5>
+
+    <div class="row">
+        <div class="col">
+            <div class="text-light">
+
+
+
+
+                <ul class="sidenav-menu left-bar text-light" style="padding-bottom: 200px;">
+                    <li id="sidenav-item ctg-item-all-items" class="pt-2 text-center fw-bold">
+                        <h5>Supported Items</h5>
                     </li>
-                    
-                    @foreach (var item in ItemMgr.This.ItemList)
+                    @foreach (var categories in CategoryMgr.This.Categories.GroupBy(x => x.CategoryType))
                     {
-                        <li id="ctg-item-type-@item.Id" class="pt-1">
-                            <a href="#" class="btn btn-dark w-100 m-0 rounded-2">@item.Name</a>
+                        var first = categories.FirstOrDefault()!;
+                        <li class="sidenav-item ">
+                            <a class="sidenav-link collapsed ripple-surface btn text-light" data-mdb-toggle="collapse" href="#category-@((int)first.CategoryType)" role="button" aria-expanded="false" tabindex="1">
+                                <span>
+                                    @first?.CategoryTypeReadableString
+
+
+                                </span>
+                                <i class="fas fa-angle-down rotate-icon" style="transition-property: transform;"></i></a>
+                            <ul class="sidenav-collapse collapse" id="category-@((int)first.CategoryType)" style="transition-property: height;">
+                                @foreach (var item in categories)
+                                {
+                                    <li class="sidenav-item">
+                                        <a href="#" class="btn  m-0 text-secondary">@item.ItemTypeReadableString</a>
+
+
+                                    </li>
+                                }
+                            </ul>
                         </li>
+
+
                     }
+
                 </ul>
+
+
+
+
+
 
             </div>
         </div>
-        <div class="col col-xl-10 pt-2">
+        <div class="col col-xl-10 pt-2" id="item-container">
             <h5 class="text-light text-center">Recent Sell Orders</h5>
             <table class="table table-dark table-striped ">
                 <thead>
@@ -39,13 +68,19 @@
                     <th scope="col">Perks</th>
                     <th scope="col">Price</th>
                     <th scope="col">Delivery In</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in @Model.SellOrderList)
+                @foreach (var item in Model.SellOrderList)
                 {
-                    <tr>
-                        <td></td>
+                    <tr data-item-guid="@item.Guid">
+                        <td>
+                            <div class="item">
+                                <img src="~/img/loadaing.jpg" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                                <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                            </div>
+                        </td>
                         <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
                         <td>@item.Character.Name</td>
                         <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
@@ -55,10 +90,13 @@
                         <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedText(item.Perks))</td>
                         <td>@item.Price.ConvertPriceToReadableString()</td>
                         <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                        <td>
+                            <a class="btn btn-secondary">Order</a>
+                        </td>
 
                     </tr>
                 }
-               
+
                 </tbody>
             </table>
 
@@ -76,14 +114,20 @@
                     <th scope="col">Perks</th>
                     <th scope="col">Price</th>
                     <th scope="col">Delivery In</th>
+                    <th scope="col">Actions</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in @Model.BuyOrderList)
+                @foreach (var item in Model.BuyOrderList)
                 {
-                    <tr>
-                        <td></td>
+                    <tr data-guid="@item.Guid">
+                        <td>
+                            <div class="item">
+                                <img src="~/img/loadaing.jpg" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                                <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                            </div>
+                        </td>
                         <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
                         <td>@item.Character.Name</td>
                         <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
@@ -93,11 +137,13 @@
                         <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedText(item.Perks))</td>
                         <td>@item.Price.ConvertPriceToReadableString()</td>
                         <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
-
+                        <td>
+                            <a class="btn btn-secondary">Order</a>
+                        </td>
                     </tr>
 
                 }
-               
+
                 </tbody>
             </table>
         </div>
@@ -105,3 +151,11 @@
 
 
 </div>
+
+@section Scripts {
+    <script src="~/js/image-tooltip.js"></script>
+
+}
+@section Css {
+    <link rel="stylesheet" href="~/css/image-tooltip.css"/>
+}

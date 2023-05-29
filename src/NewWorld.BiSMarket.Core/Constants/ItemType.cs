@@ -3,7 +3,6 @@
 public enum ItemType
 {
     Sword,
-    Shield,
     Rapier,
     Hatchet,
     Spear,
@@ -34,5 +33,9 @@ public enum ItemType
     Light_Glove,
     Amulet,
     Ring,
-    Earring
+    Earring,
+    Tower_Shield,
+    Round_Shield,
+    Kite_Shield,
+
 }

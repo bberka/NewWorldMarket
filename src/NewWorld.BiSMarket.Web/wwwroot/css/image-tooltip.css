@@ -1,0 +1,27 @@
+
+#item-container {
+    position: relative;
+}
+
+.item {
+    position: relative;
+    display: inline-block;
+}
+
+.icon {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    cursor: pointer;
+}
+
+.full-picture {
+    position: absolute;
+    top: 0;
+    left: 0; /* Position it to the right of the small icon */
+    display: none;
+    z-index: 1;
+    width: auto;
+    height: 500px;
+    position: absolute;
+    /* Add additional styles like width, height, border, etc. */
+}

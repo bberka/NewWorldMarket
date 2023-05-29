@@ -13,11 +13,11 @@ public class Order : IEntity
     /// <summary>
     /// 0: Buy, 1: Sell
     /// </summary>
-    public byte Type { get; set; }
+    public int Type { get; set; }
     public bool IsValid { get; set; } = true;
     public DateTime RegisterDate { get; set; } = DateTime.Now;
     public DateTime? LastUpdateDate { get; set; }
-    public DateTime? ExpirationDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
     public DateTime? CompletedDate { get; set; }
     public DateTime? CancelledDate { get; set; }
     public bool IsExpired => ExpirationDate != null && ExpirationDate < DateTime.Now;
@@ -30,7 +30,7 @@ public class Order : IEntity
     public int EstimatedDeliveryTimeHour { get; set; } 
     public float Price { get; set; }
 
-    public Guid? CharacterGuid { get; set; }
+    public Guid CharacterGuid { get; set; }
     public Character Character { get; set; } 
 
     public Guid ImageGuid { get; set; }
@@ -39,7 +39,7 @@ public class Order : IEntity
     public int Region { get; set; }
     public int Server { get; set; }
 
-    public byte ItemType { get; set; }
+    public int ItemType { get; set; }
     /// <summary>
     /// Format: (AttributeType:AttributeValue,AttributeType:AttributeValue)
     /// </summary>
@@ -49,7 +49,6 @@ public class Order : IEntity
     /// GemList.txt GemLineNumber
     /// </summary>
     public int GemId { get; set; } = 0;
-    public bool IsEmptySocket { get; set; } = false;
     /// <summary>
     /// This value can not be known by OCR, it is set by the user. Default is true. There are only few cases where this is false.
     /// </summary>
