@@ -76,7 +76,7 @@
 <!-- Tabs content -->
 <div class="tab-content" id="ex2-content">
     <div
-        class="tab-pane fade show "
+        class="tab-pane fade show active"
         id="ex3-tabs-1"
         role="tabpanel"
         aria-labelledby="ex3-tab-1">
@@ -93,6 +93,7 @@
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
                 <th scope="col">Delivery In</th>
+                <th scope="col">Expire In</th>
                 <th scope="col">Actions</th>
 
             </tr>
@@ -116,8 +117,9 @@
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedText(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                    <td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>
                     <td>
-                        <a class="btn btn-danger ">Cancel</a>
+                        <a class="btn btn-danger btn-cancel-order" data-guid="@item.Guid">Cancel</a>
                     </td>
                 </tr>
             }

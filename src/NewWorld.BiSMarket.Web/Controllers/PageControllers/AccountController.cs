@@ -116,15 +116,7 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             return RedirectToAction("Characters", "Account"); //redirect to account page
 
         }
-        [HttpGet]
-        [Route("/[controller]/[action]/{guid}")]
-        public IActionResult RemoveCharacter(Guid guid)
-        {
-            var user = SessionLib.This.GetUser();
-            var registerResult = _userService.RemoveCharacter(user.Guid,guid);
-            return Ok(registerResult);
-
-        }
+        
 
     }
 }

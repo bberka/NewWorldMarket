@@ -41,8 +41,8 @@
                 <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
                 <td>Not Verified</td>
                 <td>
-                    <a class="btn btn-success" href="~/Account/VerifyCharacter/@item.Guid">Verify</a>
-                    <a class="btn btn-danger"  onclick="RemoveCharacter('@item.Guid','@item.Name')">Remove</a>
+                    <a class="btn btn-success btn-verify-character" href="~/Account/VerifyCharacter/@item.Guid">Verify</a>
+                    <a class="btn btn-danger btn-remove-character" data-guid="@item.Guid" data-character-name="@item.Name">Remove</a>
                 </td>
 
             </tr>

@@ -11,6 +11,7 @@ using NewWorld.BiSMarket.Core;
 using System.Drawing;
 using Microsoft.EntityFrameworkCore;
 using Image = NewWorld.BiSMarket.Core.Entity.Image;
+using Ninject.Activation;
 
 namespace NewWorld.BiSMarket.Infrastructure.Services;
 
@@ -127,6 +128,53 @@ public class OrderService : IOrderService
     {
         throw new NotImplementedException();
     }
+
+    public Result CancelOrder(Guid userGuid, Guid orderGuid)
+    {
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid,"Character");
+        if (order == null)
+            return DomainResult.Order.ErrNotFound;
+        var isOwner = order.Character.UserGuid == userGuid;
+        if (!isOwner)
+            return DomainResult.Unauthorized;
+        var isCompleted = order.CompletedDate.HasValue;
+        if (isCompleted)
+            return DomainResult.Order.ErrCompleted;
+        var isCancelled = order.CancelledDate.HasValue;
+        if (isCancelled)
+            return DomainResult.Order.ErrCancelled;
+        var isExpired = order.ExpirationDate < DateTime.Now;
+        if (isExpired)
+            return DomainResult.Order.ErrExpired;
+        order.CancelledDate = DateTime.Now;
+        _unitOfWork.OrderRepository.Update(order);
+        var saveResult = _unitOfWork.Save();
+        return saveResult;
+    }
+
+    public Result ActivateExpiredOrder(Guid userGuid, Guid orderRequestGuid)
+    {
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid);
+        if (order == null)
+            return DomainResult.Order.ErrNotFound;
+        var isOwner = order.Character.UserGuid == userGuid;
+        if (!isOwner)
+            return DomainResult.Unauthorized;
+        var isCompleted = order.CompletedDate.HasValue;
+        if (isCompleted)
+            return DomainResult.Order.ErrCompleted;
+        var isCancelled = order.CancelledDate.HasValue;
+        if (isCancelled)
+            return DomainResult.Order.ErrCancelled;
+        var isExpired = order.ExpirationDate < DateTime.Now;
+        if (isExpired)
+            return DomainResult.Order.ErrExpired;
+        order.ExpirationDate = DateTime.Now.AddHours(ConstMgr.DefaultExpirationTimeInHours);
+        _unitOfWork.OrderRepository.Update(order);
+        var saveResult = _unitOfWork.Save();
+        return saveResult;
+    }
+   
     public ResultData<List<Order>> GetMainPageSellOrders(int region = -1, int server = -1, int page = 1)
     {
         if (region > 0)
@@ -330,38 +378,8 @@ public class OrderService : IOrderService
 
 
 
-    public Result CancelOrder(CancelOrder request)
-    {
-        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == request.OrderGuid);
-        if (order == null)
-            return Result.Warn("Order not found.");
-        if (order.CompletedDate != null)
-            return Result.Warn("This order is already completed.");
-        if (order.CancelledDate != null)
-            return Result.Warn("This order is already cancelled.");
-        order.CancelledDate = DateTime.Now;
-        _unitOfWork.OrderRepository.Update(order);
-        var saveResult = _unitOfWork.Save();
-        return saveResult;
-    }
+    
 
-    public Result ActivateExpiredOrder(ActivateExpiredOrder request)
-    {
-        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == request.OrderGuid);
-        if (order == null)
-            return Result.Warn("Order not found.");
-        if (order.CompletedDate != null)
-            return Result.Warn("This order is already completed.");
-        if (order.CancelledDate != null)
-            return Result.Warn("This order is already cancelled.");
-        if(order.ExpirationDate > DateTime.Now)
-            return Result.Warn("This order is not expired yet.");
-        order.ExpirationDate = DateTime.Now.AddDays(14);
-        _unitOfWork.OrderRepository.Update(order);
-        var saveResult = _unitOfWork.Save();
-        return saveResult;
-
-    }
 
 
     public Result CreateOrderRequest(CreateOrderRequest request)
@@ -410,20 +428,22 @@ public class OrderService : IOrderService
         return saveResult;
     }
 
-    public Result CancelOrderRequest(CancelOrderRequest request)
+    public Result CancelOrderRequest(Guid userGuid, Guid orderRequestGuid)
     {
-        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == request.UserGuid);
+        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid);
         if (user == null)
             return Result.Warn("User not found.");
         var characters = user.Characters.Select(x => x.Guid).ToList();
-
         var orderRequest = _unitOfWork.OrderRequestRepository
-            .GetFirstOrDefault(x => 
-                characters.Contains(x.CharacterGuid) && 
-                x.OrderGuid == request.OrderGuid && 
+            .GetFirstOrDefault(x =>
+                characters.Contains(x.CharacterGuid) &&
+                x.OrderGuid == orderRequestGuid &&
                 !x.CancelDate.HasValue);
         if (orderRequest == null)
             return Result.Warn("Order request not found.");
+        //var isOwner = orderRequest.Character.UserGuid == userGuid;
+        //if (!isOwner)
+        //    return DomainResult.Unauthorized;
 
         //if (orderRequest.Order is null)
         //{
@@ -432,15 +452,17 @@ public class OrderService : IOrderService
         //    if (orderRequest.Order == null)
         //        return Result.Warn("Order not found.");
         //}
-        if(orderRequest.IsCancelled)
-            return  Result.Warn("Order request is cancelled already");
-        if(orderRequest.IsCompleted)
+        if (orderRequest.IsCancelled)
+            return Result.Warn("Order request is cancelled already");
+        if (orderRequest.IsCompleted)
             return Result.Warn("You can not cancel a completed order request.");
         orderRequest.CancelDate = DateTime.Now;
         _unitOfWork.OrderRequestRepository.Update(orderRequest);
         var res = _unitOfWork.Save();
         return res;
     }
+
+   
 
 
 }

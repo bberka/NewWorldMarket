@@ -6,9 +6,6 @@ namespace NewWorld.BiSMarket.Web.Controllers
     [Route("/api/[controller]/[action]")]
     public class BaseApiController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+     
     }
 }

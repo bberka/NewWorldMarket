@@ -104,7 +104,7 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             return RedirectToAction("MyOrders", "Account");
         }
 
-
+        
         [HttpGet]
         public IActionResult CreateBuyOrder()
         {

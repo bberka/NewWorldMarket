@@ -1,7 +1,9 @@
 ﻿using EasMe.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewWorld.BiSMarket.Core.Abstract;
 using NewWorld.BiSMarket.Core.Entity;
+using NewWorld.BiSMarket.Infrastructure.Services;
 
 namespace NewWorld.BiSMarket.Web.Controllers.ApiControllers
 {
@@ -23,6 +25,14 @@ namespace NewWorld.BiSMarket.Web.Controllers.ApiControllers
         {
             return _orderService.GetMainPageBuyOrders(page: page);
         }
-
+        [HttpGet]
+        [Authorize]
+        public IActionResult CancelOrder(Guid guid)
+        {
+            var user = SessionLib.This.GetUser()!;
+            var cancelResult = _orderService.CancelOrder(user.Guid, guid);
+            return Ok(cancelResult);
+        }
+       
     }
 }
