@@ -1,122 +1,122 @@
 Empty
-Abyssal IV
-Electrified IV
-Empowered IV
-Ignited IV
-Frozen IV
-Arboreal IV
-Brash IV
-Opportunist IV
-Retaliate IV
-Exhilarate IV
-Cruel IV
-Gambit IV
-Rally IV
-Abyssal Ward IV
-Fire Ward IV
-Lightning Ward IV
-Arcane Ward IV
-Ice Ward IV
-Nature Ward IV
-Slash Ward IV
-Strike Ward IV
-Thrust Ward IV
-Physical Ward IV
-Wilderness Ward IV
-Elemental Ward IV
-Spectral Ward IV
+Abyssal
+Electrified
+Empowered
+Ignited
+Frozen
+Arborea
+Brash
+Opportunist
+Retaliate
+Exhilarate
+Cruel
+Gambit
+Rally
+Abyssal Ward
+Fire Ward
+Lightning Ward
+Arcane Ward
+Ice Ward
+Nature Ward
+Slash Ward
+Strike Ward
+Thrust Ward
+Physical Ward
+Wilderness Ward
+Elemental Ward
+Spectral Ward
 Acid Resistance
-Abyssal III
-Electrified III
-Empowered III
-Ignited III
-Frozen III
-Arboreal III
-Brash III
-Opportunist III
-Retaliate III
-Exhilarate III
-Cruel III
-Gambit III
-Rally III
-Abyssal Ward III
-Fire Ward III
-Lightning Ward III
-Arcane Ward III
-Ice Ward III
-Nature Ward III
-Slash Ward III
-Strike Ward III
-Thrust Ward III
-Physical Ward III
-Wilderness Ward III
-Elemental Ward III
-Spectral Ward III
-Abyssal II
-Electrified II
-Empowered II
-Ignited II
-Frozen II
-Arboreal II
-Brash II
-Opportunist II
-Retaliate II
-Exhilarate II
-Cruel II
-Gambit II
-Rally II
-Abyssal Ward II
-Fire Ward II
-Lightning Ward II
-Arcane Ward II
-Ice Ward II
-Nature Ward II
-Slash Ward II
-Strike Ward II
-Thrust Ward II
-Physical Ward II
-Wilderness Ward II
-Elemental Ward II
-Spectral Ward II
-Abyssal I
-Electrified I
-Empowered I
-Ignited I
-Frozen I
-Arboreal I
-Brash I
-Opportunist I
-Retaliate I
-Exhilarate I
-Cruel I
-Gambit I
-Rally I
-Abyssal Ward I
-Fire Ward I
-Lightning Ward I
-Arcane Ward I
-Ice Ward I
-Nature Ward I
-Slash Ward I
-Strike Ward I
-Thrust Ward I
-Physical Ward I
-Wilderness Ward I
-Elemental Ward I
-Spectral Ward I
+Abyssal
+Electrified
+Empowered
+Ignited
+Frozen
+Arboreal
+BrashI
+Opportunist
+Retaliate
+Exhilarate
+Cruel
+Gambit
+Rally
+Abyssal Ward
+Fire Ward
+Lightning Ward
+Arcane Ward
+Ice Ward
+Nature Ward
+Slash Ward
+Strike Ward
+Thrust Ward
+Physical Ward
+Wilderness Ward
+Elemental Ward
+Spectral Ward
+Abyssal
+Electrified
+Empowered
+Ignited
+Frozen
+Arboreal
+Brash
+Opportunist
+Retaliate
+Exhilarate
+Cruel
+Gambit
+Rally
+Abyssal Ward
+Fire Ward
+Lightning Ward
+Arcane Ward
+Ice Ward
+Nature Ward
+Slash Ward
+Strike Ward
+Thrust Ward
+Physical Ward
+Wilderness Ward
+Elemental Ward
+Spectral Ward
+Abyssal
+Electrified
+Empowered
+Ignited
+Frozen
+Arboreal
+Brash
+Opportunist
+Retaliate
+Exhilarate
+Cruel
+Gambit
+Rally
+Abyssal Ward
+Fire Ward
+Lightning Ward
+Arcane Ward
+Ice Ward
+Nature Ward
+Slash Ward
+Strike Ward
+Thrust Ward
+Physical Ward
+Wilderness Ward
+Elemental Ward
+Spectral Ward
 Empty Socket
-Taunting I
-Taunting II
-Taunting III
-Taunting IV
-Calming I
-Calming II
-Calming III
-Calming IV
-Lucky I
-Lucky II
-Lucky III
-Lucky IV
+Taunting
+Taunting
+Taunting
+Taunting
+Calming
+Calming
+Calming
+Calming
+Lucky
+Lucky
+Lucky
+Lucky
 Leeching Taunt
 Leeching Calm
 Energized Taunt

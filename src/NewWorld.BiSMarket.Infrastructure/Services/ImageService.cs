@@ -6,6 +6,8 @@ using NewWorld.BiSMarket.Core.Abstract;
 using NewWorld.BiSMarket.Core.Constants;
 using NewWorld.BiSMarket.Core.Entity;
 using NewWorld.BiSMarket.Core.Models;
+using System.Drawing;
+using Image = NewWorld.BiSMarket.Core.Entity.Image;
 
 namespace NewWorld.BiSMarket.Infrastructure.Services;
 
@@ -44,6 +46,12 @@ public class ImageService : IImageService
         {
             return Result.Warn(readResult.ErrorCode, readResult.Errors);
         }
+        Bitmap bmpImage = new Bitmap(ms);
+        var rect = new Rectangle(0, 0, 140, 140);
+        var icon = bmpImage.Clone(rect, bmpImage.PixelFormat);
+        using var iconStream = new MemoryStream();
+        icon.Save(iconStream, System.Drawing.Imaging.ImageFormat.Png);
+        var iconBytes = iconStream.ToArray();
         var dbImage = new Image
         {
             Guid = Guid.NewGuid(),
@@ -53,7 +61,8 @@ public class ImageService : IImageService
             Name = file.FileName,
             OcrTextResult = ocrTextResult,
             OcrItemDataResult = readResult.Data.ToJsonString(),
-            UserGuid = userGuid
+            UserGuid = userGuid,
+            SmallIconBytes = iconBytes
         };
         _unitOfWork.ImageRepository.Insert(dbImage);
         var saveResult = _unitOfWork.Save();

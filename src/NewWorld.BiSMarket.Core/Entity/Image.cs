@@ -11,6 +11,7 @@ public class Image : IEntity
     public string ContentType { get; set; } = string.Empty;
     public DateTime RegisterDate { get; set; } = DateTime.Now;
     public byte[] Bytes { get; set; }
+    public byte[] SmallIconBytes { get; set; }
     public string OcrTextResult { get; set; } = string.Empty;
     public string OcrItemDataResult { get; set; } = string.Empty;
     public Guid UserGuid { get; set; }

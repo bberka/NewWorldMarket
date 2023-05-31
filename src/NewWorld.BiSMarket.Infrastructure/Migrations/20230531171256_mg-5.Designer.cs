@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewWorld.BiSMarket.Infrastructure;
 
@@ -11,9 +12,11 @@ using NewWorld.BiSMarket.Infrastructure;
 namespace NewWorld.BiSMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    partial class MarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230531171256_mg-5")]
+    partial class mg5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,11 +280,6 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
 
                     b.Property<int>("Server")
                         .HasColumnType("int");
-
-                    b.Property<string>("ShortId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int>("Tier")
                         .HasColumnType("int");

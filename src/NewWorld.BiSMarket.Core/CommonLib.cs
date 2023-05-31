@@ -1,4 +1,5 @@
-﻿using NewWorld.BiSMarket.Core.Constants;
+﻿using System.Text;
+using NewWorld.BiSMarket.Core.Constants;
 
 namespace NewWorld.BiSMarket.Core;
 
@@ -35,5 +36,31 @@ public static class CommonLib
             _ => "Unknown"
         };
 
+    }
+
+    public static string RemoveSpecialCharacters(this string str)
+    {
+        var sb = new StringBuilder();
+        foreach (var c in str)
+        {
+            if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c))
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
+    }
+
+    public static string RemoveWhitespace(this string str)
+    {
+        var sb = new StringBuilder();
+        foreach (var c in str)
+        {
+            if (!char.IsWhiteSpace(c))
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
     }
 }

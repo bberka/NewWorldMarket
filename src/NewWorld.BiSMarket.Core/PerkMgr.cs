@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using EasMe.Extensions;
 using NewWorld.BiSMarket.Core.Models;
 using NewWorld.BiSMarket.Core.Properties;
 
@@ -47,8 +48,10 @@ public class PerkMgr
         return _list.FirstOrDefault(x => x.EnglishName.Equals(nameTrim,StringComparison.OrdinalIgnoreCase));
     }
 
-    public string ParsePerkFormattedText(string text)
+    public string ParsePerkFormattedTextHtmlRaw(string text)
     {
+        if (text.IsNullOrEmpty()) return "Could not be read";
+
         var split = text.Split(",");
         var sb = new StringBuilder();
         foreach (var s in split)
@@ -61,6 +64,24 @@ public class PerkMgr
             }
             sb.Append($"{perk.EnglishName}");
             sb.Append("<br/>");
+        }
+        return sb.ToString();
+    }
+    public string ParsePerkFormattedText(string text)
+    {
+        if(text.IsNullOrEmpty()) return "Could not be read";
+        var split = text.Split(",");
+        var sb = new StringBuilder();
+        foreach (var s in split)
+        {
+            var perkId = int.Parse(s);
+            var perk = GetPerk(perkId);
+            if (perk == null)
+            {
+                continue;
+            }
+            sb.Append($"{perk.EnglishName}");
+            sb.Append(Environment.NewLine);
         }
         return sb.ToString();
     }

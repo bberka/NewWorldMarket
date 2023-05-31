@@ -4,14 +4,26 @@
 
 @{
     ViewData["Title"] = "Create Sell Order";
+    var isReadItemType = Model.ItemType != -1;
+    var isReadAttributes = !string.IsNullOrEmpty(Model.Attributes);
+    var isReadPerks = !string.IsNullOrEmpty(Model.Perks);
+    var isReadGems = Model.GemId != -1;
+    var isReadGearScore = Model.GearScore != -1;
+    var isReadLevelReq = Model.LevelRequirement != -1;
+    var isReadRarity = Model.Rarity != -1;
+    var isReadTier = Model.Tier != -1;
+    
+        
+
 }
 
 <div class="container ">
-    <h1 class="text-light">Create Sell Order</h1>
-    <hr class="text-light"/>
     <div class="row">
         
         <div class="col-md-4 text-light">
+            <h1 class="text-light">Create Sell Order</h1>
+            <hr class="text-light"/>
+
             <form asp-action="CreateSellOrder">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @*<input asp-for="UserGuid" class="form-control" />
@@ -25,13 +37,13 @@
                 <div class="form-group py-2">
                     <label asp-for="CharacterGuid" class="control-label"></label>
                     <select class="form-control" asp-for="CharacterGuid">
-                        @foreach(var item in Model.CharactersListForView)
+                        @foreach (var item in Model.CharactersListForView)
                         {
                             var region = ServerMgr.This.GetRegion(item.Region).Value;
                             var server = ServerMgr.This.GetServer(item.Server).Value;
                             <option value="@item.Guid">@($"{item.Name} {region.Name}:{server.Name}")</option>
                         }
-                    </select>   
+                    </select>
                     <span asp-validation-for="CharacterGuid" class="text-danger"></span>
                 </div>
 
@@ -53,54 +65,51 @@
                     <input asp-for="EstimatedDeliveryTimeHour" class="form-control"/>
                     <span asp-validation-for="EstimatedDeliveryTimeHour" class="text-danger"></span>
                 </div>
-                @if (Model.ItemType == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="ItemType" class="control-label"></label>
-                        <select class="form-control" asp-for="ItemType">
-                            @foreach(var item in Enum.GetValues<ItemType>())
-                            {
-                                <option value="@((int)item)">@item.ToString().Replace("_"," ")</option>
-                            }
-                        </select>   
-                        <span asp-validation-for="ItemType" class="text-danger"></span>
-                    </div>
-                }
-                @if (Model.Attributes == string.Empty)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="Attributes" class="control-label"></label>
-                        <input asp-for="Attributes" class="form-control"/>
-                        <span asp-validation-for="Attributes" class="text-danger"></span>
-                    </div>
-                }
-                
-                @if (Model.Perks == string.Empty)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="Perks" class="control-label"></label>
-                        <input asp-for="Perks" class="form-control"/>
-                        <span asp-validation-for="Perks" class="text-danger"></span>
-                    </div>
-                }
-               
-                @if (Model.GemId == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="GemId" class="control-label"></label>
-                        <select class="form-control" asp-for="GemId">
-                            <option value="0">None</option>
+                <div class="form-group py-2
+@if (isReadItemType) { <text>d-none</text>}
+">
+                    <label asp-for="ItemType" class="control-label"></label>
+                    <select class="form-control" asp-for="ItemType">
+                        @foreach (var item in Enum.GetValues<ItemType>())
+                        {
+                            <option value="@((int)item)">@item.ToString().Replace("_", " ")</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ItemType" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2
+@if (isReadAttributes) { <text>d-none</text>}
+">
+                    <label asp-for="Attributes" class="control-label"></label>
+                    <input asp-for="Attributes" class="form-control"/>
+                    <span asp-validation-for="Attributes" class="text-danger"></span>
+                </div>
 
-                            @foreach (var item in GemMgr.This.Gems)
-                            {
-                                <option value="@item.Id">@item.EnglishName</option>
-                            }
-                        </select>
-                        <span asp-validation-for="GemId" class="text-danger"></span>
-                    </div>
-                }
-              
-               
+
+                <div class="form-group py-2
+@if (isReadPerks) { <text>d-none</text>}
+">
+                    <label asp-for="Perks" class="control-label"></label>
+                    <input asp-for="Perks" class="form-control"/>
+                    <span asp-validation-for="Perks" class="text-danger"></span>
+                </div>
+
+                <div class="form-group py-2
+@if (isReadGems) { <text>d-none</text>}
+">
+                    <label asp-for="GemId" class="control-label"></label>
+                    <select class="form-control" asp-for="GemId">
+                        <option value="0">None</option>
+
+                        @foreach (var item in GemMgr.This.Gems)
+                        {
+                            <option value="@item.Id">@item.EnglishName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="GemId" class="text-danger"></span>
+                </div>
+
+
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="IsGemChangeable"/> @Html.DisplayNameFor(model => model.IsGemChangeable)
@@ -114,58 +123,57 @@
                         </label>
                     </div>
                 }
-                
-                
-                
-               
-                @if (Model.Rarity == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="Rarity" class="control-label"></label>
-                        <select class="form-control" asp-for="Rarity">
-                            @foreach(var item in Enum.GetValues<GradeType>())
-                            {
-                                <option value="@((int)item)">@item.ToString()</option>
-                            }
-                        </select>
-                        <span asp-validation-for="Rarity" class="text-danger"></span>
-                    </div>
-                }
-                @if (Model.Tier == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="Tier" class="control-label"></label>
-                        <select class="form-control" asp-for="Tier">
-                            @foreach(var item in Enum.GetValues<TierType>())
-                            {
-                                <option value="@((int)item)">@item.ToString()</option>
-                            }
-                        </select>
-                        <span asp-validation-for="Tier" class="text-danger"></span>
-                    </div>
-                }
-               
-                @if (Model.GearScore == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="GearScore" class="control-label"></label>
-                        <input asp-for="GearScore" value="590" min="590" max="625" class="form-control"/>
-                        <span asp-validation-for="GearScore" class="text-danger"></span>
-                    </div>
-                }
-               
-                @if (Model.LevelRequirement == -1)
-                {
-                    <div class="form-group py-2">
-                        <label asp-for="LevelRequirement" class="control-label"></label>
-                        <input asp-for="LevelRequirement" readonly class="form-control"/>
-                        <span asp-validation-for="LevelRequirement" class="text-danger"></span>
-                    </div>
-                }
-                
+
+
+
+
+                <div class="form-group py-2
+@if (isReadRarity) { <text>d-none</text>}
+">
+                    <label asp-for="Rarity" class="control-label"></label>
+                    <select class="form-control" asp-for="Rarity">
+                        @foreach (var item in Enum.GetValues<RarityType>())
+                        {
+                            <option value="@((int)item)">@item.ToString()</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Rarity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group py-2
+@if (isReadTier) { <text>d-none</text>}
+">
+                    <label asp-for="Tier" class="control-label"></label>
+                    <select class="form-control" asp-for="Tier">
+                        @foreach (var item in Enum.GetValues<TierType>())
+                        {
+                            <option value="@((int)item)">@item.ToString()</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Tier" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="form-group py-2
+@if (isReadGearScore) { <text>d-none</text>}
+">
+                    <label asp-for="GearScore" class="control-label"></label>
+                    <input asp-for="GearScore" value="590" min="590" max="625" class="form-control"/>
+                    <span asp-validation-for="GearScore" class="text-danger"></span>
+                </div>
+
+                <div class="form-group py-2 
+@if (isReadLevelReq) { <text>d-none</text>}
+                    ">
+                    <label asp-for="LevelRequirement" class="control-label"></label>
+                    <input asp-for="LevelRequirement" readonly class="form-control"/>
+                    <span asp-validation-for="LevelRequirement" class="text-danger"></span>
+                </div>
+
                 <div class="form-group py-2">
                     <label asp-for="UniqueHash" class="control-label"></label>
-                    <input asp-for="UniqueHash" readonly class="form-control" />
+                    <input asp-for="UniqueHash" readonly class="form-control"/>
                     <span asp-validation-for="UniqueHash" class="text-danger"></span>
                 </div>
                 <div class="form-group pt-2">
@@ -173,6 +181,48 @@
                 </div>
             </form>
         </div>
+        <div class="col text-light">
+            <h1 class="text-light">Image Read Result</h1>
+            <hr class="text-light"/>
+            <div class="form-group py-2">
+                <label asp-for="ItemType" class="control-label"></label>
+                <input value="@(((ItemType)Model.ItemType).ToString().Replace("_", " "))" readonly class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="GemId" class="control-label"></label>
+                <input value="@(GemMgr.This.Get(Model.GemId)?.EnglishName)" readonly class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="GearScore" class="control-label"></label>
+                <input value="@if (Model.GearScore == -1){<text>Could not be read</text>}else {@Model.GearScore}" readonly class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="LevelRequirement" class="control-label"></label>
+                <input value="@Model.LevelRequirement" readonly class="form-control"/>
+            </div>
+            @*<div class="form-group py-2">
+                <label asp-for="IsNamed" class="control-label"></label>
+                <input value="@Model.IsNamed" readonly class="form-control"/>
+            </div>*@
+           
+            <div class="form-group py-2">
+                <label asp-for="Rarity" class="control-label"></label>
+                <input value="@(((RarityType)Model.Rarity).ToString())" readonly class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="Tier" class="control-label"></label>
+                <input value="@(((TierType)Model.Tier).ToString())" readonly class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="Perks" class="control-label"></label>
+                <textarea readonly class="form-control">@PerkMgr.This.ParsePerkFormattedText(Model.Perks)</textarea>
+            </div>
+            <div class="form-group py-2">
+                <label asp-for="Attributes" class="control-label"></label>
+                <textarea readonly class="form-control">@AttributeMgr.This.ParseAttributeFormattedText(Model.Attributes)</textarea>
+            </div>
+        </div>  
+
         <div class="col">
             <img width="400vh" src="@Model.GetImageUrl()"/>
         </div>  

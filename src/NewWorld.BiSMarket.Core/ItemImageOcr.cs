@@ -139,15 +139,21 @@ public class ItemImageOcr
         foreach (var gemLine in gemLineList)
         {
             var split = gemLine.Text.Split(':');
-            var firstPart = split[0];
-            var gemPerk = GemMgr.This.Get(firstPart);
+            if(split.Length < 2)
+                continue;
+            var firstPart = split[0].RemoveSpecialCharacters().Trim();
+            var splitSpace = firstPart.Split(' ');
+            if (splitSpace.Length < 2)
+                continue;
+            var gemPerk = GemMgr.This.Get(splitSpace[0]);
             if (gemPerk is null)
             {
-                var split2 = firstPart.Split(' ');
-                var lastTwoMerge = split2[^2] + " " + split2[^1];
-                gemPerk = GemMgr.This.Get(lastTwoMerge);
-                if (gemPerk is null)
-                    continue;
+                continue;
+                //var split2 = firstPart.Split(' ');
+                //var lastTwoMerge = split2[^2] + " " + split2[^1];
+                //gemPerk = GemMgr.This.Get(lastTwoMerge);
+                //if (gemPerk is null)
+                //    continue;
             }
             item.GemId = gemPerk.Id;
             break;
@@ -179,11 +185,35 @@ public class ItemImageOcr
     private static Result ImportPerks(IEnumerable<Line> lines, string ocrTextResult, ref Item item)
     {
         var list = new List<int>();
-        foreach (var perk in PerkMgr.This.Perks)
+        var perkLines = lines.Where(x => x.Text.Contains(":"))
+            .ToList();
+        foreach (var perkLine in perkLines)
         {
-            if (ocrTextResult.Contains(perk.EnglishName + ":", StringComparison.OrdinalIgnoreCase))
-                list.Add(perk.Id);
+            var first = perkLine.Text.Split(':')[0];
+            var perkName = first.RemoveSpecialCharacters().Trim();
+            //remove single character if after space 
+            var split = perkName.Split(' ');
+            if (split.Length > 1)
+            {
+                var first2 = split[0];
+                if (first2.Length == 1)
+                {
+                    perkName = perkName.Replace(first2, "");
+                }
+            }
+            var isValidPerk = IsValidPerk(perkName);
+            if (!isValidPerk)
+                continue;
+            var perk = PerkMgr.This.GetPerk(perkName);
+            if (perk is null)
+                continue;
+            list.Add(perk.Id);
         }
+        //foreach (var perk in PerkMgr.This.Perks)
+        //{
+        //    if (ocrTextResult.Equals(perk.EnglishName + ":", StringComparison.OrdinalIgnoreCase))
+        //        list.Add(perk.Id);
+        //}
 
         if (list.Count == 0)
         {
@@ -215,10 +245,10 @@ public class ItemImageOcr
 
     private static Result ImportRarity(string ocrResultText, ref Item item)
     {
-        var gradeTypeList = Enum.GetNames(typeof(GradeType)).ToList();
+        var gradeTypeList = Enum.GetNames(typeof(RarityType)).ToList();
         var gradeTypeMatchInResultText = gradeTypeList
             .FirstOrDefault(x => ocrResultText.Contains(x, StringComparison.OrdinalIgnoreCase));
-        var parseToEnum = Enum.TryParse(gradeTypeMatchInResultText, out GradeType gradeType);
+        var parseToEnum = Enum.TryParse(gradeTypeMatchInResultText, out RarityType gradeType);
         if (!parseToEnum)
             return Result.Error("Rarity type is not found");
         item.Rarity = (byte)gradeType;

@@ -36,7 +36,7 @@ function hideFullPicture() {
 // Event handler for updating the position of the full picture
 function updateFullPicturePosition(event) {
     const fullPicture = $('.full-picture');
-    const offsetX = 30; // Adjust as needed to offset the full picture from the cursor horizontally
+    const offsetX = 50; // Adjust as needed to offset the full picture from the cursor horizontally
     const offsetY = 0; // Adjust as needed to offset the full picture from the cursor vertically
 
     // Get the position of the icon relative to the page

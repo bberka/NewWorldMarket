@@ -12,6 +12,8 @@ using System.Drawing;
 using Microsoft.EntityFrameworkCore;
 using Image = NewWorld.BiSMarket.Core.Entity.Image;
 using Ninject.Activation;
+using shortid;
+using shortid.Configuration;
 
 namespace NewWorld.BiSMarket.Infrastructure.Services;
 
@@ -44,9 +46,13 @@ public class OrderService : IOrderService
         }
 
         //This hash check can be improved and its not tested so it may not be working correctly
-        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid && x.Hash == request.UniqueHash);
+        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid 
+                                                          && x.Hash == request.UniqueHash 
+                                                          && !x.CancelledDate.HasValue
+                                                          && !x.CompletedDate.HasValue
+                                                          && x.ExpirationDate > DateTime.Now);
         if (exists)
-            return Result.Warn("It looks like you already listed this same item, if you think this is a mistake contact us.");
+            return Result.Warn("It looks like you already listed the same item, if you think this is a mistake contact us.");
         var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == request.UserGuid);
         if (user == null)
             return Result.Warn("User not found.");
@@ -116,7 +122,8 @@ public class OrderService : IOrderService
             Tier = itemData.LevelRequirement,
             Rarity = itemData.LevelRequirement,
             Perks = itemData.Perks,
-            IsLimitedToVerifiedUsers = false //TODO: implement verified user stuff
+            IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
+            ShortId = ShortId.Generate(new GenerationOptions(true,false,8))
         };
 
         _unitOfWork.OrderRepository.Insert(oq);

@@ -66,6 +66,8 @@ body {
 }
     .dropdown-item-custom:hover {
         background: rgb(23, 25, 26) !important;
+        /*cursor change*/
+cursor: pointer;
     }
 .main-container {
     width: 100%;
@@ -84,5 +86,13 @@ ul {
 }
 .on-hover-custom:hover{
     background: black;
+}
+
+
+.active {
+    color: white !important;
+}
+.text-light-second {
+    color: #e0e0e0;
 }
 

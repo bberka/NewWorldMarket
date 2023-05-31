@@ -1,6 +1,6 @@
 ﻿namespace NewWorld.BiSMarket.Core.Constants;
 
-public enum GradeType
+public enum RarityType
 {
     Uncommon,
     Rare,

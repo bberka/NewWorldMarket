@@ -115,7 +115,6 @@ Shirking Frost
 Contagious Reverse Stab
 Nullifying Oblivion
 Diminishing Orb
-Sundering Shockwave
 Abyssal Conditioning
 Exhaustive Net Shot
 Leeching Shrapnel Blast
@@ -351,3 +350,4 @@ Exploitation
 Purifying Crits
 Vicious
 Keenly Jagged
+Resilient

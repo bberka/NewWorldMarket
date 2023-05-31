@@ -33,7 +33,7 @@ public static class ConstMgr
     }
 
     internal const string ApiKey = "K82989277388957";
-    public const string OcrIgnoredCharacters = "[]{}()@\\-—_=";
+    public const string OcrIgnoredCharacters = ""; //[]{}()@\\-—_=
     public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
     public const int PageSize = 20;
     public const int MaxImageSize = 1048576;
