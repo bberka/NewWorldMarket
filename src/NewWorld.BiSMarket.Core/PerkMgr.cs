@@ -36,10 +36,15 @@ public class PerkMgr
         return _list.FirstOrDefault(x => x.Id == id);
     }
 
-    public bool IsValidPerk(string name)
+    public bool IsValid(string name)
     {
         var nameTrim = name.Trim();
         return _list.Any(x => x.EnglishName.Equals(nameTrim, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public bool IsValid(int id)
+    {
+        return _list.Any(x => x.Id == id);
     }
 
     public Perk? GetPerk(string name)

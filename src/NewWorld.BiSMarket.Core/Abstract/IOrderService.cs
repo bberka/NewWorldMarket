@@ -19,6 +19,15 @@ public interface IOrderService
     ResultData<List<Order>> GetOrderByHash(string hash);
     ResultData<List<Order>> GetOrderByHash(Guid userGuid,string hash);
 
+    ResultData<List<Order>> GetFilteredActiveOrders(
+        int attr = -1,
+        int perk1 = -1,
+        int perk2 = -1,
+        int perk3 = -1,
+        int type = -1,
+        int server = -1,
+        int rarity = -1
+        );
 
 
     //order

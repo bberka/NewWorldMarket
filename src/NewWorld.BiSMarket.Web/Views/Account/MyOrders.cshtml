@@ -85,7 +85,6 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -95,6 +94,8 @@
                 <th scope="col">Price</th>
                 <th scope="col">Delivery In</th>
                 <th scope="col">Expire In</th>
+                <th scope="col">Order Id</th>
+
                 <th scope="col">Actions</th>
 
             </tr>
@@ -110,7 +111,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -120,6 +120,8 @@
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
                     <td>@CommonLib.ConvertDateDiffAsReadableText(item.ExpirationDate, DateTime.Now)</td>
+                    <td>@item.ShortId</td>
+
                     @*<td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>*@
                     <td>
                         <div class="btn-group dropdown">
@@ -158,7 +160,6 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Order Id</th>
 
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
@@ -168,6 +169,8 @@
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
                 <th scope="col">Delivery In</th>
+                <th scope="col">Order Id</th>
+
                 <th scope="col">Actions</th>
 
             </tr>
@@ -183,7 +186,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -192,6 +194,8 @@
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                    <td>@item.ShortId</td>
+
                     <td>
                         <a class="btn btn-danger">Cancel</a>
                     </td>
@@ -215,7 +219,6 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -224,11 +227,14 @@
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
                 <th scope="col">Type</th>
+                <th scope="col">Order Id</th>
+
+                <th scope="col">Completed Date</th>
 
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.CompletedOrderList)
+            @foreach (var item in Model.CompletedOrderList.OrderByDescending(x => x.CompletedDate))
             {
                 <tr>
                     <td>
@@ -238,7 +244,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.ShortId</td>
 
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
@@ -248,6 +253,9 @@
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@CommonLib.GetOrderTypeString(item.Type)</td>
+                    <td>@item.ShortId</td>
+
+                    <td>@item.CompletedDate</td>
 
                 </tr>
 
@@ -268,7 +276,6 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Order Id</th>
 
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
@@ -277,13 +284,16 @@
                 <th scope="col">Attributes</th>
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
-                <th scope="col">Type</th>
+                @*<th scope="col">Type</th>*@
+                <th scope="col">Order Id</th>
+                <th scope="col">Expire Date</th>
+
                 <th scope="col">Actions</th>
 
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.ExpiredOrderList)
+            @foreach (var item in Model.ExpiredOrderList.OrderByDescending(x => x.ExpirationDate))
             {
                 <tr>
                     <td>
@@ -293,7 +303,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -301,7 +310,10 @@
                     <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
-                    <td>@CommonLib.GetOrderTypeString(item.Type)</td>
+                    @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
+                    <td>@item.ShortId</td>
+                    <td>@item.ExpirationDate</td>
+
                     <td>
                         <a class="btn btn-success">Relist</a>
                     </td>
@@ -324,7 +336,6 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -332,12 +343,14 @@
                 <th scope="col">Attributes</th>
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
-                <th scope="col">Type</th>
+                @*<th scope="col">Type</th>*@
+                <th scope="col">Order Id</th>
+                <th scope="col">Cancel Date</th>
 
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.CancelledOrderList)
+            @foreach (var item in Model.CancelledOrderList.OrderByDescending(x => x.CancelledDate))
             {
                 <tr>
                     <td>
@@ -347,7 +360,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -355,7 +367,10 @@
                     <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
-                    <td>@CommonLib.GetOrderTypeString(item.Type)</td>
+                    @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
+                    <td>@item.ShortId</td>
+                    <td>@item.CancelledDate</td>
+
 
                 </tr>
 

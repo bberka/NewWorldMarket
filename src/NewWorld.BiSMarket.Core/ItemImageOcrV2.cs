@@ -32,9 +32,9 @@ public class ItemImageOcrV2
     {
         _ocrInput = input;
         _itemImageData = itemImageData;
-        //input.Contrast(1.4F);
-        input.AdaptiveThreshold(1.2F);
-        input.DeNoise();
+        //input.Contrast(1.8F);
+        input.AdaptiveThreshold(1.45F);
+        //input.DeNoise();
 
         input.SaveAsImages(@"C:\Users\kkass\OneDrive\Masaüstü\outputOCR\");
         //input.SelectTextColors(ConstMgr.ItemTooltipTextColorList,20);
@@ -396,8 +396,12 @@ public class ItemImageOcrV2
                 continue;
             var first = split[0];
             var perkName = first.RemoveSpecialCharacters("'").RemoveNumbers().Trim();
+            if(perkName.IsNullOrEmpty()) continue;
+            //var perkName = perkLine.Text.RemoveSpecialCharacters("'").RemoveNumbers().Trim();
             //remove single character if after space 
             var split2 = perkName.Split(' ');
+            if (split2.Length < 2)
+                continue;
             var first2 = split2[0];
             if (first2.Length < 3)
             {

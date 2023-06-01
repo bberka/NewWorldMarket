@@ -129,7 +129,7 @@ function CancelOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('You have successfully cancelled your order! Refresh the page to see changes.', 'asd', 'success');
+            Swal.fire('Success!', 'You have successfully cancelled your order! Refresh the page to see changes.', 'success');
             //TODO : refresh page
         }
     })

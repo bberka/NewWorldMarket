@@ -15,23 +15,43 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             _orderService = orderService;
         }
 
+        //[Route("/")]
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
+        //    var buyOrders = _orderService.GetMainPageBuyOrders();
+        //    var sellOrders = _orderService.GetMainPageSellOrders();
+        //    if (buyOrders.IsSuccess && sellOrders.IsSuccess)
+        //    {
+        //        return View(new ActiveOrderData
+        //        {
+        //            BuyOrderList = buyOrders.Data!,
+        //            SellOrderList = sellOrders.Data!
+        //        });
+        //    }
+        //    return View(new ActiveOrderData());
+        //}
+        [Route("/List")]
         [Route("/")]
-
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(
+            [FromQuery] int attr = -1, 
+            [FromQuery] int perk1 = -1,
+            [FromQuery] int perk2 = -1,
+            [FromQuery] int perk3 = -1,
+            [FromQuery] int item = -1,
+            [FromQuery] int server = -1,
+            [FromQuery] int rarity = -1
+            )
         {
-            var buyOrders = _orderService.GetMainPageBuyOrders();
-            var sellOrders = _orderService.GetMainPageSellOrders();
-            if (buyOrders.IsSuccess && sellOrders.IsSuccess)
+            var model = new ActiveOrderData();
+            var result = _orderService.GetFilteredActiveOrders(attr, perk1, perk2, perk3, item, server,rarity);
+            if (result.IsSuccess)
             {
-                return View(new ActiveOrderData
-                {
-                    BuyOrderList = buyOrders.Data!,
-                    SellOrderList = sellOrders.Data!
-                });
+                model.SellOrderList = result.Data!;
             }
-            return View(new ActiveOrderData());
+            return View(model);
         }
-
         [Route("/{statusCode}")]
 
         public IActionResult ErrorCode(int statusCode)

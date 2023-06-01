@@ -9,7 +9,7 @@ Console.WriteLine("Hello, World!");
 
 //PerkOcrExport.Export(@"C:\Users\kkass\OneDrive\Masaüstü\perks", @"C:\Users\kkass\OneDrive\Masaüstü\perks\export.txt");
 
-var path = @"C:\Users\kkass\OneDrive\Masaüstü\NWITems\  (3).png";
+var path = @"C:\Users\kkass\OneDrive\Masaüstü\NWITems\  (12).png";
 var imageBytes = File.ReadAllBytes(path);
 var ocr = ItemImageOcrV2.Create(imageBytes);
 

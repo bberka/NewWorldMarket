@@ -73,6 +73,9 @@ body {
 
 .dropdown-item-custom {
     color: white !important;
+    /*disable text selection*/
+-webkit-user-select: none;  
+
 }
 
     .dropdown-item-custom:hover {
@@ -110,4 +113,19 @@ ul {
 
 .text-light-second {
     color: #e0e0e0;
+}
+
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+
+
+}
+:root {
+    color-scheme: dark;
+}
+.active-dropdown {
+    background: rgb(80,85,86) !important;
+    color: wheat !important;
 }

@@ -78,4 +78,9 @@ public class AttributeMgr
         }
         return sb.ToString();
     }
+
+    public bool IsValid(int attributeType)
+    {
+        return AttributeList.ContainsKey(attributeType);
+    }
 }

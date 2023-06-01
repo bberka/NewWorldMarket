@@ -23,6 +23,7 @@
         rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@sweetalert2/theme-dark@@5/dark.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
     @await RenderSectionAsync("Css", false)
 
 </head>
@@ -58,6 +59,8 @@
 ></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="~/js/datatable.js"></script>
 
 <script src="~/js/account.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", false)

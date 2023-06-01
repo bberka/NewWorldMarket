@@ -39,4 +39,15 @@ public class ItemMgr
         return ItemList.FirstOrDefault(t => t.Key == key);
     }
 
+    public bool IsValid(int type)
+    {
+        return  ItemList.Any(x => x.Id == type);
+    }
+
+    public bool IsValid(string key)
+    {
+        return  ItemList.Any(x => x.Key == key);
+    }
+
+   
 }

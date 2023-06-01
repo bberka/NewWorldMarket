@@ -119,8 +119,8 @@ public class OrderService : IOrderService
             ItemType = itemData.ItemType,
             LastUpdateDate = null,
             LevelRequirement = itemData.LevelRequirement,
-            Tier = itemData.LevelRequirement,
-            Rarity = itemData.LevelRequirement,
+            Tier = itemData.Tier,
+            Rarity = itemData.Rarity,
             Perks = itemData.Perks,
             IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
             ShortId = ShortId.Generate(new GenerationOptions(true,false,8))
@@ -330,6 +330,71 @@ public class OrderService : IOrderService
             .ToList();
     }
 
+    public ResultData<List<Order>> GetFilteredActiveOrders(
+        int attr = -1,
+        int perk1 = -1,
+        int perk2 = -1,
+        int perk3 = -1,
+        int type = -1,
+        int server = -1,
+        int rarity = -1)
+    {
+        var isValidAttr = AttributeMgr.This.IsValid(attr);
+        var isValidPerk1 = PerkMgr.This.IsValid(perk1);
+        var isValidPerk2 = PerkMgr.This.IsValid(perk2);
+        var isValidPerk3 = PerkMgr.This.IsValid(perk3);
+        var isValidType = ItemMgr.This.IsValid(type);
+        var isValidWorld = ServerMgr.This.IsValidServer(server);
+        var isValidRarity = Enum.IsDefined(typeof(RarityType), rarity);
+        //var isValidCategory = CategoryMgr.This.IsValidCategory()
+        var queryable = _unitOfWork.OrderRepository.GetOrdered(
+                       x => x.Type == (int)OrderType.Sell
+                            && !x.CancelledDate.HasValue 
+                            && !x.CompletedDate.HasValue 
+                            && x.ExpirationDate > DateTime.Now,
+                            x => x.OrderByDescending(y => y.RegisterDate))
+            .Include(x =>x.Character)
+            .AsQueryable();
+        //var test = queryable.ToList();
+        if (isValidAttr)
+        {
+            queryable = queryable.Where(x => x.Attributes.Contains(attr + ":"));
+        }
+        
+
+        if (isValidPerk1)
+        {
+            queryable = queryable.Where(x => x.Perks.Contains(perk1.ToString()));
+        }
+
+        if (isValidPerk2)
+        {
+            queryable = queryable.Where(x => x.Perks.Contains(perk2.ToString()));
+
+        }
+
+        if (isValidPerk3)
+        {
+
+            queryable = queryable.Where(x => x.Perks.Contains(perk3.ToString()));
+        }
+        if (isValidType)
+        {
+            queryable = queryable.Where(x => x.ItemType == type);
+
+        }
+        if (isValidWorld)
+        {
+            queryable = queryable.Where(x => x.Server == server);
+        }
+
+        if (isValidRarity)
+        {
+            queryable = queryable.Where(x => x.Rarity == rarity);
+        }
+        return queryable.ToList();
+
+    }
 
 
     public Result CreateOrder(CreateOrder request)
