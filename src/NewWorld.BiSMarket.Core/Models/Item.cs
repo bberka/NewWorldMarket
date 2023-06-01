@@ -5,6 +5,8 @@ namespace NewWorld.BiSMarket.Core.Models;
 
 public class Item
 {
+    public string ItemName { get; set; } = string.Empty;
+
     public int ItemType { get; set; } = -1;
     /// <summary>
     /// Format: (AttributeType:AttributeValue,AttributeType:AttributeValue)

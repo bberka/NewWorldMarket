@@ -36,33 +36,50 @@ public class ImageService : IImageService
             case > ConstMgr.MaxImageSize:
                 return Result.Warn("File size can not be bigger than 1MB.");
         }
-
+        var fileExtension = Path.GetExtension(file.FileName);
+        if (fileExtension is not ".png" and not ".jpg" and not ".jpeg")
+        {
+            return Result.Warn("File extension is not supported. Supported extensions png,jpg,jpeg");
+        }
         using var ms = new MemoryStream();
         file.CopyTo(ms);
         var fileBytes = ms.ToArray();
-        var ocr = ItemImageOcr.Create(fileBytes);
-        var readResult = ocr.Read(out var ocrTextResult);
-        if (readResult.IsFailure)
+        var ocr = ItemImageOcrV2.Create(fileBytes);
+        var readResult = ocr.Read();
+        if (!readResult.IsSuccess)
         {
-            return Result.Warn(readResult.ErrorCode, readResult.Errors);
+            if (readResult.Errors.Count < 7)
+            {
+                var secondTry = ItemImageOcrV2.CreateForSecondTry(fileBytes);
+                readResult = secondTry.Read();
+                if (!readResult.IsSuccess)
+                {
+                    return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
+                }
+            }
+            else
+            {
+                return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
+            }
+
         }
-        Bitmap bmpImage = new Bitmap(ms);
-        var rect = new Rectangle(0, 0, 140, 140);
-        var icon = bmpImage.Clone(rect, bmpImage.PixelFormat);
-        using var iconStream = new MemoryStream();
-        icon.Save(iconStream, System.Drawing.Imaging.ImageFormat.Png);
-        var iconBytes = iconStream.ToArray();
+        //var bmpImage = new Bitmap(ms);
+        //var rect = new Rectangle(0, 0, 140, 140);
+        //var icon = bmpImage.Clone(rect, bmpImage.PixelFormat);
+        //using var iconStream = new MemoryStream();
+        //icon.Save(iconStream, System.Drawing.Imaging.ImageFormat.Png);
+        //var iconBytes = iconStream.ToArray();
         var dbImage = new Image
         {
             Guid = Guid.NewGuid(),
-            Bytes = fileBytes,
+            Bytes = readResult.ItemImageData.FullImageBytes,
             RegisterDate = DateTime.Now,
             ContentType = file.ContentType,
             Name = file.FileName,
-            OcrTextResult = ocrTextResult,
-            OcrItemDataResult = readResult.Data.ToJsonString(),
+            OcrTextResult = readResult.Pages.ToJsonString(),
+            OcrItemDataResult = readResult.ItemOcrReadData.ToJsonString(),
             UserGuid = userGuid,
-            SmallIconBytes = iconBytes
+            SmallIconBytes = readResult.ItemImageData.IconImageBytes,
         };
         _unitOfWork.ImageRepository.Insert(dbImage);
         var saveResult = _unitOfWork.Save();

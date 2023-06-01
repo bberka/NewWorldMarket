@@ -9,9 +9,9 @@
 }
 
 .icon {
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    cursor: pointer;
+    width: 70px !important; /* Adjust size as needed */
+    height: 70px !important; /* Adjust size as needed */
+    cursor: auto;
 }
 
 .full-picture {
@@ -21,7 +21,7 @@
     display: none;
     z-index: 1;
     width: auto;
-    height: 500px;
+    height: 650px;
     position: absolute;
     /* Add additional styles like width, height, border, etc. */
 }

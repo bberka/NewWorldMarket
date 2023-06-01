@@ -61,6 +61,7 @@ function RemoveCharacter() {
     var guid = $(this).data('guid');
     var characterName = $(this).data('character-name');
     Swal.fire({
+        icon: 'warning',
         title: 'Are you sure ?',
         html: 'You are about to remove <b>' + characterName + '</b> character from your account. All of your active orders linked to this character will be canceled automatically.',
         showCancelButton: true,
@@ -101,6 +102,7 @@ function CancelOrder(event) {
     console.log(guid);
     var orderNo = $(event.target).data("order-no");
     Swal.fire({
+        icon: 'warning',
         title: 'Are you sure ?',
         html: 'You are about to cancel an active order.',
         showCancelButton: true,
@@ -127,7 +129,7 @@ function CancelOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('You have successfully cancelled your order! Refresh the page to see changes.', '', 'success');
+            Swal.fire('You have successfully cancelled your order! Refresh the page to see changes.', 'asd', 'success');
             //TODO : refresh page
         }
     })

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NewWorld.BiSMarket.Core.Abstract;
 using NewWorld.BiSMarket.Core.Models;
 
@@ -37,6 +38,11 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             if (uploadResult.IsFailure)
             {
                 ModelState.AddModelError("", uploadResult.ErrorCode);
+
+                //foreach (var item in uploadResult.Errors)
+                //{
+                //    ModelState.AddModelError("", item);
+                //}
                 return View();
             }
 

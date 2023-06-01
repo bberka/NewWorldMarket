@@ -209,11 +209,7 @@ public class ItemImageOcr
                 continue;
             list.Add(perk.Id);
         }
-        //foreach (var perk in PerkMgr.This.Perks)
-        //{
-        //    if (ocrTextResult.Equals(perk.EnglishName + ":", StringComparison.OrdinalIgnoreCase))
-        //        list.Add(perk.Id);
-        //}
+       
 
         if (list.Count == 0)
         {

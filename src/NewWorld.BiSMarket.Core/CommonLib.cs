@@ -38,12 +38,12 @@ public static class CommonLib
 
     }
 
-    public static string RemoveSpecialCharacters(this string str)
+    public static string RemoveSpecialCharacters(this string str,string allowedSpecialChars = "")
     {
         var sb = new StringBuilder();
         foreach (var c in str)
         {
-            if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c))
+            if (char.IsLetterOrDigit(c) || allowedSpecialChars.Contains(c) || char.IsWhiteSpace(c))
             {
                 sb.Append(c);
             }
@@ -51,6 +51,18 @@ public static class CommonLib
         return sb.ToString();
     }
 
+    public static string RemoveNumbers(this string str)
+    {
+        var sb = new StringBuilder();
+        foreach (var c in str)
+        {
+            if (!char.IsDigit(c))
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
+    }
     public static string RemoveWhitespace(this string str)
     {
         var sb = new StringBuilder();
@@ -62,5 +74,27 @@ public static class CommonLib
             }
         }
         return sb.ToString();
+    }
+
+    public static string ConvertDateDiffAsReadableText(DateTime date1, DateTime date2)
+    {
+        var diff = date1 - date2;
+        if (diff.TotalDays > 1)
+        {
+            return $"{diff.TotalDays:0} days";
+        }
+        else if (diff.TotalHours > 1)
+        {
+            return $"{diff.TotalHours:0} hours";
+        }
+        else if (diff.TotalMinutes > 1)
+        {
+            return $"{diff.TotalMinutes:0} minutes";
+        }
+        else
+        {
+            return $"{diff.TotalSeconds:0} seconds";
+        }
+
     }
 }

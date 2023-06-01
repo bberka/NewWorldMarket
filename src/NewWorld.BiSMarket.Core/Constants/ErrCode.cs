@@ -7,6 +7,20 @@ public enum ErrCode
     Exception,
     Fatal,
     InternalDbError,
-    
+    OcrReadError,
+    OcrPageCountError,
+    OcrRarityParseError,
+    OcrGearScoreParseError,
+    OcrItemTypeParseError,
+    OcrAttributeParseError,
+    OcrAttributeNotFound,
+    OcrAttributeCountInvalid,
+    OcrLevelRequirementNotFound,
+    OcrLevelRequirementParseError,
+    OcrTierNotFound,
+    OcrTierParseError,
+    OcrGemNotFound,
+    OcrPerkNotFound,
+
 
 }

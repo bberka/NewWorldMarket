@@ -22,7 +22,7 @@
             aria-controls="ex3-tabs-1"
             aria-selected="true">Sell Orders</a>
     </li>
-    <li class="nav-item" role="presentation">
+    @*<li class="nav-item" role="presentation">
         <a
             class="btn btn-tertiary w-100" 
             data-mdb-ripple-color="light"
@@ -33,7 +33,7 @@
             role="tab"
             aria-controls="ex3-tabs-2"
             aria-selected="false">Buy Orders</a>
-    </li>
+    </li>*@
     <li class="nav-item" role="presentation">
         <a
             class="btn btn-tertiary  w-100" 
@@ -85,6 +85,7 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
+                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -104,11 +105,12 @@
                 <tr>
                     <td>
                         <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
                             <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -117,7 +119,8 @@
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
-                    <td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>
+                    <td>@CommonLib.ConvertDateDiffAsReadableText(item.ExpirationDate, DateTime.Now)</td>
+                    @*<td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>*@
                     <td>
                         <div class="btn-group dropdown">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -155,6 +158,8 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
+                <th scope="col">Order Id</th>
+
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -173,11 +178,12 @@
                 <tr>
                     <td>
                         <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
                             <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -209,6 +215,7 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
+                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -226,11 +233,13 @@
                 <tr>
                     <td>
                         <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
                             <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                    <td>@item.ShortId</td>
+
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -259,6 +268,8 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
+                <th scope="col">Order Id</th>
+
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -277,11 +288,12 @@
                 <tr>
                     <td>
                         <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
                             <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -312,6 +324,7 @@
             <tr>
                 <th scope="col">Icon</th>
                 <th scope="col">Item Name</th>
+                <th scope="col">Order Id</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Region</th>
                 <th scope="col">World</th>
@@ -329,11 +342,12 @@
                 <tr>
                     <td>
                         <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" style="width: 50px; height: 50px;" data-image-guid="@item.ImageGuid"/>
+                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
                             <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                    <td>@item.ShortId</td>
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
