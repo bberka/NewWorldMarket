@@ -187,7 +187,7 @@
                             Clear Filter
                         </button>
                         <button type="button" class="btn btn-success btn-apply-filter-search" aria-expanded="false">
-                            SEARCH
+                            APPLY FILTER
                         </button>
 
                     </div>
@@ -207,7 +207,7 @@
                     <th scope="col">Attributes</th>
                     <th scope="col">Perks</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Delivery In</th>
+                    @*<th scope="col">Delivery In</th>*@
                     <th scope="col">Order Id</th>
 
                     @*<th scope="col">Actions</th>*@
@@ -231,7 +231,7 @@
                         <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                         <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                         <td>@item.Price.ConvertPriceToReadableString()</td>
-                        <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                        @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
                         <td>@item.ShortId</td>
 
                        @* <td>

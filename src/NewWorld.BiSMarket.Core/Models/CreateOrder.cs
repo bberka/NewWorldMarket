@@ -11,7 +11,7 @@ public class CreateOrder
     /// 0: Buy, 1: Sell
     /// </summary>
     public byte Type { get; set; }
-    public Item ItemData { get; set; }
+    public ItemV3 ItemData { get; set; }
 
 
 }

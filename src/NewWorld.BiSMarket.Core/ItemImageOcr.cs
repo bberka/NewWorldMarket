@@ -9,6 +9,11 @@ using static IronOcr.OcrResult;
 
 namespace NewWorld.BiSMarket.Core;
 
+#if OCR_v1
+
+
+
+[Obsolete]
 public class ItemImageOcr
 {
     /*
@@ -282,3 +287,5 @@ public class ItemImageOcr
 
 
 }
+
+#endif

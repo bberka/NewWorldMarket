@@ -28,14 +28,15 @@ public class OrderService : IOrderService
 
     public Result CreateSellOrder(CreateSellOrder request)
     {
-        if (request.EstimatedDeliveryTimeHour > ConstMgr.MaxDeliveryTime)
-        {
-            return Result.Warn($"Estimated delivery time cannot be more than {ConstMgr.MaxDeliveryTime} hours.");
-        }
-        if (request.EstimatedDeliveryTimeHour < 1)
-        {
-            return Result.Warn($"Estimated delivery time cannot be less than 1 hours.");
-        }
+        request.EstimatedDeliveryTimeHour = ConstMgr.MaxDeliveryTime;
+        //if (request.EstimatedDeliveryTimeHour > ConstMgr.MaxDeliveryTime)
+        //{
+        //    return Result.Warn($"Estimated delivery time cannot be more than {ConstMgr.MaxDeliveryTime} hours.");
+        //}
+        //if (request.EstimatedDeliveryTimeHour < 1)
+        //{
+        //    return Result.Warn($"Estimated delivery time cannot be less than 1 hours.");
+        //}
         if (request.Price < 1000)
         {
             return Result.Warn($"Price cannot be less than 1000 coins.");
@@ -77,17 +78,17 @@ public class OrderService : IOrderService
         var image = _unitOfWork.ImageRepository.GetById(request.ImageGuid);
         if (image == null)
             return Result.Warn("Image not found.");
-        var itemData = image.OcrItemDataResult.FromJsonString<Item>();
+        var itemData = image.OcrItemDataResult.FromJsonString<ItemV3>();
         if (itemData == null)
             return Result.Warn("Item data not found.");
         if(itemData.ItemType == -1) itemData.ItemType = request.ItemType;
         if(itemData.LevelRequirement == -1) itemData.LevelRequirement = request.LevelRequirement;
         if(itemData.Tier == -1) itemData.Tier = request.Tier;
         if(itemData.Rarity == -1) itemData.Rarity = request.Rarity;
-        if(itemData.Perks == string.Empty) itemData.Perks = request.Perks;
-        if(itemData.Attributes == string.Empty) itemData.Attributes = request.Attributes;
+        //if(itemData.PerkString == string.Empty) itemData.PerkString = request.Perks;
+        //if(itemData.AttributeString == string.Empty) itemData.Attributes = request.Attributes;
         if(itemData.GemId == -1) itemData.GemId = request.GemId;
-        itemData.IsGemChangeable = request.IsGemChangeable;
+        //itemData.IsGemChangeable = request.IsGemChangeable;
         if(itemData.IsNamed == null) itemData.IsNamed = request.IsNamed;
         if(itemData.GearScore == -1) itemData.GearScore = request.GearScore;
         
@@ -107,21 +108,21 @@ public class OrderService : IOrderService
             RegisterDate = DateTime.Now,
             IsNamed = itemData.IsNamed ?? false,
             GemId = itemData.GemId,
-            Attributes = itemData.Attributes,
+            Attributes = itemData.AttributeString,
             CancelledDate = null,
             CompletedDate = null,
             ImageGuid = request.ImageGuid,
             EstimatedDeliveryTimeHour = request.EstimatedDeliveryTimeHour,
             ExpirationDate = DateTime.Now.AddDays(14),
             GearScore = itemData.GearScore,
-            IsGemChangeable = itemData.IsGemChangeable,
+            IsGemChangeable = true,
             IsValid = true,
             ItemType = itemData.ItemType,
             LastUpdateDate = null,
             LevelRequirement = itemData.LevelRequirement,
             Tier = itemData.Tier,
             Rarity = itemData.Rarity,
-            Perks = itemData.Perks,
+            Perks = itemData.PerkString,
             IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
             ShortId = ShortId.Generate(new GenerationOptions(true,false,8))
         };
@@ -358,7 +359,7 @@ public class OrderService : IOrderService
         //var test = queryable.ToList();
         if (isValidAttr)
         {
-            queryable = queryable.Where(x => x.Attributes.Contains(attr + ":"));
+            queryable = queryable.Where(x => x.Attributes.Contains(attr.ToString()));
         }
         
 
@@ -372,7 +373,6 @@ public class OrderService : IOrderService
             queryable = queryable.Where(x => x.Perks.Contains(perk2.ToString()));
 
         }
-
         if (isValidPerk3)
         {
 
@@ -421,21 +421,21 @@ public class OrderService : IOrderService
             RegisterDate = DateTime.Now,
             IsNamed = request.ItemData.IsNamed ?? false,
             GemId = request.ItemData.GemId,
-            Attributes = request.ItemData.Attributes,
+            Attributes = request.ItemData.AttributeString,
             CancelledDate = null,
             CompletedDate = null,
             ImageGuid = request.ImageGuid,
             EstimatedDeliveryTimeHour = request.EstimatedDeliveryTimeHour,
             ExpirationDate = DateTime.Now.AddDays(14),
             GearScore = request.ItemData.GearScore,
-            IsGemChangeable = request.ItemData.IsGemChangeable,
+            IsGemChangeable = true,
             IsValid = true,
             ItemType = request.ItemData.ItemType,
             LastUpdateDate = null,
             LevelRequirement = request.ItemData.LevelRequirement,
             Tier = request.ItemData.LevelRequirement,
             Rarity = request.ItemData.LevelRequirement,
-            Perks = request.ItemData.Perks,
+            Perks = request.ItemData.PerkString,
             
         };
 

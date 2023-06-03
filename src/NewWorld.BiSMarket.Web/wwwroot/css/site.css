@@ -129,3 +129,26 @@ ul {
     background: rgb(80,85,86) !important;
     color: wheat !important;
 }
+
+
+
+.dataTables_info {
+    color: white !important;
+}
+.dataTables_filter {
+    color: white !important;
+}
+.dataTables_length {
+    color: white !important;
+}
+
+.dataTables_paginate {
+    color: white !important;
+}
+.paginate_button {
+    color: white !important;
+}
+
+.dataTables_length > label > select > option {
+    background: black;
+}

@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 using NewWorld.BiSMarket.Core.Constants;
+using Image = System.Drawing.Image;
 
 namespace NewWorld.BiSMarket.Core;
 
@@ -63,6 +65,19 @@ public static class CommonLib
         }
         return sb.ToString();
     }
+
+    public static string RemoveLetters(this string str)
+    {
+        var sb = new StringBuilder();
+        foreach (var c in str)
+        {
+            if (!char.IsLetter(c))
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
+    }
     public static string RemoveWhitespace(this string str)
     {
         var sb = new StringBuilder();
@@ -96,5 +111,70 @@ public static class CommonLib
             return $"{diff.TotalSeconds:0} seconds";
         }
 
+    }
+
+    public static string SeparateWordsAndRemoveIfFirstWordIsShort(this string text, byte checkNum)
+    {
+        var split = text.Split(' ');
+        var first = split[0];
+        if (first.Length < checkNum)
+        {
+            return text.Replace(first, "");
+        }
+        return text;
+    }
+
+    public static string FixGemNameText(this string text)
+    {
+        var split = text.Split(' ');
+        var last = split[^1];
+        var fixedLast = last
+                .Replace("I", "")
+                .Replace("II", "")
+                .Replace("III", "")
+                .Replace("IV", "")
+                .Replace("l", "")
+                .Replace("ll", "")
+                .Replace("lll", "")
+                .Replace("lV", "")
+            ;
+        return text.Replace(last, fixedLast);
+
+    }
+    public static byte[] ResizeImageWidth(byte[] imageBytes, int newWidth, out int imageHeight)
+    {
+        // Create a MemoryStream from the image byte array
+        using MemoryStream imageStream = new MemoryStream(imageBytes);
+        // Create an Image object from the MemoryStream
+        using Image originalImage = Image.FromStream(imageStream);
+        // Get the original width and height of the image
+        int width = originalImage.Width;
+        var height = originalImage.Height;
+
+        // Calculate the aspect ratio of the image
+        double aspectRatio = (double)width / height;
+
+        // Calculate the new height based on the new width and aspect ratio
+        imageHeight = (int)(newWidth / aspectRatio);
+
+        // Create a new Bitmap object with the new dimensions
+        using Bitmap resizedImage = new Bitmap(newWidth, imageHeight);
+        // Create a Graphics object from the resized image
+        using Graphics graphics = Graphics.FromImage(resizedImage);
+        // Set the interpolation mode to high quality bicubic
+        graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+        // Draw the original image onto the resized image
+        graphics.DrawImage(originalImage, 0, 0, newWidth, imageHeight);
+
+        // Create a MemoryStream to store the resized image
+        using MemoryStream resizedImageStream = new MemoryStream();
+        // Save the resized image to the MemoryStream in JPEG format
+        resizedImage.Save(resizedImageStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+        // Get the resized image data as a byte array
+        byte[] resizedImageBytes = resizedImageStream.ToArray();
+
+        return resizedImageBytes;
     }
 }

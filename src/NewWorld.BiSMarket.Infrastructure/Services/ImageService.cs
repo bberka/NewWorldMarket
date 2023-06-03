@@ -44,23 +44,11 @@ public class ImageService : IImageService
         using var ms = new MemoryStream();
         file.CopyTo(ms);
         var fileBytes = ms.ToArray();
-        var ocr = ItemImageOcrV2.Create(fileBytes);
+        var ocr = ItemImageOcrV3.Create(fileBytes);
         var readResult = ocr.Read();
         if (!readResult.IsSuccess)
         {
-            if (readResult.Errors.Count < 7)
-            {
-                var secondTry = ItemImageOcrV2.CreateForSecondTry(fileBytes);
-                readResult = secondTry.Read();
-                if (!readResult.IsSuccess)
-                {
-                    return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
-                }
-            }
-            else
-            {
-                return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
-            }
+            return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
 
         }
         //var bmpImage = new Bitmap(ms);
@@ -72,14 +60,14 @@ public class ImageService : IImageService
         var dbImage = new Image
         {
             Guid = Guid.NewGuid(),
-            Bytes = readResult.ItemImageData.FullImageBytes,
+            Bytes = readResult.Data.FullImageBytes,
             RegisterDate = DateTime.Now,
             ContentType = file.ContentType,
             Name = file.FileName,
-            OcrTextResult = readResult.Pages.ToJsonString(),
-            OcrItemDataResult = readResult.ItemOcrReadData.ToJsonString(),
+            OcrTextResult = readResult.Data.OcrTextResult,
+            OcrItemDataResult = readResult.Data.Item.ToJsonString(),
             UserGuid = userGuid,
-            SmallIconBytes = readResult.ItemImageData.IconImageBytes,
+            SmallIconBytes = readResult.Data.IconBytes,
         };
         _unitOfWork.ImageRepository.Insert(dbImage);
         var saveResult = _unitOfWork.Save();
@@ -90,13 +78,13 @@ public class ImageService : IImageService
         return dbImage.Guid;
     }
 
-    public ResultData<Item> GetItemData(Guid imageGuid)
+    public ResultData<ItemV3> GetItemData(Guid imageGuid)
     {
         var image = _unitOfWork.ImageRepository.GetById(imageGuid);
         if (image is null)
         {
             return Result.Error("Image not found");
         }
-        return image.OcrItemDataResult.FromJsonString<Item>();
+        return image.OcrItemDataResult.FromJsonString<ItemV3>();
     }
 }

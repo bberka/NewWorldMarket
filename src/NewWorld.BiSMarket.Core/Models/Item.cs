@@ -3,6 +3,11 @@ using EasMe;
 
 namespace NewWorld.BiSMarket.Core.Models;
 
+#if OCR_v1 || OCR_v2
+
+
+
+
 public class Item
 {
     public string ItemName { get; set; } = string.Empty;
@@ -35,3 +40,4 @@ public class Item
     public string UniqueHash => $"{ItemType}|{Attributes}|{Perks}".XXHashAsHexString();
 
 }
+#endif

@@ -68,7 +68,7 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             {
                 return RedirectToAction("UploadItemImage", "Order");
             }
-            var item = image.Data?.OcrItemDataResult.FromJsonString<Item>();
+            var item = image.Data?.OcrItemDataResult.FromJsonString<ItemV3>();
             if (item is null)
             {
                 return RedirectToAction("UploadItemImage", "Order");
@@ -78,15 +78,15 @@ namespace NewWorld.BiSMarket.Web.Controllers.PageControllers
             {
                 CharactersListForView = characters.Data ?? new(),
                 GearScore = item.GearScore,
-                Attributes = item.Attributes,
+                Attributes = item.AttributeString,
                 IsNamed = item.IsNamed ?? false,
                 ItemType = item.ItemType,
                 LevelRequirement = item.LevelRequirement,
-                IsGemChangeable = item.IsGemChangeable,
+                IsGemChangeable = true,
                 GemId = item.GemId,
                 Rarity = item.Rarity,
                 Tier = item.Tier,
-                Perks = item.Perks,
+                Perks = item.PerkString,
                 UserGuid = user.Guid,
                 ImageGuid = imageGuid,
                 ImageBytesBase64String = image.Data.Bytes.ToBase64String()

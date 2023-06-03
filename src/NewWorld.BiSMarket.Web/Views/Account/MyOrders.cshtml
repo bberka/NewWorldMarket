@@ -12,7 +12,7 @@
 <ul class="nav nav-tabs nav-justified mb-3 border border-secondary " id="ex1" role="tablist">
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary w-100 active" 
+            class="btn btn-tertiary w-75 active" 
             style="height: 40px"
             data-mdb-ripple-color="light"
             id="ex3-tab-1"
@@ -36,7 +36,7 @@
     </li>*@
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-100" 
+            class="btn btn-tertiary  w-75" 
             data-mdb-ripple-color="light"
             style="height: 40px"
             id="ex3-tab-3"
@@ -48,7 +48,7 @@
     </li>
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-100" 
+            class="btn btn-tertiary  w-75" 
             data-mdb-ripple-color="light"
             style="height: 40px"
             id="ex4-tab-4"
@@ -60,7 +60,7 @@
     </li>
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-100" 
+            class="btn btn-tertiary  w-75" 
             style="height: 40px"
             data-mdb-ripple-color="light"
             id="ex4-tab-5"
@@ -92,7 +92,7 @@
                 <th scope="col">Attributes</th>
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
-                <th scope="col">Delivery In</th>
+                @*<th scope="col">Delivery In</th>*@
                 <th scope="col">Expire In</th>
                 <th scope="col">Order Id</th>
 
@@ -118,7 +118,7 @@
                     <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
-                    <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                    @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
                     <td>@CommonLib.ConvertDateDiffAsReadableText(item.ExpirationDate, DateTime.Now)</td>
                     <td>@item.ShortId</td>
 
@@ -133,7 +133,7 @@
                                     <a class="dropdown-item dropdown-item-custom btn-complete-order text-success" data-guid="@item.Guid">Mark As Sold</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-update-order text-info" data-guid="@item.Guid">Update</a>
+                                    <a class="dropdown-item dropdown-item-custom btn-update-order text-info disabled" data-guid="@item.Guid">Update</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -168,7 +168,7 @@
                 <th scope="col">Attributes</th>
                 <th scope="col">Perks</th>
                 <th scope="col">Price</th>
-                <th scope="col">Delivery In</th>
+                @*<th scope="col">Delivery In</th>*@
                 <th scope="col">Order Id</th>
 
                 <th scope="col">Actions</th>
@@ -193,7 +193,7 @@
                     <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                     <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                     <td>@item.Price.ConvertPriceToReadableString()</td>
-                    <td>@item.EstimatedDeliveryTimeHour hour(s)</td>
+                    @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
                     <td>@item.ShortId</td>
 
                     <td>

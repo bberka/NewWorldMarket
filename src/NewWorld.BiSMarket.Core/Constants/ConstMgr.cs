@@ -48,7 +48,7 @@ public static class ConstMgr
     public const int VerifiedOrderRequestCountLimit = 5;
     public const int PremiumOrderRequestCountLimit = 10;
 
-    public const int DefaultCharacterLimit = 2;
+    public const int DefaultCharacterLimit = 1;
     public const int PremiumCharacterLimit = 5;
 
     public const float MaxPriceLimit = 500_000.000F;

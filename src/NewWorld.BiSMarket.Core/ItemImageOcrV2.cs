@@ -11,9 +11,16 @@ using Image = System.Drawing.Image;
 using Rectangle = System.Drawing.Rectangle;
 
 namespace NewWorld.BiSMarket.Core;
+
+#if OCR_v2
+
+
+
 /// <summary>
 /// Resizing and parsing full image to separate images, each image will be read separately by OCR
 /// </summary>
+///
+[Obsolete]
 public class ItemImageOcrV2
 {
 
@@ -253,30 +260,8 @@ public class ItemImageOcrV2
             item.ItemType = (int)itemType;
         }
 
-        //GS READ
-        var fixedGearScore = gearScore.Text.RemoveSpecialCharacters().RemoveWhitespace().RemoveLineEndings();
-        var gearScoreParseResult = int.TryParse(fixedGearScore, out int itemGearScore);
-        if (!gearScoreParseResult)
-        {
-            errorList.Add(ErrCode.OcrGearScoreParseError.ToMessage());
-        }
-        else
-        {
-            item.GearScore = itemGearScore;
-        }
-        //RARITY AND NAMED READ
-        var fixedRarity = rarity.Text.RemoveSpecialCharacters();
-        item.IsNamed = fixedRarity.Contains("Named");
-        fixedRarity = fixedRarity.Replace("Named", "").RemoveWhitespace().RemoveLineEndings();
-        var rarityParseResult = Enum.TryParse(fixedRarity, out RarityType itemRarity);
-        if (!rarityParseResult)
-        {
-            errorList.Add(ErrCode.OcrRarityParseError.ToMessage());
-        }
-        else
-        {
-            item.Rarity = (int)itemRarity;
-        }
+        
+        
         //ATTRIBUTE READ
         var listAttributes = new List<string>();
         var attributeLinesNotProcessed = rest.Lines
@@ -423,6 +408,44 @@ public class ItemImageOcrV2
         {
             item.Perks = string.Join(",", perkNoList);
         }
+        //GS READ
+        var fixedGearScore = gearScore.Text.RemoveSpecialCharacters().RemoveWhitespace().RemoveLineEndings();
+        var gearScoreParseResult = int.TryParse(fixedGearScore, out int itemGearScore);
+        if (!gearScoreParseResult)
+        {
+            if (perkNoList.Count == 3)
+            {
+                item.GearScore = 600;
+            }
+            else
+            {
+                errorList.Add(ErrCode.OcrGearScoreParseError.ToMessage());
+            }
+        }
+        else
+        {
+            item.GearScore = itemGearScore;
+        }
+        //RARITY AND NAMED READ
+        var fixedRarity = rarity.Text.RemoveSpecialCharacters();
+        item.IsNamed = fixedRarity.Contains("Named");
+        fixedRarity = fixedRarity.Replace("Named", "").RemoveWhitespace().RemoveLineEndings();
+        var rarityParseResult = Enum.TryParse(fixedRarity, out RarityType itemRarity);
+        if (!rarityParseResult)
+        {
+            if (perkNoList.Count == 3)
+            {
+                item.Rarity = (int)RarityType.Legendary;
+            }
+            else
+            {
+                errorList.Add(ErrCode.OcrRarityParseError.ToMessage());
+            }
+        }
+        else
+        {
+            item.Rarity = (int)itemRarity;
+        }
 
         var pageDictionary = result.Pages.ToDictionary(x => x.PageNumber, x => x.Text);
         pageDictionary.Remove(0);
@@ -455,3 +478,5 @@ public class ItemImageOcrV2
 
 
 }
+
+#endif

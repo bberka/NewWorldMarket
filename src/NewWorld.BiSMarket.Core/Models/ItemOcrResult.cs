@@ -15,7 +15,7 @@ public class ItemOcrResult
         };
     }
 
-    public static ItemOcrResult SuccessWithErrors(ItemImageData image, Item readData, Dictionary<int, string> pages,
+    public static ItemOcrResult SuccessWithErrors(ItemImageData image, ItemV3 readData, Dictionary<int, string> pages,
         params string[] errors)
     {
         if (errors.Length > 4)
@@ -31,7 +31,7 @@ public class ItemOcrResult
             Errors = errors
         };
     }
-    public static ItemOcrResult Success(ItemImageData image, Item readData, Dictionary<int, string> pages)
+    public static ItemOcrResult Success(ItemImageData image, ItemV3 readData, Dictionary<int, string> pages)
     {
         return new ItemOcrResult
         {
@@ -45,6 +45,6 @@ public class ItemOcrResult
     public bool IsSuccess { get; init; } 
     public IReadOnlyCollection<string> Errors { get; init; }
     public ItemImageData ItemImageData { get; init; }
-    public Item ItemOcrReadData { get; init; }
+    public ItemV3 ItemOcrReadData { get; init; }
     public Dictionary<int,string> Pages { get; init; }
 }

@@ -8,6 +8,6 @@ public interface IImageService
 {
     ResultData<Entity.Image> GetImage(Guid guid);
     ResultData<Guid> UploadItemImageAndGetImageGuid(Guid userGuid,IFormFile file);
-    ResultData<Item> GetItemData(Guid imageGuid);
+    ResultData<ItemV3> GetItemData(Guid imageGuid);
 
 }

@@ -60,11 +60,11 @@
                     <input asp-for="Price" class="form-control"/>
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
-                <div class="form-group py-2">
+                @*<div class="form-group py-2">
                     <label asp-for="EstimatedDeliveryTimeHour" class="control-label"></label>
                     <input asp-for="EstimatedDeliveryTimeHour" class="form-control"/>
                     <span asp-validation-for="EstimatedDeliveryTimeHour" class="text-danger"></span>
-                </div>
+                </div>*@
                 <div class="form-group py-2
 @if (isReadItemType) { <text>d-none</text>}
 ">
@@ -94,7 +94,7 @@
                     <span asp-validation-for="Perks" class="text-danger"></span>
                 </div>
 
-                <div class="form-group py-2
+                @*<div class="form-group py-2
 @if (isReadGems) { <text>d-none</text>}
 ">
                     <label asp-for="GemId" class="control-label"></label>
@@ -107,7 +107,7 @@
                         }
                     </select>
                     <span asp-validation-for="GemId" class="text-danger"></span>
-                </div>
+                </div>*@
 
 
                 <div class="form-group form-check">
@@ -115,14 +115,14 @@
                         <input class="form-check-input" asp-for="IsGemChangeable"/> @Html.DisplayNameFor(model => model.IsGemChangeable)
                     </label>
                 </div>
-                @if (Model.IsNamed == null)
+                @*@if (Model.IsNamed == null)
                 {
                     <div class="form-group form-check">
                         <label class="form-check-label">
                             <input class="form-check-input" asp-for="IsNamed"/> @Html.DisplayNameFor(model => model.IsNamed)
                         </label>
                     </div>
-                }
+                }*@
 
 
 
@@ -140,7 +140,7 @@
                     <span asp-validation-for="Rarity" class="text-danger"></span>
                 </div>
 
-                <div class="form-group py-2
+                @*<div class="form-group py-2
 @if (isReadTier) { <text>d-none</text>}
 ">
                     <label asp-for="Tier" class="control-label"></label>
@@ -151,7 +151,7 @@
                         }
                     </select>
                     <span asp-validation-for="Tier" class="text-danger"></span>
-                </div>
+                </div>*@
 
 
 
@@ -163,13 +163,13 @@
                     <span asp-validation-for="GearScore" class="text-danger"></span>
                 </div>
 
-                <div class="form-group py-2 
+                @*<div class="form-group py-2 
 @if (isReadLevelReq) { <text>d-none</text>}
                     ">
                     <label asp-for="LevelRequirement" class="control-label"></label>
                     <input asp-for="LevelRequirement" readonly class="form-control"/>
                     <span asp-validation-for="LevelRequirement" class="text-danger"></span>
-                </div>
+                </div>*@
 
                 <div class="form-group py-2">
                     <label asp-for="UniqueHash" class="control-label"></label>
@@ -188,18 +188,18 @@
                 <label asp-for="ItemType" class="control-label"></label>
                 <input value="@(((ItemType)Model.ItemType).ToString().Replace("_", " "))" readonly class="form-control"/>
             </div>
-            <div class="form-group py-2">
+            @*<div class="form-group py-2">
                 <label asp-for="GemId" class="control-label"></label>
                 <input value="@(GemMgr.This.Get(Model.GemId)?.EnglishName)" readonly class="form-control"/>
-            </div>
+            </div>*@
             <div class="form-group py-2">
                 <label asp-for="GearScore" class="control-label"></label>
                 <input value="@if (Model.GearScore == -1){<text>Could not be read</text>}else {@Model.GearScore}" readonly class="form-control"/>
             </div>
-            <div class="form-group py-2">
+            @*<div class="form-group py-2">
                 <label asp-for="LevelRequirement" class="control-label"></label>
                 <input value="@Model.LevelRequirement" readonly class="form-control"/>
-            </div>
+            </div>*@
             @*<div class="form-group py-2">
                 <label asp-for="IsNamed" class="control-label"></label>
                 <input value="@Model.IsNamed" readonly class="form-control"/>
@@ -209,10 +209,10 @@
                 <label asp-for="Rarity" class="control-label"></label>
                 <input value="@(((RarityType)Model.Rarity).ToString())" readonly class="form-control"/>
             </div>
-            <div class="form-group py-2">
+            @*<div class="form-group py-2">
                 <label asp-for="Tier" class="control-label"></label>
                 <input value="@(((TierType)Model.Tier).ToString())" readonly class="form-control"/>
-            </div>
+            </div>*@
             <div class="form-group py-2">
                 <label asp-for="Perks" class="control-label"></label>
                 <textarea readonly class="form-control">@PerkMgr.This.ParsePerkFormattedText(Model.Perks)</textarea>

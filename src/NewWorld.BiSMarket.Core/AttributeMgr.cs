@@ -41,16 +41,9 @@ public class AttributeMgr
         var sb = new StringBuilder();
         foreach (var s in split)
         {
-            var split2 = s.Split(":");
-            if (split2.Length == 0)
-            {
-                continue;
-            }
-
-            var attributeType = int.Parse(split2[0]);
-            var attributeValue = int.Parse(split2[1]);
-            var typeAsShortName = AttributeShortList[AttributeList[attributeType]];
-            sb.Append($"+{attributeValue} {typeAsShortName}");
+            var attributeType = int.Parse(s);
+            var typeName = AttributeList[attributeType];
+            sb.Append(typeName);
             sb.Append("<br/>");
         }
         return sb.ToString();
@@ -64,16 +57,9 @@ public class AttributeMgr
         var sb = new StringBuilder();
         foreach (var s in split)
         {
-            var split2 = s.Split(":");
-            if (split2.Length == 0)
-            {
-                continue;
-            }
-
-            var attributeType = int.Parse(split2[0]);
-            var attributeValue = int.Parse(split2[1]);
-            var typeAsShortName = AttributeShortList[AttributeList[attributeType]];
-            sb.Append($"+{attributeValue} {typeAsShortName}");
+            var attributeType = int.Parse(s);
+            var typeName = AttributeList[attributeType];
+            sb.Append(typeName);
             sb.Append(Environment.NewLine);
         }
         return sb.ToString();
