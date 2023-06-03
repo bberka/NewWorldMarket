@@ -42,6 +42,7 @@ public class AttributeMgr
         foreach (var s in split)
         {
             var attributeType = int.Parse(s);
+            if (attributeType < 0) continue;
             var typeName = AttributeList[attributeType];
             sb.Append(typeName);
             sb.Append("<br/>");
@@ -58,6 +59,7 @@ public class AttributeMgr
         foreach (var s in split)
         {
             var attributeType = int.Parse(s);
+            if(attributeType < 0) continue;
             var typeName = AttributeList[attributeType];
             sb.Append(typeName);
             sb.Append(Environment.NewLine);

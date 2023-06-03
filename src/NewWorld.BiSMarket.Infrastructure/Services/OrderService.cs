@@ -29,6 +29,7 @@ public class OrderService : IOrderService
     public Result CreateSellOrder(CreateSellOrder request)
     {
         request.EstimatedDeliveryTimeHour = ConstMgr.MaxDeliveryTime;
+        request.IsGemChangeable = true;
         //if (request.EstimatedDeliveryTimeHour > ConstMgr.MaxDeliveryTime)
         //{
         //    return Result.Warn($"Estimated delivery time cannot be more than {ConstMgr.MaxDeliveryTime} hours.");

@@ -62,11 +62,9 @@ public class PerkMgr
         foreach (var s in split)
         {
             var perkId = int.Parse(s);
+            if (perkId < 0) continue;
             var perk = GetPerk(perkId);
-            if (perk == null)
-            {
-                continue;
-            }
+            if (perk == null) continue;
             sb.Append($"{perk.EnglishName}");
             sb.Append("<br/>");
         }
@@ -80,11 +78,9 @@ public class PerkMgr
         foreach (var s in split)
         {
             var perkId = int.Parse(s);
+            if (perkId < 0) continue;
             var perk = GetPerk(perkId);
-            if (perk == null)
-            {
-                continue;
-            }
+            if (perk == null) continue;
             sb.Append($"{perk.EnglishName}");
             sb.Append(Environment.NewLine);
         }
