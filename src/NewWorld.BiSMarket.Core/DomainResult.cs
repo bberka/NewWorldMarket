@@ -12,6 +12,7 @@ public static class DomainResult
     {
 
         public static Result ErrNotFound => Result.Error("Order not found");
+        public static Result ErrNotExpired => Result.Error("Order must be expired");
         public static Result ErrInvalid => Result.Error("Order is invalid");
         public static Result ErrCompleted => Result.Error("Order is completed");
         public static Result ErrExpired => Result.Error("Order is expired");

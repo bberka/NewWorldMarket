@@ -75,7 +75,7 @@ public class OrderService : IOrderService
                         && !x.CompletedDate.HasValue 
                         && x.ExpirationDate > DateTime.Now);
         if (currentOrders >= ConstMgr.DefaultOrderCountLimit)
-            return Result.Warn($"You can only list {currentOrders} items at a time.");
+            return Result.Warn($"You can only list {ConstMgr.DefaultOrderCountLimit} items at a time.");
         var image = _unitOfWork.ImageRepository.GetById(request.ImageGuid);
         if (image == null)
             return Result.Warn("Image not found.");
@@ -138,6 +138,58 @@ public class OrderService : IOrderService
         throw new NotImplementedException();
     }
 
+    public Result CompleteOrder(Guid userGuid, Guid orderGuid)
+    {
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
+        if (order == null)
+            return DomainResult.Order.ErrNotFound;
+        var isOwner = order.Character.UserGuid == userGuid;
+        if (!isOwner)
+            return DomainResult.Unauthorized;
+        var isCompleted = order.CompletedDate.HasValue;
+        if (isCompleted)
+            return DomainResult.Order.ErrCompleted;
+        var isCancelled = order.CancelledDate.HasValue;
+        if (isCancelled)
+            return DomainResult.Order.ErrCancelled;
+        var isExpired = order.ExpirationDate < DateTime.Now;
+        if (isExpired)
+            return DomainResult.Order.ErrExpired;
+        order.CompletedDate = DateTime.Now;
+        _unitOfWork.OrderRepository.Update(order);
+        var saveResult = _unitOfWork.Save();
+        return saveResult;
+    }
+    public Result UpdateOrderPrice(Guid userGuid, Guid orderGuid, float price)
+    {
+        if (price < 1000)
+        {
+            return Result.Warn($"Price cannot be less than 1000 coins.");
+        }
+        if (price > ConstMgr.MaxPriceLimit)
+        {
+            return Result.Warn($"Price cannot be more than {ConstMgr.MaxPriceLimit} coins.");
+        }
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
+        if (order == null)
+            return DomainResult.Order.ErrNotFound;
+        var isOwner = order.Character.UserGuid == userGuid;
+        if (!isOwner)
+            return DomainResult.Unauthorized;
+        var isCompleted = order.CompletedDate.HasValue;
+        if (isCompleted)
+            return DomainResult.Order.ErrCompleted;
+        var isCancelled = order.CancelledDate.HasValue;
+        if (isCancelled)
+            return DomainResult.Order.ErrCancelled;
+        var isExpired = order.ExpirationDate < DateTime.Now;
+        if (isExpired)
+            return DomainResult.Order.ErrExpired;
+        order.Price = price;
+        _unitOfWork.OrderRepository.Update(order);
+        var saveResult = _unitOfWork.Save();
+        return saveResult;
+    }
     public Result CancelOrder(Guid userGuid, Guid orderGuid)
     {
         var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid,"Character");
@@ -163,7 +215,7 @@ public class OrderService : IOrderService
 
     public Result ActivateExpiredOrder(Guid userGuid, Guid orderRequestGuid)
     {
-        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid);
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid,"Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
         var isOwner = order.Character.UserGuid == userGuid;
@@ -176,8 +228,26 @@ public class OrderService : IOrderService
         if (isCancelled)
             return DomainResult.Order.ErrCancelled;
         var isExpired = order.ExpirationDate < DateTime.Now;
-        if (isExpired)
-            return DomainResult.Order.ErrExpired;
+        if (!isExpired)
+            return DomainResult.Order.ErrNotExpired;
+        var characterList = _unitOfWork.CharacterRepository.Get(x => x.UserGuid == userGuid).Select(x => new
+        {
+            Guid = x.Guid,
+            Region = x.Region,
+            Server = x.Server,
+            Name = x.Name,
+        });
+        var character = characterList.FirstOrDefault(x => x.Guid == order.CharacterGuid);
+        if (character == null)
+            return Result.Warn("Character not found.");
+        var charGuidList = characterList.Select(x => x.Guid).ToList();
+        var currentOrders = _unitOfWork.OrderRepository
+            .Count(x => charGuidList.Contains(x.CharacterGuid)
+                        && !x.CancelledDate.HasValue
+                        && !x.CompletedDate.HasValue
+                        && x.ExpirationDate > DateTime.Now);
+        if (currentOrders >= ConstMgr.DefaultOrderCountLimit)
+            return Result.Warn($"You can only list {ConstMgr.DefaultOrderCountLimit} items at a time.");
         order.ExpirationDate = DateTime.Now.AddHours(ConstMgr.DefaultExpirationTimeInHours);
         _unitOfWork.OrderRepository.Update(order);
         var saveResult = _unitOfWork.Save();
@@ -300,10 +370,13 @@ public class OrderService : IOrderService
         var orderData = new OrderData()
         {
             ActiveBuyOrderList = allList.Where(x => x.Type == (int)OrderType.Buy && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now).ToList(),
-            ActiveSellOrderList = allList.Where(x => x.Type == (int)OrderType.Sell && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now).ToList(),
+            ActiveSellOrderList = allList.Where(x => x.Type == (int)OrderType.Sell 
+            && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now).ToList(),
             CancelledOrderList = allList.Where(x => x.CancelledDate.HasValue).ToList(),
             CompletedOrderList = allList.Where(x => x.CompletedDate.HasValue).ToList(),
-            ExpiredOrderList = allList.Where(x => x.ExpirationDate < DateTime.Now).ToList()
+            ExpiredOrderList = allList.Where(x => x.ExpirationDate < DateTime.Now 
+                                                  && !x.CompletedDate.HasValue 
+                                                  && !x.CancelledDate.HasValue).ToList()
         };
         return orderData;
 
@@ -448,12 +521,7 @@ public class OrderService : IOrderService
         //    return saveResult;
         //return Result.Success();
     }
-
-
-
     
-
-
 
     public Result CreateOrderRequest(CreateOrderRequest request)
     {

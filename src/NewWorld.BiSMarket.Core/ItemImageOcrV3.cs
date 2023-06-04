@@ -267,7 +267,18 @@ public class ItemImageOcrV3
         }
         else
         {
+            if (itemGearScore > 600)
+            {
+                itemGearScore = 600;
+            }
+            else if (itemGearScore < 500)
+            {
+                var gsAsStr = itemGearScore.ToString();
+                var changeFirstDigitTo5 = gsAsStr.Replace(gsAsStr[0], '5');
+                itemGearScore = int.Parse(changeFirstDigitTo5);
+            }
             item.GearScore = itemGearScore;
+
         }
 
         #endregion

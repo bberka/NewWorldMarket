@@ -87,7 +87,7 @@ public class UserService : IUserService
             .Any(x => x.Name == request.Name && x.Server == request.Server && x.Region == request.Region);
         if (sameCharExist)
         {
-            return Result.Warn("Same character already exists in our data, if you are the owner of this character contact us to verify your account.");
+            return Result.Warn("Same character already exists in our data, if you are the owner of this character contact us.");
         }
         var characterCount = _unitOfWork.CharacterRepository.Count(x => x.UserGuid == request.UserGuid && !x.DeletedDate.HasValue);
         if (characterCount >= ConstMgr.DefaultCharacterLimit)
@@ -120,10 +120,11 @@ public class UserService : IUserService
         }
         var isOwner = character.UserGuid == userGuid;
         if (!isOwner)
-        {
-            return Result.Unauthorized();
-        }
-        var orderList = _unitOfWork.OrderRepository.Get(x => x.CharacterGuid == characterGuid && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue).ToList();
+            return DomainResult.Unauthorized;
+        var orderList = _unitOfWork.OrderRepository.Get(x => x.CharacterGuid == characterGuid 
+            && !x.CancelledDate.HasValue 
+            && !x.CompletedDate.HasValue
+            && x.ExpirationDate > DateTime.Now).ToList();
         //invalidate orders
         if (orderList.Count > 0)
         {

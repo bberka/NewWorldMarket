@@ -35,6 +35,8 @@ public interface IOrderService
     Result CreateSellOrder(CreateSellOrder request);
     Result CreateBuyOrder(CreateBuyOrder request);
     Result CancelOrder(Guid userGuid, Guid orderGuid);
+    Result CompleteOrder(Guid userGuid, Guid orderGuid);
+    Result UpdateOrderPrice(Guid userGuid, Guid orderGuid, float price);
 
     Result ActivateExpiredOrder(Guid userGuid, Guid orderRequestGuid);
     Result CreateOrderRequest(CreateOrderRequest request);

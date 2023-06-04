@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using EasMe.Extensions;
 using EasMe.Logging;
+using EasMe.Result;
+using Microsoft.AspNetCore.Http;
 
 namespace NewWorld.BiSMarket.Web.Middleware
 {
@@ -31,6 +33,7 @@ namespace NewWorld.BiSMarket.Web.Middleware
             {
                 await _next(context);
             }
+
             var status = context.Response.StatusCode;
 			if (status == (int)HttpStatusCode.Unauthorized || status == (int)HttpStatusCode.Forbidden)
 			{
@@ -42,6 +45,15 @@ namespace NewWorld.BiSMarket.Web.Middleware
 				context.Response.Redirect("/" + context.Response.StatusCode);
 			}
 #endif
+            var isApiRequest = uri.Contains("/api/");
+            if (status >= 400 && isApiRequest)
+            {
+                context.Response.StatusCode = 200;
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(Result.Error("Status Code Error: " + status).ToJsonString());
+
+                //logger.Error($"[{status}] {uri}");
+            }
 		}
        
     }

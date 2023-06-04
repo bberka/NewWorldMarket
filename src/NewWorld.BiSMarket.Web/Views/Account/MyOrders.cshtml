@@ -130,16 +130,16 @@
                             </button>
                             <ul class="dropdown-menu bg-dark ">
                                 <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-complete-order text-success" data-guid="@item.Guid">Mark As Sold</a>
+                                    <a class="dropdown-item dropdown-item-custom btn-complete-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Mark As Sold</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-update-order text-info disabled" data-guid="@item.Guid">Update</a>
+                                    <a class="dropdown-item dropdown-item-custom btn-update-order text-info" data-order-price="@item.Price" data-order-id="@item.ShortId" data-guid="@item.Guid">Update Price</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-cancel-order text-danger" data-guid="@item.Guid">Cancel</a>
+                                    <a class="dropdown-item dropdown-item-custom btn-cancel-order text-danger" data-order-id="@item.ShortId" data-guid="@item.Guid">Cancel</a>
                                 </li>
                             </ul>
                         </div>
@@ -197,6 +197,7 @@
                     <td>@item.ShortId</td>
 
                     <td>
+
                         <a class="btn btn-danger">Cancel</a>
                     </td>
 
@@ -244,7 +245,6 @@
                         </div>
                     </td>
                     <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-
                     <td>@item.Character.Name</td>
                     <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                     <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
@@ -254,9 +254,7 @@
                     <td>@item.Price.ConvertPriceToReadableString()</td>
                     <td>@CommonLib.GetOrderTypeString(item.Type)</td>
                     <td>@item.ShortId</td>
-
                     <td>@item.CompletedDate</td>
-
                 </tr>
 
             }
@@ -315,7 +313,17 @@
                     <td>@item.ExpirationDate</td>
 
                     <td>
-                        <a class="btn btn-success">Relist</a>
+                        <div class="btn-group dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu bg-dark ">
+                                <li>
+                                    <a class="dropdown-item dropdown-item-custom btn-activate-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Activate</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
                     </td>
 
 
