@@ -5,8 +5,8 @@ namespace NewWorld.BiSMarket.Core.Entity;
 
 public class Image : IEntity
 {
-    [Key]
-    public Guid Guid { get; set; }
+    [Key] public Guid Guid { get; set; }
+
     public string Name { get; set; } = string.Empty;
     public string ContentType { get; set; } = string.Empty;
     public DateTime RegisterDate { get; set; } = DateTime.Now;
@@ -16,5 +16,4 @@ public class Image : IEntity
     public string OcrItemDataResult { get; set; } = string.Empty;
     public Guid UserGuid { get; set; }
     public User User { get; set; }
-
 }

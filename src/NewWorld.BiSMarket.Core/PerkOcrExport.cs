@@ -4,7 +4,7 @@ namespace NewWorld.BiSMarket.Core;
 
 public static class PerkOcrExport
 {
-    public static void Export(string folderPath,string exportTextFilePath)
+    public static void Export(string folderPath, string exportTextFilePath)
     {
         var list = new List<string>();
         var fileList = Directory.GetFiles(folderPath, "*.png", SearchOption.AllDirectories);
@@ -21,6 +21,7 @@ public static class PerkOcrExport
             var lines = result.Lines.Select(x => x.Text);
             list.AddRange(lines);
         }
+
         var distinct = list.Distinct().ToList();
         var text = string.Join(Environment.NewLine, distinct);
         File.WriteAllText(exportTextFilePath, text);

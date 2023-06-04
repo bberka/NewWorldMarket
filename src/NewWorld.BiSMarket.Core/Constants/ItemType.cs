@@ -36,6 +36,5 @@ public enum ItemType
     Earring,
     Tower_Shield,
     Round_Shield,
-    Kite_Shield,
-
+    Kite_Shield
 }

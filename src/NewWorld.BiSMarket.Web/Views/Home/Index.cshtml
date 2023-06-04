@@ -7,10 +7,10 @@
 
 
 <div class="main-container">
-                <h5 class="text-light text-center">SELL ORDERS</h5>
+<h5 class="text-light text-center">SELL ORDERS</h5>
 
 <div class="row">
-        @*<div class="col">
+@*<div class="col">
             <div class="text-light">
 
 
@@ -55,81 +55,79 @@
 
             </div>
         </div>*@
-        <div class="col col-xl-12 pt-2" id="item-container">
-            <div class="row">
-                <div class="d-flex flex-row bd-highlight mb-3">
-                    <div class="p-2 bd-highlight">
-                        <div class="btn-group dropdown " id="dd-rarity" data-selection-limit="1"> 
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-rarity" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Rarity
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                @foreach (var item in Enum.GetValues<RarityType>())
-                                {
-                                    <li>
-                                        <a class="dropdown-item dropdown-item-custom btn-filter-rarity" data-value="@((int)item)">@item.ToString()</a>
-                                    </li>
-                                }
+<div class="col col-xl-12 pt-2" id="item-container">
+<div class="row">
+    <div class="d-flex flex-row bd-highlight mb-3">
+        <div class="p-2 bd-highlight">
+            <div class="btn-group dropdown " id="dd-rarity" data-selection-limit="1">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-rarity" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Rarity
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    @foreach (var item in Enum.GetValues<RarityType>())
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom btn-filter-rarity" data-value="@((int)item)">@item.ToString()</a>
+                        </li>
+                    }
 
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="p-2 bd-highlight">
-                        <div class="btn-group dropdown " data-selection-limit="1" id="dd-item">
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-itemtype" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Item
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                <li>
-                                    <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
-                                </li>
-                                @foreach (var category in  CategoryMgr.This.Categories.GroupBy(x => x.CategoryType))
-                                {
-                                    var first = category.FirstOrDefault()!;
-                                    <li>
-                                        <a class="dropdown-item dropdown-item-custom disabled" style="background: black; color: gray !important" data-main-category-id="@((int)category.Key)">@first.CategoryTypeReadableString</a>
-                                    </li>
-                                    @foreach (var subCategory in category)
-                                    {
-                                        <li>
-                                            <a class="dropdown-item dropdown-item-custom btn-filter-itemtype" data-value="@((int)subCategory.ItemType)">&nbsp;&nbsp;@subCategory.ItemTypeReadableString</a>
-                                        </li>
-                                    }
-                                }
+                </ul>
+            </div>
+        </div>
+        <div class="p-2 bd-highlight">
+            <div class="btn-group dropdown " data-selection-limit="1" id="dd-item">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-itemtype" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Item
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    <li>
+                        <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                    </li>
+                    @foreach (var category in  CategoryMgr.This.Categories.GroupBy(x => x.CategoryType))
+                    {
+                        var first = category.FirstOrDefault()!;
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom disabled" style="background: black; color: gray !important" data-main-category-id="@((int)category.Key)">@first.CategoryTypeReadableString</a>
+                        </li>
+                        @foreach (var subCategory in category)
+                        {
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-filter-itemtype" data-value="@((int)subCategory.ItemType)">&nbsp;&nbsp;@subCategory.ItemTypeReadableString</a>
+                            </li>
+                        }
+                    }
 
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="p-2 bd-highlight" >
-                        <div class="btn-group dropdown " data-selection-limit="1" id="dd-server">
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-server" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Server
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                <li>
-                                    <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
-                                </li>
-                                @foreach (var item in ConstMgr.Regions)
-                                {
+                </ul>
+            </div>
+        </div>
+        <div class="p-2 bd-highlight">
+            <div class="btn-group dropdown " data-selection-limit="1" id="dd-server">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-server" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Server
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    <li>
+                        <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                    </li>
+                    @foreach (var item in ConstMgr.Regions)
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom disabled" style="background: black; color: gray !important" data-value="@item.Id">@item.Name</a>
+                        </li>
+                        @foreach (var world in item.Servers)
+                        {
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-filter-server" data-region-id="@item.Id" data-value="@world.Id">&nbsp;&nbsp;@world.Name</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
 
-                                    <li>
-                                        <a class="dropdown-item dropdown-item-custom disabled" style="background: black; color: gray !important" data-value="@item.Id">@item.Name</a>
-                                    </li>
-                                    @foreach (var world in item.Servers)
-                                    {
-                                        <li>
-                                            <a class="dropdown-item dropdown-item-custom btn-filter-server" data-region-id="@item.Id" data-value="@world.Id">&nbsp;&nbsp;@world.Name</a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    
-                    
-                    <div class="p-2 bd-highlight">
-                        @*<div class="dropdown">
+
+        <div class="p-2 bd-highlight">
+            @*<div class="dropdown">
                             <input type="text" id="search" class="form-control" placeholder="Search...">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Perks
@@ -144,107 +142,103 @@
                             </div>
                         </div>*@
 
-                        <div class="btn-group dropdown " data-selection-limit="3" id="dd-perks">
+            <div class="btn-group dropdown " data-selection-limit="3" id="dd-perks">
 
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-perk" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Perks
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                <li>
-                                    <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
-                                </li>
-                                @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
-                                {
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-perk" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Perks
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    <li>
+                        <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                    </li>
+                    @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom btn-filter-perk" data-value="@item.Id">@item.EnglishName</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="p-2 bd-highlight">
+            <div class="btn-group dropdown " data-selection-limit="1" id="dd-attr">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-attribute" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Attribute
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    @foreach (var item in AttributeMgr.This.AttributeList)
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom btn-filter-attribute" data-value="@item.Key">@item.Value</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
 
-                                    <li>
-                                        <a class="dropdown-item dropdown-item-custom btn-filter-perk" data-value="@item.Id">@item.EnglishName</a>
-                                    </li>
+        <div class="p-2 bd-highlight ms-auto">
+            <button type="button" class="btn btn-danger btn-clear-filter" aria-expanded="false">
+                Clear Filter
+            </button>
+            <button type="button" class="btn btn-success btn-apply-filter-search" aria-expanded="false">
+                APPLY FILTER
+            </button>
 
-                                }
-                            </ul>
-                        </div>
+        </div>
+    </div>
+
+</div >
+<div class="row">
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Delivery In</th>*@
+            <th scope="col">Order Id</th>
+
+            @*<th scope="col">Actions</th>*@
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.SellOrderList)
+        {
+            <tr data-item-guid="@item.Guid">
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
                     </div>
-                    <div class="p-2 bd-highlight">
-                        <div class="btn-group dropdown " data-selection-limit="1" id="dd-attr">
-                            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-attribute" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Attribute
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                @foreach (var item in AttributeMgr.This.AttributeList)
-                                {
-                                    
-                                    <li>
-                                        <a class="dropdown-item dropdown-item-custom btn-filter-attribute" data-value="@item.Key">@item.Value</a>
-                                    </li>
-                                    
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="p-2 bd-highlight ms-auto">
-                        <button type="button" class="btn btn-danger btn-clear-filter" aria-expanded="false">
-                            Clear Filter
-                        </button>
-                        <button type="button" class="btn btn-success btn-apply-filter-search" aria-expanded="false">
-                            APPLY FILTER
-                        </button>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
+                <td>@item.ShortId</td>
 
-                    </div>
-                </div>
-                
-            </div >
-            <div class="row">
-            <table class="table table-dark table-striped ">
-                <thead>
-                <tr>
-                    <th scope="col">Icon</th>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">Seller</th>
-                    <th scope="col">Region</th>
-                    <th scope="col">World</th>
-                    <th scope="col">Gear Score</th>
-                    <th scope="col">Attributes</th>
-                    <th scope="col">Perks</th>
-                    <th scope="col">Price</th>
-                    @*<th scope="col">Delivery In</th>*@
-                    <th scope="col">Order Id</th>
-
-                    @*<th scope="col">Actions</th>*@
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model.SellOrderList)
-                {
-                    <tr data-item-guid="@item.Guid">
-                        <td>
-                            <div class="item">
-                                <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                                <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                            </div>
-                        </td>
-                        <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                        <td>@item.Character.Name</td>
-                        <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                        <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                        <td>@item.GearScore</td>
-                        <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                        <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                        <td>@item.Price.ConvertPriceToReadableString()</td>
-                        @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
-                        <td>@item.ShortId</td>
-
-                       @* <td>
+                @* <td>
                             <a class="btn btn-secondary">Order</a>
                         </td>*@
 
-                    </tr>
-                }
+            </tr>
+        }
 
-                </tbody>
-            </table>
+        </tbody>
+    </table>
 
-            @*<h5 class="text-light text-center pt-5">Recent Buy Orders</h5>
+    @*<h5 class="text-light text-center pt-5">Recent Buy Orders</h5>
             <table class="table table-dark table-striped ">
                 <thead>
                 <tr>
@@ -290,9 +284,9 @@
 
                 </tbody>
             </table>*@
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+</div>
 
 
 </div>
@@ -303,6 +297,7 @@
     <script src="~/js/order.js"></script>
 
 }
+
 @section Css {
     <link rel="stylesheet" href="~/css/image-tooltip.css"/>
     <link rel="stylesheet" href="~/css/searchable-dropdown.css"/>

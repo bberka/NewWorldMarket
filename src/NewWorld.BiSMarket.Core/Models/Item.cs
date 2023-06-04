@@ -1,13 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using EasMe;
-
-namespace NewWorld.BiSMarket.Core.Models;
+﻿namespace NewWorld.BiSMarket.Core.Models;
 
 #if OCR_v1 || OCR_v2
-
-
-
-
 public class Item
 {
     public string ItemName { get; set; } = string.Empty;

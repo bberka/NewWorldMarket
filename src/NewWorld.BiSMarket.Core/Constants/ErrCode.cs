@@ -20,7 +20,5 @@ public enum ErrCode
     OcrTierNotFound,
     OcrTierParseError,
     OcrGemNotFound,
-    OcrPerkNotFound,
-
-
+    OcrPerkNotFound
 }

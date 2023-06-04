@@ -7,11 +7,11 @@ public class CreateOrder
     public Guid ImageGuid { get; set; }
     public float Price { get; set; }
     public int EstimatedDeliveryTimeHour { get; set; }
+
     /// <summary>
-    /// 0: Buy, 1: Sell
+    ///     0: Buy, 1: Sell
     /// </summary>
     public byte Type { get; set; }
+
     public ItemV3 ItemData { get; set; }
-
-
 }

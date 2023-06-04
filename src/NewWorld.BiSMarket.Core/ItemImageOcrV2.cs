@@ -1,21 +1,6 @@
-﻿using EasMe;
-using EasMe.Extensions;
-using EasMe.Result;
-using IronOcr;
-using NewWorld.BiSMarket.Core.Constants;
-using NewWorld.BiSMarket.Core.Models;
-using NewWorld.BiSMarket.Core.Properties;
-using System.Drawing;
-using static IronOcr.OcrResult;
-using Image = System.Drawing.Image;
-using Rectangle = System.Drawing.Rectangle;
-
-namespace NewWorld.BiSMarket.Core;
+﻿namespace NewWorld.BiSMarket.Core;
 
 #if OCR_v2
-
-
-
 /// <summary>
 /// Resizing and parsing full image to separate images, each image will be read separately by OCR
 /// </summary>
@@ -296,7 +281,8 @@ public class ItemImageOcrV2
             item.Attributes = string.Join(",", listAttributes);
         }
         //LEVEL REQUIREMENT READ
-        var levelReqLine = rest.Lines.FirstOrDefault(x => x.Text.Contains("Requirement: Level ", StringComparison.OrdinalIgnoreCase));
+        var levelReqLine =
+ rest.Lines.FirstOrDefault(x => x.Text.Contains("Requirement: Level ", StringComparison.OrdinalIgnoreCase));
         if (levelReqLine == null)
         {
             errorList.Add(ErrCode.OcrLevelRequirementNotFound.ToMessage());
@@ -351,7 +337,8 @@ public class ItemImageOcrV2
             {
                 foreach (var gemLine in gemLineList)
                 {
-                    var split = gemLine.Text.Split(':'); // Get first part which has the name of the gem and remove special characters
+                    var split =
+ gemLine.Text.Split(':'); // Get first part which has the name of the gem and remove special characters
                     if (split.Length < 2)
                         continue;
                     var firstPart = split[0].RemoveSpecialCharacters().Trim();
@@ -478,5 +465,4 @@ public class ItemImageOcrV2
 
 
 }
-
 #endif

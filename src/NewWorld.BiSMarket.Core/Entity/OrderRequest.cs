@@ -1,15 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
-using EasMe.Result;
-using Microsoft.EntityFrameworkCore;
 
 namespace NewWorld.BiSMarket.Core.Entity;
 
-
 public class OrderRequest : IEntity
 {
-    [Key]
-    public Guid Guid { get; set; }
+    [Key] public Guid Guid { get; set; }
 
     public DateTime RegisterDate { get; set; } = DateTime.Now;
 
@@ -25,9 +21,7 @@ public class OrderRequest : IEntity
     public Guid CharacterGuid { get; set; }
 
 
-
     //Virtual
     public virtual Character Character { get; set; } = null!;
     public virtual Order Order { get; set; } = null!;
-
 }

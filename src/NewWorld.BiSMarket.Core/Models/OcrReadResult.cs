@@ -7,5 +7,4 @@ public class OcrReadResult
     public string OcrTextResult { get; set; }
     public List<string> Errors { get; set; }
     public ItemV3 Item { get; set; }
-
 }

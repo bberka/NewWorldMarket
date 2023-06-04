@@ -1,29 +1,30 @@
-﻿using EasMe;
-using EasMe.Extensions;
+﻿using System.Security.Claims;
+using EasMe;
 using Newtonsoft.Json;
 using NewWorld.BiSMarket.Core.Entity;
-using System.Security.Claims;
 
 namespace NewWorld.BiSMarket.Web;
 
 public class SessionLib
 {
+    private static SessionLib? Instance;
+    private static EasJWT _jwt;
 
     private SessionLib()
     {
         var jwtSecret = EasConfig.GetString("JwtToken");
-        _jwt = new(jwtSecret);
+        _jwt = new EasJWT(jwtSecret);
     }
+
     public static SessionLib This
     {
         get
         {
-            Instance ??= new();
+            Instance ??= new SessionLib();
             return Instance;
         }
     }
-    private static SessionLib? Instance;
-    private static EasJWT _jwt;
+
     public User? GetUser()
     {
         var context = new HttpContextAccessor();
@@ -42,10 +43,10 @@ public class SessionLib
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-        var dic = new Dictionary<string, object?>()
+        var dic = new Dictionary<string, object?>
         {
             { "UserJson", json },
-            { ClaimTypes.Name, user.Username},
+            { ClaimTypes.Name, user.Username }
         };
         var token = _jwt.GenerateJwtToken(dic, 1440);
         context.HttpContext?.Session.SetString("token", token);
@@ -55,16 +56,13 @@ public class SessionLib
     {
         var context = new HttpContextAccessor();
         context.HttpContext?.Session.Remove("token");
-
     }
+
     public bool IsAuthenticated()
     {
         var context = new HttpContextAccessor();
         var isAuthenticated = context.HttpContext?.User?.Identity?.IsAuthenticated;
-        if (isAuthenticated is null)
-        {
-            return false;
-        }
+        if (isAuthenticated is null) return false;
         return true;
     }
 }

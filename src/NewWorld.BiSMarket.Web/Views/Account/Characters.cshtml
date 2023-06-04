@@ -9,13 +9,12 @@
 
 <div class="container">
     <div class="d-flex bd-highlight mb-3">
-        
+
         <div class="d-flex align-items-center justify-content-between ">
             <h1 class="text-light text-center p-3">My Characters (@Model.Count / @ConstMgr.DefaultCharacterLimit)</h1>
             @if (Model.Count < ConstMgr.DefaultCharacterLimit)
             {
                 <a class="btn btn-success" asp-action="AddCharacter" asp-controller="Account">Add Character</a>
-
             }
         </div>
     </div>

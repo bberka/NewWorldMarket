@@ -1,11 +1,13 @@
-﻿using EasMe.Extensions;
-using NewWorld.BiSMarket.Core.Constants;
+﻿using NewWorld.BiSMarket.Core.Constants;
 using NewWorld.BiSMarket.Core.Models;
 
 namespace NewWorld.BiSMarket.Core;
 
 public class ItemMgr
 {
+    private static ItemMgr? Instance;
+
+    public IReadOnlyCollection<ItemTypeModel> ItemList;
 
     private ItemMgr()
     {
@@ -14,26 +16,25 @@ public class ItemMgr
             .Select(t => new ItemTypeModel
             {
                 Key = t.ToString(),
-                Name = t.ToString().Replace("_"," "),
-                Id = (int)t,
+                Name = t.ToString().Replace("_", " "),
+                Id = (int)t
             }).ToList();
     }
-	public static ItemMgr This
-	{
-		get
-		{
-			Instance ??= new();
-			return Instance;
-		}
-	}
-	private static ItemMgr? Instance;
 
-    public IReadOnlyCollection<ItemTypeModel> ItemList;
+    public static ItemMgr This
+    {
+        get
+        {
+            Instance ??= new ItemMgr();
+            return Instance;
+        }
+    }
 
     public ItemTypeModel? GetItemTypeName(int type)
     {
-       return ItemList.FirstOrDefault(t => t.Id == type);
+        return ItemList.FirstOrDefault(t => t.Id == type);
     }
+
     public ItemTypeModel? GetItemTypeName(string key)
     {
         return ItemList.FirstOrDefault(t => t.Key == key);
@@ -41,13 +42,11 @@ public class ItemMgr
 
     public bool IsValid(int type)
     {
-        return  ItemList.Any(x => x.Id == type);
+        return ItemList.Any(x => x.Id == type);
     }
 
     public bool IsValid(string key)
     {
-        return  ItemList.Any(x => x.Key == key);
+        return ItemList.Any(x => x.Key == key);
     }
-
-   
 }

@@ -1,18 +1,6 @@
-﻿using EasMe;
-using EasMe.Extensions;
-using EasMe.Result;
-using IronOcr;
-using NewWorld.BiSMarket.Core.Constants;
-using NewWorld.BiSMarket.Core.Models;
-using NewWorld.BiSMarket.Core.Properties;
-using static IronOcr.OcrResult;
-
-namespace NewWorld.BiSMarket.Core;
+﻿namespace NewWorld.BiSMarket.Core;
 
 #if OCR_v1
-
-
-
 [Obsolete]
 public class ItemImageOcr
 {
@@ -257,7 +245,8 @@ public class ItemImageOcr
     }
     private static Result ImportLevelRequirement(IEnumerable<Line> lines, ref Item item)
     {
-        var line = lines.FirstOrDefault(x => x.Text.Contains("Requirement: Level ", StringComparison.OrdinalIgnoreCase));
+        var line =
+ lines.FirstOrDefault(x => x.Text.Contains("Requirement: Level ", StringComparison.OrdinalIgnoreCase));
         if (line == null)
         {
             return Result.Warn("Requirement level not found");
@@ -287,5 +276,4 @@ public class ItemImageOcr
 
 
 }
-
 #endif

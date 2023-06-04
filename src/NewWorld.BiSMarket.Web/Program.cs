@@ -3,10 +3,7 @@ using EasMe.Extensions;
 using EasMe.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using NewWorld.BiSMarket.Core;
-using NewWorld.BiSMarket.Infrastructure;
 using NewWorld.BiSMarket.Web;
-using NewWorld.BiSMarket.Web.Filters;
 using NewWorld.BiSMarket.Web.Middleware;
 using WebMarkupMin.AspNetCore6;
 
@@ -30,7 +27,6 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
-
 });
 builder.Services
     .AddAuthentication(op =>
@@ -53,7 +49,7 @@ builder.Services
             ValidateAudience = false,
             RequireExpirationTime = true,
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero,
+            ClockSkew = TimeSpan.Zero
         };
     });
 
@@ -91,7 +87,6 @@ builder.Services.AddWebMarkupMin(
     .AddHttpCompression();
 
 var app = builder.Build();
-
 
 
 #if !DEBUG
@@ -139,8 +134,8 @@ AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledException
     try
     {
         EasLogFactory.StaticLogger
-            .Exception((Exception?)e.ExceptionObject ?? 
-            new Exception("FATAL|EXCEPTION IS NULL"), "UnhandledException");
+            .Exception((Exception?)e.ExceptionObject ??
+                       new Exception("FATAL|EXCEPTION IS NULL"), "UnhandledException");
     }
     catch (Exception)
     {

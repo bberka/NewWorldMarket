@@ -5,6 +5,8 @@ namespace NewWorld.BiSMarket.Core;
 
 public class GemMgr
 {
+    private static GemMgr? Instance;
+    private readonly List<Perk> _list;
 
     private GemMgr()
     {
@@ -18,19 +20,19 @@ public class GemMgr
             perkModel.EnglishName = perk;
             temp.Add(perkModel);
         }
-        _list = temp.DistinctBy(x => x).ToList();
 
+        _list = temp.DistinctBy(x => x).ToList();
     }
-	public static GemMgr This
-	{
-		get
-		{
-			Instance ??= new();
-			return Instance;
-		}
-	}
-	private static GemMgr? Instance;
-    private List<Perk> _list;
+
+    public static GemMgr This
+    {
+        get
+        {
+            Instance ??= new GemMgr();
+            return Instance;
+        }
+    }
+
     public IReadOnlyCollection<Perk> Gems => _list;
 
     public bool IsValidGem(string name)
@@ -48,6 +50,6 @@ public class GemMgr
     public Perk? Get(int id)
     {
         if (id < 0) return null;
-        return  _list.First(x => x.Id == id);
+        return _list.First(x => x.Id == id);
     }
 }

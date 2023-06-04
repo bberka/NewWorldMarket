@@ -16,7 +16,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group py-2">
                     <label asp-for="Region" class="control-label text-light"></label>
-                    <select onchange="LoadServersByRegion()" asp-for="Region"  class="form-select"  >
+                    <select onchange="LoadServersByRegion()" asp-for="Region" class="form-select">
                         <option selected disabled value="-1">Select Region</option>
                         @foreach (var item in ServerMgr.This.GetRegionsAsDictionary())
                         {
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group py-2">
                     <label asp-for="Server" class="control-label text-light"></label>
-                    <select asp-for="Server" class="form-select" >
+                    <select asp-for="Server" class="form-select">
                     </select>
                     <span asp-validation-for="Server" class="text-danger"></span>
                 </div>
@@ -60,27 +60,26 @@
     option.disabled = true;
     serverSelect.add(option);
     const regionList = @Html.Raw(ConstMgr.Regions.ToJsonString());
+
     function LoadServersByRegion() {
-        var regionId = regionSelect.value;
+        const regionId = regionSelect.value;
         var regionName = regionSelect.options[regionSelect.selectedIndex].text;
         console.log(regionId);
         const region = regionList.find(x => x.Name === regionName);
         //add servers to server select
         console.log(region);
         if (region != null) {
-            var servers = region.Servers;
+            const servers = region.Servers;
             console.log(servers);
             //clear options
-serverSelect.options.length = 0;
-            for(var i = 0; i < servers.length; i++)
-            {
-                var option = document.createElement("option");
+            serverSelect.options.length = 0;
+            for (let i = 0; i < servers.length; i++) {
+                const option = document.createElement("option");
                 option.text = servers[i].Name;
                 option.value = servers[i].Id;
                 serverSelect.add(option);
             }
         }
-
 
 
     }

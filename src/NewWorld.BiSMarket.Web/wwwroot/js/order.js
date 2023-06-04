@@ -1,54 +1,50 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function() {
     //cancel order event register
     $(".btn-apply-filter-search").click(ApplyFilterAndSearch);
     $(".btn-clear-filter").click(ClearFilter);
     SelectFilterElementsInDropdownByQuery();
 
-    
 
 });
 
 function ApplyFilterAndSearch() {
-    var filter = GetFilter();
-    var queryArray = [];
-    if (filter.rarity != -1) 
-        queryArray.push("rarity=" + filter.rarity);
-    if (filter.item != -1) 
-        queryArray.push("item=" + filter.item);
-    if (filter.attr != -1) 
-        queryArray.push("attr=" + filter.attr);
+    const filter = GetFilter();
+    const queryArray = [];
+    if (filter.rarity != -1)
+        queryArray.push(`rarity=${filter.rarity}`);
+    if (filter.item != -1)
+        queryArray.push(`item=${filter.item}`);
+    if (filter.attr != -1)
+        queryArray.push(`attr=${filter.attr}`);
     if (filter.server != -1)
-        queryArray.push("server=" + filter.server);
+        queryArray.push(`server=${filter.server}`);
     if (filter.perk1 != -1)
-        queryArray.push("perk1=" + filter.perk1);
+        queryArray.push(`perk1=${filter.perk1}`);
     if (filter.perk2 != -1)
-        queryArray.push("perk2=" + filter.perk2);
+        queryArray.push(`perk2=${filter.perk2}`);
     if (filter.perk3 != -1)
-        queryArray.push("perk3=" + filter.perk3);
+        queryArray.push(`perk3=${filter.perk3}`);
     //append query array to url 
-    var query = queryArray.join("&");
-    var url = "/list?" + query;
+    const query = queryArray.join("&");
+    const url = `/list?${query}`;
     //redirect to url
     window.location.href = url;
-
-
-
 
 
 }
 
 function GetFilter() {
-    var elSelectedRarity = $("#dd-rarity").find(".active-dropdown");
-    var elSelectedPerks = $("#dd-perks").find(".active-dropdown");
-    var elSelectedItem = $("#dd-item").find(".active-dropdown");
-    var elSelectedAttr = $("#dd-attr").find(".active-dropdown");
-    var elSelectedServer = $("#dd-server").find(".active-dropdown");
+    const elSelectedRarity = $("#dd-rarity").find(".active-dropdown");
+    const elSelectedPerks = $("#dd-perks").find(".active-dropdown");
+    const elSelectedItem = $("#dd-item").find(".active-dropdown");
+    const elSelectedAttr = $("#dd-attr").find(".active-dropdown");
+    const elSelectedServer = $("#dd-server").find(".active-dropdown");
     var rarity = elSelectedRarity.data("value");
     var item = elSelectedItem.data("value");
     var attr = elSelectedAttr.data("value");
     var server = elSelectedServer.data("value");
     var perks = [];
-    elSelectedPerks.each(function () {
+    elSelectedPerks.each(function() {
         perks.push($(this).data("value"));
     });
     var perk1 = -1;
@@ -63,11 +59,12 @@ function GetFilter() {
         perk2 = perks[1];
         perk3 = perks[2];
 
-    } catch (e) { } 
+    } catch (e) {
+    }
     if (perk1 == null || perk1 == undefined) perk1 = -1;
     if (perk2 == null || perk2 == undefined) perk2 = -1;
     if (perk3 == null || perk3 == undefined) perk3 = -1;
-    
+
     return {
         rarity: rarity,
         item: item,
@@ -83,22 +80,22 @@ function GetFilter() {
 
 
 function SelectFilterElementsInDropdownByQuery() {
-    var query = window.location.search;
-    var params = new URLSearchParams(query);
-    var rarity = params.get("rarity");
-    var item = params.get("item");
-    var attr = params.get("attr");
-    var server = params.get("server");
-    var perk1 = params.get("perk1");
-    var perk2 = params.get("perk2");
-    var perk3 = params.get("perk3");
-    var elRarity = $("#dd-rarity").find("[data-value='" + rarity + "']");
-    var elItem = $("#dd-item").find("[data-value='" + item + "']");
-    var elAttr = $("#dd-attr").find("[data-value='" + attr + "']");
-    var elServer = $("#dd-server").find("[data-value='" + server + "']");
-    var elPerk1 = $("#dd-perks").find("[data-value='" + perk1 + "']");
-    var elPerk2 = $("#dd-perks").find("[data-value='" + perk2 + "']");
-    var elPerk3 = $("#dd-perks").find("[data-value='" + perk3 + "']");
+    const query = window.location.search;
+    const params = new URLSearchParams(query);
+    const rarity = params.get("rarity");
+    const item = params.get("item");
+    const attr = params.get("attr");
+    const server = params.get("server");
+    const perk1 = params.get("perk1");
+    const perk2 = params.get("perk2");
+    const perk3 = params.get("perk3");
+    const elRarity = $("#dd-rarity").find(`[data-value='${rarity}']`);
+    const elItem = $("#dd-item").find(`[data-value='${item}']`);
+    const elAttr = $("#dd-attr").find(`[data-value='${attr}']`);
+    const elServer = $("#dd-server").find(`[data-value='${server}']`);
+    const elPerk1 = $("#dd-perks").find(`[data-value='${perk1}']`);
+    const elPerk2 = $("#dd-perks").find(`[data-value='${perk2}']`);
+    const elPerk3 = $("#dd-perks").find(`[data-value='${perk3}']`);
 
     //elRarity.addClass("active-dropdown");
     //elItem.addClass("active-dropdown");
@@ -114,7 +111,7 @@ function SelectFilterElementsInDropdownByQuery() {
     elPerk1.click();
     elPerk2.click();
     elPerk3.click();
-    
+
 }
 
 //function name(parameters) {
@@ -147,10 +144,10 @@ function SelectFilterElementsInDropdownByQuery() {
 //activeItemList.removeClass('active-dropdown');
 //$dropdownToggle.text(originalText);
 function ClearFilter() {
-    var dropdownList = $(".dropdown-menu");
-    dropdownList.each(function () {
-        var activeDropdownItems = $(this).find(".active-dropdown");
-        activeDropdownItems.each(function () {
+    const dropdownList = $(".dropdown-menu");
+    dropdownList.each(function() {
+        const activeDropdownItems = $(this).find(".active-dropdown");
+        activeDropdownItems.each(function() {
             //trigger click
             $(this).click();
         });

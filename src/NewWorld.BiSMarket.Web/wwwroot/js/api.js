@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function() {
     //cancel order event register
     $(".btn-cancel-order").click(CancelOrder);
     $(".btn-complete-order").click(CompleteOrder);
@@ -61,13 +61,13 @@
 //}
 function ActivateOrder(event) {
     var guid = $(event.target).data("guid");
-    var orderId = $(event.target).data("order-id");
+    const orderId = $(event.target).data("order-id");
     Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure ?',
-        html: 'You are about to activate an expired order.<br> Order id: ' + orderId,
+        icon: "warning",
+        title: "Are you sure ?",
+        html: `You are about to activate an expired order.<br> Order id: ${orderId}`,
         showCancelButton: true,
-        confirmButtonText: 'Save',
+        confirmButtonText: "Save",
         preConfirm: (login) => {
             return fetch(`../api/Order/ActivateOrder?guid=${guid}`)
                 .then(response => response.json())
@@ -88,27 +88,28 @@ function ActivateOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('Success!',
-                'You have successfully activated your order! Refresh the page to see changes.',
-                'success')
+            Swal.fire("Success!",
+                    "You have successfully activated your order! Refresh the page to see changes.",
+                    "success")
                 .then(() => {
-                //refresh page
-                location.reload();
+                    //refresh page
+                    location.reload();
 
 
-            });
+                });
         }
     });
 }
+
 function CompleteOrder(event) {
     var guid = $(event.target).data("guid");
-    var orderId = $(event.target).data("order-id");
+    const orderId = $(event.target).data("order-id");
     Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure ?',
-        html: 'You are about to complete an active order.<br> Order id: ' + orderId,
+        icon: "warning",
+        title: "Are you sure ?",
+        html: `You are about to complete an active order.<br> Order id: ${orderId}`,
         showCancelButton: true,
-        confirmButtonText: 'Save',
+        confirmButtonText: "Save",
         preConfirm: (login) => {
             return fetch(`../api/Order/CompleteOrder?guid=${guid}`)
                 .then(response => response.json())
@@ -130,9 +131,9 @@ function CompleteOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('Success!',
-                'You have successfully completed your order! Refresh the page to see changes.',
-                'success').then(() => {
+            Swal.fire("Success!",
+                "You have successfully completed your order! Refresh the page to see changes.",
+                "success").then(() => {
                 //refresh page
                 location.reload();
 
@@ -145,21 +146,22 @@ function CompleteOrder(event) {
 function UpdateOrder(event) {
     var guid = $(event.target).data("guid");
     var orderId = $(event.target).data("order-id");
-    var priceText = $(event.target).data("order-price");
-    var price = parseFloat(priceText);
+    const priceText = $(event.target).data("order-price");
+    const price = parseFloat(priceText);
     Swal.fire({
-        icon: 'info',
-        title: 'Enter new price ',
+        icon: "info",
+        title: "Enter new price ",
         html: `
                 <h5>Order Id: ${orderId}</h5>
                 <div class="text-center">
-               <input min="1000" max="500000" id="new-order-price-input" class="m-auto p-auto form-control w-50 bg-dark text-light border-0" type="number" placeholder="New Price" value="${price}">
+               <input min="1000" max="500000" id="new-order-price-input" class="m-auto p-auto form-control w-50 bg-dark text-light border-0" type="number" placeholder="New Price" value="${
+            price}">
 
                 </div>
 
         `,
         showCancelButton: true,
-        confirmButtonText: 'Save',
+        confirmButtonText: "Save",
         preConfirm: (login) => {
             var input = document.getElementById("new-order-price-input");
             var newPrice = input.value;
@@ -183,10 +185,9 @@ function UpdateOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('You have successfully updated <b>' +
-                    orderId,
-                    '',
-                    'success')
+            Swal.fire(`You have successfully updated <b>${orderId}`,
+                    "",
+                    "success")
                 .then(() => {
                     //refresh page
                     location.reload();
@@ -198,16 +199,15 @@ function UpdateOrder(event) {
 }
 
 function RemoveCharacter() {
-    var guid = $(this).data('guid');
-    var characterName = $(this).data('character-name');
+    var guid = $(this).data("guid");
+    var characterName = $(this).data("character-name");
     Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure ?',
-        html: 'You are about to remove <b>' +
-            characterName +
-            '</b> character from your account. All of your active orders linked to this character will be canceled automatically.',
+        icon: "warning",
+        title: "Are you sure ?",
+        html: `You are about to remove <b>${characterName
+            }</b> character from your account. All of your active orders linked to this character will be canceled automatically.`,
         showCancelButton: true,
-        confirmButtonText: 'Save',
+        confirmButtonText: "Save",
         preConfirm: (login) => {
             return fetch(`../api/Account/RemoveCharacter?guid=${guid}`)
                 .then(response => response.json())
@@ -225,15 +225,15 @@ function RemoveCharacter() {
                 });
         }
 
-}).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('You have successfully removed <b>' +
-                characterName +
-                '</b> character from your account! Refresh the page to see changes.',
-                '',
-                'success')
+            Swal.fire(
+                    `You have successfully removed <b>${characterName
+                    }</b> character from your account! Refresh the page to see changes.`,
+                    "",
+                    "success")
                 .then(() => {
                     //refresh page
                     location.reload();
@@ -246,13 +246,13 @@ function RemoveCharacter() {
 
 function CancelOrder(event) {
     var guid = $(event.target).data("guid");
-    var orderId = $(event.target).data("order-id");
+    const orderId = $(event.target).data("order-id");
     Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure ?',
-        html: 'You are about to cancel an active order.<br> Order id: ' + orderId,
+        icon: "warning",
+        title: "Are you sure ?",
+        html: `You are about to cancel an active order.<br> Order id: ${orderId}`,
         showCancelButton: true,
-        confirmButtonText: 'Save',
+        confirmButtonText: "Save",
         preConfirm: (login) => {
             return fetch(`../api/Order/CancelOrder?guid=${guid}`)
                 .then(response => response.json())
@@ -274,9 +274,9 @@ function CancelOrder(event) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
 
-            Swal.fire('Success!',
-                'You have successfully cancelled your order! Refresh the page to see changes.',
-                'success')
+            Swal.fire("Success!",
+                    "You have successfully cancelled your order! Refresh the page to see changes.",
+                    "success")
                 .then(() => {
                     //refresh page
                     location.reload();

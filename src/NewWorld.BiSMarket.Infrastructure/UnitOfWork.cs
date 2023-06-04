@@ -9,6 +9,8 @@ namespace NewWorld.BiSMarket.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly MarketDbContext _context;
+
     public UnitOfWork()
     {
         _context = new MarketDbContext();
@@ -19,13 +21,13 @@ public class UnitOfWork : IUnitOfWork
         CharacterRepository = new GenericRepository<Character, MarketDbContext>(_context);
     }
 
-    private MarketDbContext _context;
+    public IGenericRepository<OrderRequest> OrderCompleteRequestRepository { get; set; }
     public IGenericRepository<Order> OrderRepository { get; set; }
     public IGenericRepository<User> UserRepository { get; set; }
     public IGenericRepository<OrderRequest> OrderRequestRepository { get; set; }
     public IGenericRepository<Image> ImageRepository { get; set; }
     public IGenericRepository<Character> CharacterRepository { get; set; }
-    public IGenericRepository<OrderRequest> OrderCompleteRequestRepository { get; set; }
+
     public Result Save()
     {
         try

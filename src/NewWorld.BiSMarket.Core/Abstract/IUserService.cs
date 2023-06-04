@@ -1,5 +1,4 @@
 ﻿using EasMe.Result;
-using Microsoft.AspNetCore.Http;
 using NewWorld.BiSMarket.Core.Entity;
 using NewWorld.BiSMarket.Core.Models;
 
@@ -9,7 +8,7 @@ public interface IUserService
 {
     ResultData<User> Register(Register request);
     ResultData<Guid> AddCharacter(AddCharacter request);
-    Result RemoveCharacter(Guid userGuid,Guid characterGuid);
+    Result RemoveCharacter(Guid userGuid, Guid characterGuid);
     ResultData<User> Login(string username, string password);
     ResultData<User> GetUserByGuid(Guid guid);
     ResultData<List<Character>> GetCharacters(Guid userGuid);

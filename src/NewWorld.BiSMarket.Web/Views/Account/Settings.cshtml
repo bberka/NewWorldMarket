@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using NewWorld.BiSMarket.Core
 @model NewWorld.BiSMarket.Core.Entity.User
 
 @{
@@ -7,61 +6,59 @@
 }
 
 
-
-            
 <div class="container">
-    
-<div>
-    <h1 class="text-light">My Account</h1>
-    <hr class=" text-light"/>
-    <dl class="row  text-light">
-        
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RegisterDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RegisterDate)
-        </dd>
-       
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastLoginDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastLoginDate)
-        </dd>
-        
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd class = "col-sm-10">
-            ********* <a asp-action="ChangePassword" asp-controller="Account">(Change Password)</a>
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-            @if (!Model.IsEmailVerified)
-            {
-                //TODO: Add resend email verification
-            }
-            @if (!Model.IsVerifiedAccount)
-            {
-                //TODO: Add account/character verification
-            }
-            
-        </dd>
-        
-        @*
+
+    <div>
+        <h1 class="text-light">My Account</h1>
+        <hr class=" text-light"/>
+        <dl class="row  text-light">
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.RegisterDate)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LastLoginDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastLoginDate)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PasswordHash)
+            </dt>
+            <dd class="col-sm-10">
+                ********* <a asp-action="ChangePassword" asp-controller="Account">(Change Password)</a>
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+                @if (!Model.IsEmailVerified)
+                {
+                    //TODO: Add resend email verification
+                }
+                @if (!Model.IsVerifiedAccount)
+                {
+                    //TODO: Add account/character verification
+                }
+
+            </dd>
+
+            @*
             TODO: add discord and steam link
         *@
-        @*<dt class = "col-sm-2">
+            @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DiscordId)
         </dt>
         <dd class = "col-sm-10">
@@ -73,10 +70,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SteamId)
         </dd>*@
-        
 
 
-        
-    </dl>
-</div>
+
+
+        </dl>
+    </div>
 </div>

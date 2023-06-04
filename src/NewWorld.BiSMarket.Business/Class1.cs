@@ -1,7 +1,5 @@
-﻿namespace NewWorld.BiSMarket.Business
-{
-    public class Class1
-    {
+﻿namespace NewWorld.BiSMarket.Business;
 
-    }
+public class Class1
+{
 }

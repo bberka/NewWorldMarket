@@ -12,7 +12,7 @@
 <ul class="nav nav-tabs nav-justified mb-3 border border-secondary " id="ex1" role="tablist">
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary w-75 active" 
+            class="btn btn-tertiary w-75 active"
             style="height: 40px"
             data-mdb-ripple-color="light"
             id="ex3-tab-1"
@@ -20,7 +20,9 @@
             href="#ex3-tabs-1"
             role="tab"
             aria-controls="ex3-tabs-1"
-            aria-selected="true">Sell Orders</a>
+            aria-selected="true">
+            Sell Orders
+        </a>
     </li>
     @*<li class="nav-item" role="presentation">
         <a
@@ -36,7 +38,7 @@
     </li>*@
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-75" 
+            class="btn btn-tertiary  w-75"
             data-mdb-ripple-color="light"
             style="height: 40px"
             id="ex3-tab-3"
@@ -44,11 +46,13 @@
             href="#ex3-tabs-3"
             role="tab"
             aria-controls="ex3-tabs-3"
-            aria-selected="false">Completed Orders</a>
+            aria-selected="false">
+            Completed Orders
+        </a>
     </li>
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-75" 
+            class="btn btn-tertiary  w-75"
             data-mdb-ripple-color="light"
             style="height: 40px"
             id="ex4-tab-4"
@@ -56,11 +60,13 @@
             href="#ex4-tabs-4"
             role="tab"
             aria-controls="ex4-tabs-4"
-            aria-selected="false">Expired Orders</a>
+            aria-selected="false">
+            Expired Orders
+        </a>
     </li>
     <li class="nav-item" role="presentation">
         <a
-            class="btn btn-tertiary  w-75" 
+            class="btn btn-tertiary  w-75"
             style="height: 40px"
             data-mdb-ripple-color="light"
             id="ex4-tab-5"
@@ -68,327 +74,325 @@
             href="#ex5-tabs-5"
             role="tab"
             aria-controls="ex5-tabs-5"
-            aria-selected="false">Cancelled Orders</a>
+            aria-selected="false">
+            Cancelled Orders
+        </a>
     </li>
 </ul>
 <!-- Tabs navs -->
 
 <!-- Tabs content -->
 <div class="tab-content" id="ex2-content">
-    <div
-        class="tab-pane fade show active"
-        id="ex3-tabs-1"
-        role="tabpanel"
-        aria-labelledby="ex3-tab-1">
-        <table class="table table-dark table-striped ">
-            <thead>
-            <tr>
-                <th scope="col">Icon</th>
-                <th scope="col">Item Name</th>
-                <th scope="col">Seller</th>
-                <th scope="col">Region</th>
-                <th scope="col">World</th>
-                <th scope="col">Gear Score</th>
-                <th scope="col">Attributes</th>
-                <th scope="col">Perks</th>
-                <th scope="col">Price</th>
-                @*<th scope="col">Delivery In</th>*@
-                <th scope="col">Expire In</th>
-                <th scope="col">Order Id</th>
+<div
+    class="tab-pane fade show active"
+    id="ex3-tabs-1"
+    role="tabpanel"
+    aria-labelledby="ex3-tab-1">
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Delivery In</th>*@
+            <th scope="col">Expire In</th>
+            <th scope="col">Order Id</th>
 
-                <th scope="col">Actions</th>
+            <th scope="col">Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.ActiveSellOrderList)
+        {
+            <tr>
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                    </div>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
+                <td>@CommonLib.ConvertDateDiffAsReadableText(item.ExpirationDate, DateTime.Now)</td>
+                <td>@item.ShortId</td>
+
+                @*<td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>*@
+                <td>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu bg-dark ">
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-complete-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Mark As Sold</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-update-order text-info" data-order-price="@item.Price" data-order-id="@item.ShortId" data-guid="@item.Guid">Update Price</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-cancel-order text-danger" data-order-id="@item.ShortId" data-guid="@item.Guid">Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+<div
+    class="tab-pane fade"
+    id="ex3-tabs-2"
+    role="tabpanel"
+    aria-labelledby="ex3-tab-2">
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Delivery In</th>*@
+            <th scope="col">Order Id</th>
+
+            <th scope="col">Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.ActiveBuyOrderList)
+        {
+            <tr>
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                    </div>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
+                <td>@item.ShortId</td>
+
+                <td>
+
+                    <a class="btn btn-danger">Cancel</a>
+                </td>
 
             </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.ActiveSellOrderList)
-            {
-                <tr>
-                    <td>
-                        <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                            <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                        </div>
-                    </td>
-                    <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.Character.Name</td>
-                    <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                    <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                    <td>@item.GearScore</td>
-                    <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                    <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                    <td>@item.Price.ConvertPriceToReadableString()</td>
-                    @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
-                    <td>@CommonLib.ConvertDateDiffAsReadableText(item.ExpirationDate, DateTime.Now)</td>
-                    <td>@item.ShortId</td>
+        }
 
-                    @*<td>@((item.ExpirationDate - DateTime.Now).TotalDays.ToString()[..4]) days</td>*@
-                    <td>
-                        <div class="btn-group dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-complete-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Mark As Sold</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-update-order text-info" data-order-price="@item.Price" data-order-id="@item.ShortId" data-guid="@item.Guid">Update Price</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-cancel-order text-danger" data-order-id="@item.ShortId" data-guid="@item.Guid">Cancel</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-    </div>
-    <div
-        class="tab-pane fade"
-        id="ex3-tabs-2"
-        role="tabpanel"
-        aria-labelledby="ex3-tab-2">
-        <table class="table table-dark table-striped ">
-            <thead>
+</div>
+<div
+    class="tab-pane fade"
+    id="ex3-tabs-3"
+    role="tabpanel"
+    aria-labelledby="ex3-tab-3">
+
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            <th scope="col">Type</th>
+            <th scope="col">Order Id</th>
+
+            <th scope="col">Completed Date</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.CompletedOrderList.OrderByDescending(x => x.CompletedDate))
+        {
             <tr>
-                <th scope="col">Icon</th>
-                <th scope="col">Item Name</th>
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                    </div>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                <td>@CommonLib.GetOrderTypeString(item.Type)</td>
+                <td>@item.ShortId</td>
+                <td>@item.CompletedDate</td>
+            </tr>
+        }
 
-                <th scope="col">Seller</th>
-                <th scope="col">Region</th>
-                <th scope="col">World</th>
-                <th scope="col">Gear Score</th>
-                <th scope="col">Attributes</th>
-                <th scope="col">Perks</th>
-                <th scope="col">Price</th>
-                @*<th scope="col">Delivery In</th>*@
-                <th scope="col">Order Id</th>
+        </tbody>
+    </table>
+</div>
+<div
+    class="tab-pane fade"
+    id="ex4-tabs-4"
+    role="tabpanel"
+    aria-labelledby="ex4-tab-4">
 
-                <th scope="col">Actions</th>
+
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Type</th>*@
+            <th scope="col">Order Id</th>
+            <th scope="col">Expire Date</th>
+
+            <th scope="col">Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.ExpiredOrderList.OrderByDescending(x => x.ExpirationDate))
+        {
+            <tr>
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                    </div>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
+                <td>@item.ShortId</td>
+                <td>@item.ExpirationDate</td>
+
+                <td>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu bg-dark ">
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-activate-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Activate</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </td>
+
 
             </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.ActiveBuyOrderList)
-            {
-                <tr>
-                    <td>
-                        <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                            <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                        </div>
-                    </td>
-                    <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.Character.Name</td>
-                    <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                    <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                    <td>@item.GearScore</td>
-                    <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                    <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                    <td>@item.Price.ConvertPriceToReadableString()</td>
-                    @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
-                    <td>@item.ShortId</td>
+        }
+        </tbody>
+    </table>
+</div>
+<div
+    class="tab-pane fade"
+    id="ex5-tabs-5"
+    role="tabpanel"
+    aria-labelledby="ex5-tab-5">
 
-                    <td>
+    <table class="table table-dark table-striped ">
+        <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Region</th>
+            <th scope="col">World</th>
+            <th scope="col">Gear Score</th>
+            <th scope="col">Attributes</th>
+            <th scope="col">Perks</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Type</th>*@
+            <th scope="col">Order Id</th>
+            <th scope="col">Cancel Date</th>
 
-                        <a class="btn btn-danger">Cancel</a>
-                    </td>
-
-                </tr>
-
-            }
-               
-            </tbody>
-        </table>
-
-    </div>
-    <div
-        class="tab-pane fade"
-        id="ex3-tabs-3"
-        role="tabpanel"
-        aria-labelledby="ex3-tab-3">
-        
-        <table class="table table-dark table-striped ">
-            <thead>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.CancelledOrderList.OrderByDescending(x => x.CancelledDate))
+        {
             <tr>
-                <th scope="col">Icon</th>
-                <th scope="col">Item Name</th>
-                <th scope="col">Seller</th>
-                <th scope="col">Region</th>
-                <th scope="col">World</th>
-                <th scope="col">Gear Score</th>
-                <th scope="col">Attributes</th>
-                <th scope="col">Perks</th>
-                <th scope="col">Price</th>
-                <th scope="col">Type</th>
-                <th scope="col">Order Id</th>
+                <td>
+                    <div class="item">
+                        <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon" data-image-guid="@item.ImageGuid"/>
+                        <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
+                    </div>
+                </td>
+                <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
+                <td>@item.Character.Name</td>
+                <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
+                <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
+                <td>@item.GearScore</td>
+                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
+                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@item.Price.ConvertPriceToReadableString()</td>
+                @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
+                <td>@item.ShortId</td>
+                <td>@item.CancelledDate</td>
 
-                <th scope="col">Completed Date</th>
 
             </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.CompletedOrderList.OrderByDescending(x => x.CompletedDate))
-            {
-                <tr>
-                    <td>
-                        <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                            <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                        </div>
-                    </td>
-                    <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.Character.Name</td>
-                    <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                    <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                    <td>@item.GearScore</td>
-                    <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                    <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                    <td>@item.Price.ConvertPriceToReadableString()</td>
-                    <td>@CommonLib.GetOrderTypeString(item.Type)</td>
-                    <td>@item.ShortId</td>
-                    <td>@item.CompletedDate</td>
-                </tr>
+        }
 
-            }
-               
-            </tbody>
-        </table>
-    </div>
-    <div
-        class="tab-pane fade"
-        id="ex4-tabs-4"
-        role="tabpanel"
-        aria-labelledby="ex4-tab-4">
-        
-        
-        <table class="table table-dark table-striped ">
-            <thead>
-            <tr>
-                <th scope="col">Icon</th>
-                <th scope="col">Item Name</th>
-
-                <th scope="col">Seller</th>
-                <th scope="col">Region</th>
-                <th scope="col">World</th>
-                <th scope="col">Gear Score</th>
-                <th scope="col">Attributes</th>
-                <th scope="col">Perks</th>
-                <th scope="col">Price</th>
-                @*<th scope="col">Type</th>*@
-                <th scope="col">Order Id</th>
-                <th scope="col">Expire Date</th>
-
-                <th scope="col">Actions</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.ExpiredOrderList.OrderByDescending(x => x.ExpirationDate))
-            {
-                <tr>
-                    <td>
-                        <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                            <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                        </div>
-                    </td>
-                    <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.Character.Name</td>
-                    <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                    <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                    <td>@item.GearScore</td>
-                    <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                    <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                    <td>@item.Price.ConvertPriceToReadableString()</td>
-                    @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
-                    <td>@item.ShortId</td>
-                    <td>@item.ExpirationDate</td>
-
-                    <td>
-                        <div class="btn-group dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu bg-dark ">
-                                <li>
-                                    <a class="dropdown-item dropdown-item-custom btn-activate-order text-success" data-order-id="@item.ShortId" data-guid="@item.Guid">Activate</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </td>
+        </tbody>
+    </table>
 
 
-                </tr>
-
-            }
-            </tbody>
-        </table>
-    </div>
-    <div
-        class="tab-pane fade"
-        id="ex5-tabs-5"
-        role="tabpanel"
-        aria-labelledby="ex5-tab-5">
-        
-        <table class="table table-dark table-striped ">
-            <thead>
-            <tr>
-                <th scope="col">Icon</th>
-                <th scope="col">Item Name</th>
-                <th scope="col">Seller</th>
-                <th scope="col">Region</th>
-                <th scope="col">World</th>
-                <th scope="col">Gear Score</th>
-                <th scope="col">Attributes</th>
-                <th scope="col">Perks</th>
-                <th scope="col">Price</th>
-                @*<th scope="col">Type</th>*@
-                <th scope="col">Order Id</th>
-                <th scope="col">Cancel Date</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.CancelledOrderList.OrderByDescending(x => x.CancelledDate))
-            {
-                <tr>
-                    <td>
-                        <div class="item">
-                            <img src="~/api/Image/GetIcon/@item.ImageGuid" alt="Small Icon" class="icon"  data-image-guid="@item.ImageGuid"/>
-                            <img class="full-picture" src="" style="" alt="Full Picture" data-image-guid="@item.ImageGuid"/>
-                        </div>
-                    </td>
-                    <td>@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name</td>
-                    <td>@item.Character.Name</td>
-                    <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
-                    <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
-                    <td>@item.GearScore</td>
-                    <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                    <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
-                    <td>@item.Price.ConvertPriceToReadableString()</td>
-                    @*<td>@CommonLib.GetOrderTypeString(item.Type)</td>*@
-                    <td>@item.ShortId</td>
-                    <td>@item.CancelledDate</td>
-
-
-                </tr>
-
-            }
-               
-            </tbody>
-        </table>
-
-
-    </div>
+</div>
 </div>
 <!-- Tabs content -->
 
@@ -396,6 +400,7 @@
     <script src="~/js/image-tooltip.js"></script>
 
 }
+
 @section Css {
     <link rel="stylesheet" href="~/css/image-tooltip.css"/>
 }

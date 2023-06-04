@@ -4,5 +4,5 @@ public enum ItemBaseType
 {
     Weapon,
     Armor,
-    Jewel,
+    Jewel
 }

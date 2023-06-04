@@ -7,11 +7,14 @@ namespace NewWorld.BiSMarket.Core;
 
 public class PerkMgr
 {
+    private static PerkMgr? Instance;
+    private readonly List<Perk> _list;
+
     private PerkMgr()
     {
         var perkList = Resource.PerkListV2.Split(Environment.NewLine);
         _list = new List<Perk>();
-        for (int i = 0; i < perkList.Length; i++)
+        for (var i = 0; i < perkList.Length; i++)
         {
             var perk = perkList[i];
             var perkModel = new Perk();
@@ -20,17 +23,18 @@ public class PerkMgr
             _list.Add(perkModel);
         }
     }
-	public static PerkMgr This
-	{
-		get
-		{
-			Instance ??= new();
-			return Instance;
-		}
-	}
-	private static PerkMgr? Instance;
-	private List<Perk> _list;
+
+    public static PerkMgr This
+    {
+        get
+        {
+            Instance ??= new PerkMgr();
+            return Instance;
+        }
+    }
+
     public IReadOnlyCollection<Perk> Perks => _list;
+
     public Perk? GetPerk(int id)
     {
         return _list.FirstOrDefault(x => x.Id == id);
@@ -50,7 +54,7 @@ public class PerkMgr
     public Perk? GetPerk(string name)
     {
         var nameTrim = name.Trim();
-        return _list.FirstOrDefault(x => x.EnglishName.Equals(nameTrim,StringComparison.OrdinalIgnoreCase));
+        return _list.FirstOrDefault(x => x.EnglishName.Equals(nameTrim, StringComparison.OrdinalIgnoreCase));
     }
 
     public string ParsePerkFormattedTextHtmlRaw(string text)
@@ -68,11 +72,13 @@ public class PerkMgr
             sb.Append($"{perk.EnglishName}");
             sb.Append("<br/>");
         }
+
         return sb.ToString();
     }
+
     public string ParsePerkFormattedText(string text)
     {
-        if(text.IsNullOrEmpty()) return "Could not be read";
+        if (text.IsNullOrEmpty()) return "Could not be read";
         var split = text.Split(",");
         var sb = new StringBuilder();
         foreach (var s in split)
@@ -84,6 +90,7 @@ public class PerkMgr
             sb.Append($"{perk.EnglishName}");
             sb.Append(Environment.NewLine);
         }
+
         return sb.ToString();
     }
 }

@@ -1,17 +1,11 @@
-﻿using Azure.Core;
+﻿using EasMe.Extensions;
 using EasMe.Result;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using NewWorld.BiSMarket.Core;
 using NewWorld.BiSMarket.Core.Abstract;
 using NewWorld.BiSMarket.Core.Constants;
 using NewWorld.BiSMarket.Core.Entity;
 using NewWorld.BiSMarket.Core.Models;
-using System.Net.Http.Headers;
-using EasMe.Extensions;
-using NewWorld.BiSMarket.Core;
-using System.Drawing;
-using Microsoft.EntityFrameworkCore;
-using Image = NewWorld.BiSMarket.Core.Entity.Image;
-using Ninject.Activation;
 using shortid;
 using shortid.Configuration;
 
@@ -38,41 +32,37 @@ public class OrderService : IOrderService
         //{
         //    return Result.Warn($"Estimated delivery time cannot be less than 1 hours.");
         //}
-        if (request.Price < 1000)
-        {
-            return Result.Warn($"Price cannot be less than 1000 coins.");
-        }
+        if (request.Price < 1000) return Result.Warn("Price cannot be less than 1000 coins.");
         if (request.Price > ConstMgr.MaxPriceLimit)
-        {
             return Result.Warn($"Price cannot be more than {ConstMgr.MaxPriceLimit} coins.");
-        }
 
         //This hash check can be improved and its not tested so it may not be working correctly
-        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid 
-                                                          && x.Hash == request.UniqueHash 
+        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid
+                                                          && x.Hash == request.UniqueHash
                                                           && !x.CancelledDate.HasValue
                                                           && !x.CompletedDate.HasValue
                                                           && x.ExpirationDate > DateTime.Now);
         if (exists)
-            return Result.Warn("It looks like you already listed the same item, if you think this is a mistake contact us.");
+            return Result.Warn(
+                "It looks like you already listed the same item, if you think this is a mistake contact us.");
         var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == request.UserGuid);
         if (user == null)
             return Result.Warn("User not found.");
-        var characterList = _unitOfWork.CharacterRepository.Get(x => x.UserGuid == request.UserGuid).Select(x => new 
+        var characterList = _unitOfWork.CharacterRepository.Get(x => x.UserGuid == request.UserGuid).Select(x => new
         {
-            Guid = x.Guid,
-            Region = x.Region,
-            Server = x.Server,
-            Name = x.Name,
+            x.Guid,
+            x.Region,
+            x.Server,
+            x.Name
         });
         var character = characterList.FirstOrDefault(x => x.Guid == request.CharacterGuid);
         if (character == null)
             return Result.Warn("Character not found.");
         var charGuidList = characterList.Select(x => x.Guid).ToList();
         var currentOrders = _unitOfWork.OrderRepository
-            .Count(x => charGuidList.Contains(x.CharacterGuid) 
-                        && !x.CancelledDate.HasValue 
-                        && !x.CompletedDate.HasValue 
+            .Count(x => charGuidList.Contains(x.CharacterGuid)
+                        && !x.CancelledDate.HasValue
+                        && !x.CompletedDate.HasValue
                         && x.ExpirationDate > DateTime.Now);
         if (currentOrders >= ConstMgr.DefaultOrderCountLimit)
             return Result.Warn($"You can only list {ConstMgr.DefaultOrderCountLimit} items at a time.");
@@ -82,19 +72,16 @@ public class OrderService : IOrderService
         var itemData = image.OcrItemDataResult.FromJsonString<ItemV3>();
         if (itemData == null)
             return Result.Warn("Item data not found.");
-        if(itemData.ItemType == -1) itemData.ItemType = request.ItemType;
-        if(itemData.LevelRequirement == -1) itemData.LevelRequirement = request.LevelRequirement;
-        if(itemData.Tier == -1) itemData.Tier = request.Tier;
-        if(itemData.Rarity == -1) itemData.Rarity = request.Rarity;
+        if (itemData.ItemType == -1) itemData.ItemType = request.ItemType;
+        if (itemData.LevelRequirement == -1) itemData.LevelRequirement = request.LevelRequirement;
+        if (itemData.Tier == -1) itemData.Tier = request.Tier;
+        if (itemData.Rarity == -1) itemData.Rarity = request.Rarity;
         //if(itemData.PerkString == string.Empty) itemData.PerkString = request.Perks;
         //if(itemData.AttributeString == string.Empty) itemData.Attributes = request.Attributes;
-        if(itemData.GemId == -1) itemData.GemId = request.GemId;
+        if (itemData.GemId == -1) itemData.GemId = request.GemId;
         //itemData.IsGemChangeable = request.IsGemChangeable;
-        if(itemData.IsNamed == null) itemData.IsNamed = request.IsNamed;
-        if(itemData.GearScore == -1) itemData.GearScore = request.GearScore;
-        
-
-
+        if (itemData.IsNamed == null) itemData.IsNamed = request.IsNamed;
+        if (itemData.GearScore == -1) itemData.GearScore = request.GearScore;
 
 
         var oq = new Order
@@ -125,7 +112,7 @@ public class OrderService : IOrderService
             Rarity = itemData.Rarity,
             Perks = itemData.PerkString,
             IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
-            ShortId = ShortId.Generate(new GenerationOptions(true,false,8))
+            ShortId = ShortId.Generate(new GenerationOptions(true, false, 8))
         };
 
         _unitOfWork.OrderRepository.Insert(oq);
@@ -160,16 +147,12 @@ public class OrderService : IOrderService
         var saveResult = _unitOfWork.Save();
         return saveResult;
     }
+
     public Result UpdateOrderPrice(Guid userGuid, Guid orderGuid, float price)
     {
-        if (price < 1000)
-        {
-            return Result.Warn($"Price cannot be less than 1000 coins.");
-        }
+        if (price < 1000) return Result.Warn("Price cannot be less than 1000 coins.");
         if (price > ConstMgr.MaxPriceLimit)
-        {
             return Result.Warn($"Price cannot be more than {ConstMgr.MaxPriceLimit} coins.");
-        }
         var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
@@ -190,9 +173,10 @@ public class OrderService : IOrderService
         var saveResult = _unitOfWork.Save();
         return saveResult;
     }
+
     public Result CancelOrder(Guid userGuid, Guid orderGuid)
     {
-        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid,"Character");
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
         var isOwner = order.Character.UserGuid == userGuid;
@@ -215,7 +199,7 @@ public class OrderService : IOrderService
 
     public Result ActivateExpiredOrder(Guid userGuid, Guid orderRequestGuid)
     {
-        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid,"Character");
+        var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderRequestGuid, "Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
         var isOwner = order.Character.UserGuid == userGuid;
@@ -232,10 +216,10 @@ public class OrderService : IOrderService
             return DomainResult.Order.ErrNotExpired;
         var characterList = _unitOfWork.CharacterRepository.Get(x => x.UserGuid == userGuid).Select(x => new
         {
-            Guid = x.Guid,
-            Region = x.Region,
-            Server = x.Server,
-            Name = x.Name,
+            x.Guid,
+            x.Region,
+            x.Server,
+            x.Name
         });
         var character = characterList.FirstOrDefault(x => x.Guid == order.CharacterGuid);
         if (character == null)
@@ -253,50 +237,48 @@ public class OrderService : IOrderService
         var saveResult = _unitOfWork.Save();
         return saveResult;
     }
-   
+
     public ResultData<List<Order>> GetMainPageSellOrders(int region = -1, int server = -1, int page = 1)
     {
         if (region > 0)
-        {
             return _unitOfWork.OrderRepository.GetPaging(
-                                   page,
-                                                      ConstMgr.PageSize,
-                                                      x => x.Type == 1 && x.Region == region && x.Server == server && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
-                                                      x => x.OrderByDescending(y => y.RegisterDate))
+                    page,
+                    ConstMgr.PageSize,
+                    x => x.Type == 1 && x.Region == region && x.Server == server && !x.CancelledDate.HasValue &&
+                         !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
+                    x => x.OrderByDescending(y => y.RegisterDate))
                 .Include(x => x.Character)
                 .ToList();
-        }
 
         return _unitOfWork.OrderRepository.GetPaging(
                 page,
                 ConstMgr.PageSize,
-                x => x.Type == 1 && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
+                x => x.Type == 1 && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue &&
+                     x.ExpirationDate > DateTime.Now,
                 x => x.OrderByDescending(y => y.RegisterDate))
             .Include(x => x.Character)
-
             .ToList();
     }
 
     public ResultData<List<Order>> GetMainPageBuyOrders(int region = -1, int server = -1, int page = 1)
     {
         if (region > 0)
-        {
             return _unitOfWork.OrderRepository.GetPaging(
                     page,
                     ConstMgr.PageSize,
-                    x => x.Type == 0 && x.Region == region && x.Server == server && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
+                    x => x.Type == 0 && x.Region == region && x.Server == server && !x.CancelledDate.HasValue &&
+                         !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
                     x => x.OrderByDescending(y => y.RegisterDate))
                 .Include(x => x.Character)
                 .ToList();
-        }
         return _unitOfWork.OrderRepository.GetPaging(
-                           page,
-                                          ConstMgr.PageSize,
-                                          x => x.Type == 0 && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now,
-                                          x => x.OrderByDescending(y => y.RegisterDate))
+                page,
+                ConstMgr.PageSize,
+                x => x.Type == 0 && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue &&
+                     x.ExpirationDate > DateTime.Now,
+                x => x.OrderByDescending(y => y.RegisterDate))
             .Include(x => x.Character)
             .ToList();
-       
     }
 
     public ResultData<List<Order>> GetOrdersByUsername(byte type, string username, int page)
@@ -313,42 +295,7 @@ public class OrderService : IOrderService
             .ToList();
     }
 
-    public ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid)
-    {
-        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == userGuid);
-        if (user is null)
-            return Result.Error("User not found");
-        var characterGuidList = user.Characters.Select(x => x.Guid).ToList();
-        return _unitOfWork.OrderRepository.GetOrdered(
-                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid),
-                x => x.OrderByDescending(y => y.RegisterDate))
-            .ToList();
-    }
-
     public ResultData<ActiveOrderData> GetUserOrders(Guid userGuid)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ResultData<List<Order>> GetCancelledOrdersByUserGuid(Guid userGuid)
-    {
-        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == userGuid);
-        if (user is null)
-            return Result.Error("User not found");
-        
-        var characterGuidList = user.Characters.Select(x => x.Guid).ToList();
-        return _unitOfWork.OrderRepository.GetOrdered(
-                           x => x.Type == 2 && characterGuidList.Contains(x.CharacterGuid),
-                                          x => x.OrderByDescending(y => y.RegisterDate))
-            .ToList();
-    }
-
-    public ResultData<List<Order>> GetCompletedOrdersByUserGuid(Guid userGuid)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ResultData<List<Order>> GetExpiredOrdersByUserGuid(Guid userGuid)
     {
         throw new NotImplementedException();
     }
@@ -367,26 +314,28 @@ public class OrderService : IOrderService
                 x => x.OrderByDescending(y => y.RegisterDate))
             .Include(x => x.Character)
             .ToList();
-        var orderData = new OrderData()
+        var orderData = new OrderData
         {
-            ActiveBuyOrderList = allList.Where(x => x.Type == (int)OrderType.Buy && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now).ToList(),
-            ActiveSellOrderList = allList.Where(x => x.Type == (int)OrderType.Sell 
-            && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue && x.ExpirationDate > DateTime.Now).ToList(),
+            ActiveBuyOrderList = allList.Where(x =>
+                x.Type == (int)OrderType.Buy && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue &&
+                x.ExpirationDate > DateTime.Now).ToList(),
+            ActiveSellOrderList = allList.Where(x => x.Type == (int)OrderType.Sell
+                                                     && !x.CancelledDate.HasValue && !x.CompletedDate.HasValue &&
+                                                     x.ExpirationDate > DateTime.Now).ToList(),
             CancelledOrderList = allList.Where(x => x.CancelledDate.HasValue).ToList(),
             CompletedOrderList = allList.Where(x => x.CompletedDate.HasValue).ToList(),
-            ExpiredOrderList = allList.Where(x => x.ExpirationDate < DateTime.Now 
-                                                  && !x.CompletedDate.HasValue 
+            ExpiredOrderList = allList.Where(x => x.ExpirationDate < DateTime.Now
+                                                  && !x.CompletedDate.HasValue
                                                   && !x.CancelledDate.HasValue).ToList()
         };
         return orderData;
-
     }
 
 
     public ResultData<Order> GetOrderById(Guid orderGuid)
     {
         return _unitOfWork.OrderRepository.GetFirstOrDefault(
-                x => x.Guid == orderGuid);
+            x => x.Guid == orderGuid);
     }
 
     public ResultData<List<Order>> GetOrderByHash(string hash)
@@ -423,60 +372,37 @@ public class OrderService : IOrderService
         var isValidRarity = Enum.IsDefined(typeof(RarityType), rarity);
         //var isValidCategory = CategoryMgr.This.IsValidCategory()
         var queryable = _unitOfWork.OrderRepository.GetOrdered(
-                       x => x.Type == (int)OrderType.Sell
-                            && !x.CancelledDate.HasValue 
-                            && !x.CompletedDate.HasValue 
-                            && x.ExpirationDate > DateTime.Now,
-                            x => x.OrderByDescending(y => y.RegisterDate))
-            .Include(x =>x.Character)
+                x => x.Type == (int)OrderType.Sell
+                     && !x.CancelledDate.HasValue
+                     && !x.CompletedDate.HasValue
+                     && x.ExpirationDate > DateTime.Now,
+                x => x.OrderByDescending(y => y.RegisterDate))
+            .Include(x => x.Character)
             .AsQueryable();
         //var test = queryable.ToList();
-        if (isValidAttr)
-        {
-            queryable = queryable.Where(x => x.Attributes.Contains(attr.ToString()));
-        }
-        
+        if (isValidAttr) queryable = queryable.Where(x => x.Attributes.Contains(attr.ToString()));
 
-        if (isValidPerk1)
-        {
-            queryable = queryable.Where(x => x.Perks.Contains(perk1.ToString()));
-        }
 
-        if (isValidPerk2)
-        {
-            queryable = queryable.Where(x => x.Perks.Contains(perk2.ToString()));
+        if (isValidPerk1) queryable = queryable.Where(x => x.Perks.Contains(perk1.ToString()));
 
-        }
-        if (isValidPerk3)
-        {
+        if (isValidPerk2) queryable = queryable.Where(x => x.Perks.Contains(perk2.ToString()));
+        if (isValidPerk3) queryable = queryable.Where(x => x.Perks.Contains(perk3.ToString()));
+        if (isValidType) queryable = queryable.Where(x => x.ItemType == type);
+        if (isValidWorld) queryable = queryable.Where(x => x.Server == server);
 
-            queryable = queryable.Where(x => x.Perks.Contains(perk3.ToString()));
-        }
-        if (isValidType)
-        {
-            queryable = queryable.Where(x => x.ItemType == type);
-
-        }
-        if (isValidWorld)
-        {
-            queryable = queryable.Where(x => x.Server == server);
-        }
-
-        if (isValidRarity)
-        {
-            queryable = queryable.Where(x => x.Rarity == rarity);
-        }
+        if (isValidRarity) queryable = queryable.Where(x => x.Rarity == rarity);
         return queryable.ToList();
-
     }
 
 
     public Result CreateOrder(CreateOrder request)
     {
         //This hash check can be improved and its not tested so it may not be working correctly
-        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid && x.Hash == request.ItemData.UniqueHash);
+        var exists = _unitOfWork.OrderRepository.Any(x =>
+            x.CharacterGuid == request.CharacterGuid && x.Hash == request.ItemData.UniqueHash);
         if (exists)
-            return Result.Warn("It looks like you already listed this item, if you think this is a mistake contact us.");
+            return Result.Warn(
+                "It looks like you already listed this item, if you think this is a mistake contact us.");
         var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == request.UserGuid);
         if (user == null)
             return Result.Warn("User not found.");
@@ -509,8 +435,7 @@ public class OrderService : IOrderService
             LevelRequirement = request.ItemData.LevelRequirement,
             Tier = request.ItemData.LevelRequirement,
             Rarity = request.ItemData.LevelRequirement,
-            Perks = request.ItemData.PerkString,
-            
+            Perks = request.ItemData.PerkString
         };
 
 
@@ -521,7 +446,7 @@ public class OrderService : IOrderService
         //    return saveResult;
         //return Result.Success();
     }
-    
+
 
     public Result CreateOrderRequest(CreateOrderRequest request)
     {
@@ -538,17 +463,16 @@ public class OrderService : IOrderService
         if (isSelfList)
             return Result.Warn("You cannot create request for your own order.");
         if (order.IsLimitedToVerifiedUsers && !requesterUser.IsVerifiedAccount)
-        {
             return Result.Warn("This order is limited to verified users.");
-        }
-        var orderListerCharacter = _unitOfWork.CharacterRepository.GetFirstOrDefault(x => x.Guid == order.CharacterGuid);
+        var orderListerCharacter =
+            _unitOfWork.CharacterRepository.GetFirstOrDefault(x => x.Guid == order.CharacterGuid);
         if (orderListerCharacter == null)
             return Result.Warn("Order lister user not found.");
         var orderListerUser = orderListerCharacter.User;
 
         var exists = _unitOfWork.OrderRequestRepository
-            .Any(x => x.OrderGuid == order.Guid 
-                      && (x.CharacterGuid == request.CharacterGuid || 
+            .Any(x => x.OrderGuid == order.Guid
+                      && (x.CharacterGuid == request.CharacterGuid ||
                           x.Character.UserGuid == request.UserGuid));
         if (exists)
             return Result.Warn("You already have a pending request for this order.");
@@ -603,7 +527,38 @@ public class OrderService : IOrderService
         return res;
     }
 
-   
+    public ResultData<List<Order>> GetOrdersByUserGuid(byte type, Guid userGuid)
+    {
+        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == userGuid);
+        if (user is null)
+            return Result.Error("User not found");
+        var characterGuidList = user.Characters.Select(x => x.Guid).ToList();
+        return _unitOfWork.OrderRepository.GetOrdered(
+                x => x.Type == type && characterGuidList.Contains(x.CharacterGuid),
+                x => x.OrderByDescending(y => y.RegisterDate))
+            .ToList();
+    }
 
+    public ResultData<List<Order>> GetCancelledOrdersByUserGuid(Guid userGuid)
+    {
+        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == userGuid);
+        if (user is null)
+            return Result.Error("User not found");
 
+        var characterGuidList = user.Characters.Select(x => x.Guid).ToList();
+        return _unitOfWork.OrderRepository.GetOrdered(
+                x => x.Type == 2 && characterGuidList.Contains(x.CharacterGuid),
+                x => x.OrderByDescending(y => y.RegisterDate))
+            .ToList();
+    }
+
+    public ResultData<List<Order>> GetCompletedOrdersByUserGuid(Guid userGuid)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ResultData<List<Order>> GetExpiredOrdersByUserGuid(Guid userGuid)
+    {
+        throw new NotImplementedException();
+    }
 }

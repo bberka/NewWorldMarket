@@ -5,17 +5,20 @@ namespace NewWorld.BiSMarket.Core;
 
 public class ServerMgr
 {
+    private static ServerMgr? Instance;
 
-	private ServerMgr() { }
-	public static ServerMgr This
-	{
-		get
-		{
-			Instance ??= new();
-			return Instance;
-		}
-	}
-	private static ServerMgr? Instance;
+    private ServerMgr()
+    {
+    }
+
+    public static ServerMgr This
+    {
+        get
+        {
+            Instance ??= new ServerMgr();
+            return Instance;
+        }
+    }
 
     public bool IsValidServer(int regionId, int serverId)
     {
@@ -46,6 +49,7 @@ public class ServerMgr
     {
         return ConstMgr.Regions.ToDictionary(x => x.Id, x => x.Name);
     }
+
     public IReadOnlyDictionary<int, string> GetServersAsDictionary(int regionId)
     {
         var region = GetRegion(regionId);

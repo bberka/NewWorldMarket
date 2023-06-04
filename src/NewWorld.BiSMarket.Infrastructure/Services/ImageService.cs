@@ -6,8 +6,6 @@ using NewWorld.BiSMarket.Core.Abstract;
 using NewWorld.BiSMarket.Core.Constants;
 using NewWorld.BiSMarket.Core.Entity;
 using NewWorld.BiSMarket.Core.Models;
-using System.Drawing;
-using Image = NewWorld.BiSMarket.Core.Entity.Image;
 
 namespace NewWorld.BiSMarket.Infrastructure.Services;
 
@@ -19,16 +17,15 @@ public class ImageService : IImageService
     {
         _unitOfWork = unitOfWork;
     }
+
     public ResultData<Image> GetImage(Guid guid)
     {
         return _unitOfWork.ImageRepository.GetById(guid);
     }
+
     public ResultData<Guid> UploadItemImageAndGetImageGuid(Guid userGuid, IFormFile file)
     {
-        if (file is null)
-        {
-            return Result.Fatal("File can not be empty");
-        }
+        if (file is null) return Result.Fatal("File can not be empty");
         switch (file.Length)
         {
             case < 1:
@@ -36,21 +33,16 @@ public class ImageService : IImageService
             case > ConstMgr.MaxImageSize:
                 return Result.Warn("File size can not be bigger than 1MB.");
         }
+
         var fileExtension = Path.GetExtension(file.FileName);
         if (fileExtension is not ".png" and not ".jpg" and not ".jpeg")
-        {
             return Result.Warn("File extension is not supported. Supported extensions png,jpg,jpeg");
-        }
         using var ms = new MemoryStream();
         file.CopyTo(ms);
         var fileBytes = ms.ToArray();
         var ocr = ItemImageOcrV3.Create(fileBytes);
         var readResult = ocr.Read();
-        if (!readResult.IsSuccess)
-        {
-            return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
-
-        }
+        if (!readResult.IsSuccess) return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
         //var bmpImage = new Bitmap(ms);
         //var rect = new Rectangle(0, 0, 140, 140);
         //var icon = bmpImage.Clone(rect, bmpImage.PixelFormat);
@@ -67,24 +59,18 @@ public class ImageService : IImageService
             OcrTextResult = readResult.Data.OcrTextResult,
             OcrItemDataResult = readResult.Data.Item.ToJsonString(),
             UserGuid = userGuid,
-            SmallIconBytes = readResult.Data.IconBytes,
+            SmallIconBytes = readResult.Data.IconBytes
         };
         _unitOfWork.ImageRepository.Insert(dbImage);
         var saveResult = _unitOfWork.Save();
-        if (saveResult.IsFailure)
-        {
-            return Result.Warn(saveResult.ErrorCode, saveResult.Errors);
-        }
+        if (saveResult.IsFailure) return Result.Warn(saveResult.ErrorCode, saveResult.Errors);
         return dbImage.Guid;
     }
 
     public ResultData<ItemV3> GetItemData(Guid imageGuid)
     {
         var image = _unitOfWork.ImageRepository.GetById(imageGuid);
-        if (image is null)
-        {
-            return Result.Error("Image not found");
-        }
+        if (image is null) return Result.Error("Image not found");
         return image.OcrItemDataResult.FromJsonString<ItemV3>();
     }
 }

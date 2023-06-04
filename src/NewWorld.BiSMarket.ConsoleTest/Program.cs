@@ -1,8 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Drawing;
-using System.Drawing.Imaging;
-using AForge.Imaging;
 using NewWorld.BiSMarket.Core;
 
 Console.WriteLine("Hello, World!");
@@ -21,4 +18,3 @@ var result = ocr.Read();
 //var result2 = ocr.Read();
 
 Console.ReadLine();
-

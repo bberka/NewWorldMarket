@@ -6,5 +6,5 @@ public enum AttributeType
     Dexterity,
     Intelligence,
     Focus,
-    Constitution,
+    Constitution
 }

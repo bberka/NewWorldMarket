@@ -14,12 +14,12 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group py-2">
                     <label asp-for="Username" class="control-label text-light"></label>
-                    <input asp-for="Username" type="text" class="form-control" />
+                    <input asp-for="Username" type="text" class="form-control"/>
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="form-group py-2">
                     <label asp-for="Password" class="control-label text-light"></label>
-                    <input asp-for="Password" type="password" class="form-control input-dark" />
+                    <input asp-for="Password" type="password" class="form-control input-dark"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group pt-2">
@@ -33,5 +33,5 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
