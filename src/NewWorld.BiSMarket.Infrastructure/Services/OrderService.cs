@@ -156,6 +156,10 @@ public class OrderService : IOrderService
         var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
+        if (order.Price == price)
+        {
+            return Result.Warn($"Price cannot same as before.");
+        }
         var isOwner = order.Character.UserGuid == userGuid;
         if (!isOwner)
             return DomainResult.Unauthorized;

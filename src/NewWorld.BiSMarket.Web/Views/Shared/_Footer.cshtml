@@ -26,34 +26,13 @@
         <section class="mb-4">
             <!-- Facebook -->
             <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-discord"></i>
             </a>
 
-            <!-- Twitter -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-twitter"></i>
-            </a>
-
-            <!-- Google -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-google"></i>
-            </a>
-
-            <!-- Instagram -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-instagram"></i>
-            </a>
-
-            <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
 
             <!-- Github -->
             <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-github">
-                </i
-                >
+                <i class="fab fa-github"></i>
             </a>
         </section>
         <!-- Section: Social media -->
@@ -74,31 +53,29 @@
             <!--Grid row-->
             <div class="row">
                 <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="col">
                     <h5 class="text-uppercase">Information</h5>
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="#!" class="text-white">Contact</a>
+                            <a asp-action="Contact" asp-controller="Home" class="text-white">Contact</a>
+                        </li>
+                        @*<li>
+                            <a asp-action="About" asp-controller="Home" class="text-white">About</a>
+                        </li>*@
+                        <li>
+                            <a asp-action="Donation" asp-controller="Home" class="text-white">Donation</a>
                         </li>
                         <li>
-                            <a href="#!" class="text-white">About</a>
+                            <a asp-action="FAQ" asp-controller="Home" class="text-white">FAQ</a>
                         </li>
-                        <li>
-                            <a href="#!" class="text-white">Donation</a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-white">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-white">Guide</a>
-                        </li>
+                        
                     </ul>
                 </div>
                 <!--Grid column-->
 
                 <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                @*<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Categories</h5>
 
                     <ul class="list-unstyled mb-0">
@@ -124,40 +101,35 @@
                             <a href="#!" class="text-white">Shields</a>
                         </li>
                     </ul>
-                </div>
+                </div>*@
                 <!--Grid column-->
 
                 <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="col">
                     <h5 class="text-uppercase">Account</h5>
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="#!" class="text-white">Sign Up</a>
+                            <a asp-action="Register" class="text-white">Sign Up</a>
                         </li>
                         <li>
-                            <a href="#!" class="text-white">Sign In</a>
+                            <a asp-action="Login" class="text-white">Sign In</a>
                         </li>
-                        <li>
-                            <a href="#!" class="text-white"></a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-white"></a>
-                        </li>
+                        
                     </ul>
                 </div>
                 <!--Grid column-->
 
                 <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="col">
                     <h5 class="text-uppercase">Legal</h5>
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="#!" class="text-white">Terms of Service</a>
+                            <a asp-action="TermsOfService" class="text-white">Terms of Service</a>
                         </li>
                         <li>
-                            <a href="#!" class="text-white">Privacy Policy</a>
+                            <a asp-action="PrivacyPolicy" class="text-white">Privacy Policy</a>
                         </li>
 
                     </ul>

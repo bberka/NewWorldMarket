@@ -95,4 +95,16 @@ public static class ConstMgr
             return assembly.GetName().Version?.ToString();
         }
     }
+
+    public static string VersionText
+    {
+        get
+        {
+            if (Version?.StartsWith("0.") == true)
+            {
+                return $"v{Version} (beta)";
+            }
+            return $"v{Version}";
+        }
+    }
 }

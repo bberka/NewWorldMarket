@@ -63,13 +63,27 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    [Route("/Contact")]
     public IActionResult Contact()
     {
         return View();
     }
 
     [HttpGet]
+    [Route("/FAQ")]
     public IActionResult FAQ()
+    {
+        return View();
+    }
+    [HttpGet]
+    [Route("/Donation")]
+    public IActionResult Donation()
+    {
+        return View();
+    }
+    [HttpGet]
+    [Route("/About")]
+    public IActionResult About()
     {
         return View();
     }
