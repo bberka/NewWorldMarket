@@ -33,8 +33,8 @@ public class AuthMiddleware
 #if !DEBUG
             else if (status > 403)
 			{
-				context.Response.Redirect("/" + context.Response.StatusCode);
-			}
+				context.Response.Redirect("/"); // + context.Response.StatusCode
+        }
 #endif
         var isApiRequest = uri.Contains("/api/");
         if (status >= 400 && isApiRequest)

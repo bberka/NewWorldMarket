@@ -1,13 +1,6 @@
-﻿using EasMe;
-using EasMe.Extensions;
-using EasMe.Result;
-using NewWorld.BiSMarket.Core;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Constants;
-using NewWorld.BiSMarket.Core.Entity;
-using NewWorld.BiSMarket.Core.Models;
+﻿
 
-namespace NewWorld.BiSMarket.Infrastructure.Services;
+namespace NewWorld.BiSMarket.Business.Services;
 
 public class UserService : IUserService
 {

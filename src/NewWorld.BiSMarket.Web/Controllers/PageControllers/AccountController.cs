@@ -94,7 +94,14 @@ public class AccountController : Controller
     [HttpPost]
     public IActionResult ChangePassword(ChangePassword request)
     {
-        return View();
+        var user = SessionLib.This.GetUser();
+        var result = _userService.ChangePassword(user!.Guid, request);
+        if (result.IsFailure)
+        {
+            ModelState.AddModelError("", result.ErrorCode);
+            return View(request);
+        }
+        return RedirectToAction("Logout", "Account");
     }
 
     [HttpGet]

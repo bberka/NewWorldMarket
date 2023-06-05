@@ -1,15 +1,8 @@
-﻿using EasMe.Extensions;
-using EasMe.Result;
-using Microsoft.EntityFrameworkCore;
-using NewWorld.BiSMarket.Core;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Constants;
-using NewWorld.BiSMarket.Core.Entity;
-using NewWorld.BiSMarket.Core.Models;
-using shortid;
-using shortid.Configuration;
+﻿
 
-namespace NewWorld.BiSMarket.Infrastructure.Services;
+
+
+namespace NewWorld.BiSMarket.Business.Services;
 
 public class OrderService : IOrderService
 {
@@ -156,10 +149,7 @@ public class OrderService : IOrderService
         var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == orderGuid, "Character");
         if (order == null)
             return DomainResult.Order.ErrNotFound;
-        if (order.Price == price)
-        {
-            return Result.Warn($"Price cannot same as before.");
-        }
+        if (order.Price == price) return Result.Warn("Price cannot same as before.");
         var isOwner = order.Character.UserGuid == userGuid;
         if (!isOwner)
             return DomainResult.Unauthorized;

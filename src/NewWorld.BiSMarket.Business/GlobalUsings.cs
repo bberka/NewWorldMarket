@@ -1,0 +1,13 @@
+﻿global using System.Net.Mime;
+global using EasMe.Extensions;
+global using EasMe.Result;
+global using Microsoft.AspNetCore.Http;
+global using NewWorld.BiSMarket.Core;
+global using NewWorld.BiSMarket.Core.Abstract;
+global using NewWorld.BiSMarket.Core.Constants;
+global using NewWorld.BiSMarket.Core.Entity;
+global using NewWorld.BiSMarket.Core.Models;
+global using EasMe;
+global using shortid;
+global using shortid.Configuration;
+global using Microsoft.EntityFrameworkCore;

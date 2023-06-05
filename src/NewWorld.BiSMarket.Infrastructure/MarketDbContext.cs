@@ -16,6 +16,11 @@ public class MarketDbContext : DbContext
     public DbSet<LoginLog> LoginLogs { get; set; }
     public DbSet<SecurityLog> SecurityLogs { get; set; }
 
+    public static bool EnsureCreated()
+    {
+        using var context = new MarketDbContext();
+        return context.Database.EnsureCreated();
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(EasConfig.GetConnectionString("MARKET_DB"));

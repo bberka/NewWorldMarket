@@ -3,9 +3,11 @@ using EasMe.Extensions;
 using EasMe.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NewWorld.BiSMarket.Infrastructure;
 using NewWorld.BiSMarket.Web;
 using NewWorld.BiSMarket.Web.Middleware;
 using WebMarkupMin.AspNetCore6;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -142,4 +144,7 @@ AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledException
         EasLogFactory.StaticLogger.Fatal(e.ToJsonString(), "UnhandledException");
     }
 };
+
+MarketDbContext.EnsureCreated();
+
 app.Run();

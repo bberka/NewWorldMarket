@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NewWorld.BiSMarket.Business\NewWorld.BiSMarket.Business.csproj" />
     <ProjectReference Include="..\NewWorld.BiSMarket.Core\NewWorld.BiSMarket.Core.csproj" />
     <ProjectReference Include="..\NewWorld.BiSMarket.Infrastructure\NewWorld.BiSMarket.Infrastructure.csproj" />
   </ItemGroup>
