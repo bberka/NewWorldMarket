@@ -1,4 +1,6 @@
-﻿<!-- Footer -->
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using NewWorld.BiSMarket.Core.Constants
+<!-- Footer -->
 
 
 @*<footer class="border-top footer text-muted">
@@ -110,10 +112,10 @@
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a asp-action="Register" class="text-white">Sign Up</a>
+                            <a asp-controller="Account" asp-action="Register" class="text-white">Sign Up</a>
                         </li>
                         <li>
-                            <a asp-action="Login" class="text-white">Sign In</a>
+                            <a asp-controller="Account" asp-action="Login" class="text-white">Sign In</a>
                         </li>
                         
                     </ul>
@@ -145,7 +147,8 @@
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2023 Copyright:
-        <a class="text-white" href="#">nwbismarket.com</a>
+        <a class="text-white" href="#">new-world.market</a>
+        <h6 class="font-small">@ConstMgr.VersionText</h6>
     </div>
     <!-- Copyright -->
 </footer>

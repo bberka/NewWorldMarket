@@ -6,7 +6,8 @@
 }
 
 
-<h1 class="text-light text-center p-3">My Orders (@(Model.ActiveBuyOrderList.Count + Model.ActiveSellOrderList.Count) / @ConstMgr.DefaultOrderCountLimit)</h1>
+<div class="px-5">
+    <h4 class="text-light text-center p-3">MY ORDERS (@(Model.ActiveBuyOrderList.Count + Model.ActiveSellOrderList.Count) / @ConstMgr.DefaultOrderCountLimit)</h4>
 
 <!-- Tabs navs -->
 <ul class="nav nav-tabs nav-justified mb-3 border border-secondary " id="ex1" role="tablist">
@@ -88,7 +89,7 @@
     id="ex3-tabs-1"
     role="tabpanel"
     aria-labelledby="ex3-tab-1">
-    <table class="table table-dark table-striped ">
+    <table class="table table-dark table-striped table-activesellorder">
         <thead>
         <tr>
             <th scope="col">Icon</th>
@@ -158,7 +159,7 @@
     </table>
 
 </div>
-<div
+@*<div
     class="tab-pane fade"
     id="ex3-tabs-2"
     role="tabpanel"
@@ -176,7 +177,7 @@
             <th scope="col">Attributes</th>
             <th scope="col">Perks</th>
             <th scope="col">Price</th>
-            @*<th scope="col">Delivery In</th>*@
+            @*<th scope="col">Delivery In</th>
             <th scope="col">Order Id</th>
 
             <th scope="col">Actions</th>
@@ -201,7 +202,7 @@
                 <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
                 <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
                 <td>@item.Price.ConvertPriceToReadableString()</td>
-                @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
+                @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>
                 <td>@item.ShortId</td>
 
                 <td>
@@ -215,14 +216,14 @@
         </tbody>
     </table>
 
-</div>
+</div>*@
 <div
     class="tab-pane fade"
     id="ex3-tabs-3"
     role="tabpanel"
     aria-labelledby="ex3-tab-3">
 
-    <table class="table table-dark table-striped ">
+    <table class="table table-dark table-striped table-completedorder">
         <thead>
         <tr>
             <th scope="col">Icon</th>
@@ -275,7 +276,7 @@
     aria-labelledby="ex4-tab-4">
 
 
-    <table class="table table-dark table-striped ">
+    <table class="table table-dark table-striped table-expiredorder" >
         <thead>
         <tr>
             <th scope="col">Icon</th>
@@ -344,7 +345,7 @@
     role="tabpanel"
     aria-labelledby="ex5-tab-5">
 
-    <table class="table table-dark table-striped ">
+    <table class="table table-dark table-striped table-cancelledorder">
         <thead>
         <tr>
             <th scope="col">Icon</th>
@@ -392,6 +393,7 @@
     </table>
 
 
+</div>
 </div>
 </div>
 <!-- Tabs content -->

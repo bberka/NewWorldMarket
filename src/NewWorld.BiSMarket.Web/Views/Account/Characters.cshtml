@@ -40,8 +40,19 @@
                 <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
                 <td>Not Verified</td>
                 <td>
-                    <a class="btn btn-success btn-verify-character" href="~/Account/VerifyCharacter/@item.Guid">Verify</a>
-                    <a class="btn btn-danger btn-remove-character" data-guid="@item.Guid" data-character-name="@item.Name">Remove</a>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu bg-dark ">
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom btn-remove-character text-danger" data-guid="@item.Guid" data-character-name="@item.Name">Remove</a>
+
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    @*<a class="btn btn-success btn-verify-character" href="~/Account/VerifyCharacter/@item.Guid">Verify</a>*@
                 </td>
 
             </tr>
