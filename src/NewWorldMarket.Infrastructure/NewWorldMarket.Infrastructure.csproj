@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewWorld.BiSMarket.Core\NewWorldMarket.Core.csproj" />
+    <ProjectReference Include="..\NewWorldMarket.Core\NewWorldMarket.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

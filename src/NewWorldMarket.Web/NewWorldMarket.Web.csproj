@@ -23,12 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewWorld.BiSMarket.Business\NewWorldMarket.Business.csproj" />
-    <ProjectReference Include="..\NewWorld.BiSMarket.Core\NewWorldMarket.Core.csproj" />
-    <ProjectReference Include="..\NewWorld.BiSMarket.Infrastructure\NewWorldMarket.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="EasMe">
       <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.dll</HintPath>
     </Reference>
@@ -46,6 +40,12 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Order\UploadItemImage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NewWorldMarket.Business\NewWorldMarket.Business.csproj" />
+    <ProjectReference Include="..\NewWorldMarket.Core\NewWorldMarket.Core.csproj" />
+    <ProjectReference Include="..\NewWorldMarket.Infrastructure\NewWorldMarket.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
