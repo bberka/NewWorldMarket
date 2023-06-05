@@ -1,6 +1,6 @@
 ﻿using EasMe.Result;
 
-namespace NewWorld.BiSMarket.Core;
+namespace NewWorldMarket.Core;
 
 public static class DomainResult
 {

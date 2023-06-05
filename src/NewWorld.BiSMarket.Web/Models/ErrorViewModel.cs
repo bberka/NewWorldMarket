@@ -1,4 +1,4 @@
-namespace NewWorld.BiSMarket.Web.Models;
+namespace NewWorldMarket.Web.Models;
 
 public class ErrorViewModel
 {

@@ -1,8 +1,11 @@
-﻿
+﻿using NewWorldMarket.Core;
+using NewWorldMarket.Core.Abstract;
+using NewWorldMarket.Core.Constants;
+using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Core.Models;
+using NewWorldMarket.Core.Tools;
 
-
-
-namespace NewWorld.BiSMarket.Business.Services;
+namespace NewWorldMarket.Business.Services;
 
 public class OrderService : IOrderService
 {
@@ -15,8 +18,13 @@ public class OrderService : IOrderService
 
     public Result CreateSellOrder(CreateSellOrder request)
     {
+
         request.EstimatedDeliveryTimeHour = ConstMgr.MaxDeliveryTime;
         request.IsGemChangeable = true;
+        if (!request.Confirmation)
+        {
+            return Result.Warn("You must confirm that information matches the screenshot of the item.");
+        }
         //if (request.EstimatedDeliveryTimeHour > ConstMgr.MaxDeliveryTime)
         //{
         //    return Result.Warn($"Estimated delivery time cannot be more than {ConstMgr.MaxDeliveryTime} hours.");
@@ -25,16 +33,20 @@ public class OrderService : IOrderService
         //{
         //    return Result.Warn($"Estimated delivery time cannot be less than 1 hours.");
         //}
-        if (request.Price < 1000) return Result.Warn("Price cannot be less than 1000 coins.");
+        if (request.Price < 1000) return Result.Warn("Price cannot be less than 1000.");
         if (request.Price > ConstMgr.MaxPriceLimit)
-            return Result.Warn($"Price cannot be more than {ConstMgr.MaxPriceLimit} coins.");
-
+            return Result.Warn($"Price cannot be more than {ConstMgr.MaxPriceLimit}.");
+        if (request.GearScore > ConstMgr.MaxGearScore)
+            return Result.Warn($"Gear score cannot be more than {ConstMgr.MaxGearScore}.");
+        if (request.GearScore < ConstMgr.MinGearScore)
+            return Result.Warn($"Gear score cannot be less than {ConstMgr.MinGearScore}.");
         //This hash check can be improved and its not tested so it may not be working correctly
-        var exists = _unitOfWork.OrderRepository.Any(x => x.CharacterGuid == request.CharacterGuid
-                                                          && x.Hash == request.UniqueHash
-                                                          && !x.CancelledDate.HasValue
-                                                          && !x.CompletedDate.HasValue
-                                                          && x.ExpirationDate > DateTime.Now);
+        var exists = _unitOfWork.OrderRepository.Any(x => (x.CharacterGuid == request.CharacterGuid
+                                                           && x.Hash == request.UniqueHash
+                                                           && !x.CancelledDate.HasValue
+                                                           && !x.CompletedDate.HasValue
+                                                           && x.ExpirationDate > DateTime.Now)
+                                                          || x.ImageGuid == request.ImageGuid);
         if (exists)
             return Result.Warn(
                 "It looks like you already listed the same item, if you think this is a mistake contact us.");
@@ -89,7 +101,8 @@ public class OrderService : IOrderService
             RegisterDate = DateTime.Now,
             IsNamed = itemData.IsNamed ?? false,
             GemId = itemData.GemId,
-            Attributes = itemData.AttributeString,
+            Attribute1 = itemData.Attribute1,
+            Attribute2 = itemData.Attribute2,
             CancelledDate = null,
             CompletedDate = null,
             ImageGuid = request.ImageGuid,
@@ -103,7 +116,9 @@ public class OrderService : IOrderService
             LevelRequirement = itemData.LevelRequirement,
             Tier = itemData.Tier,
             Rarity = itemData.Rarity,
-            Perks = itemData.PerkString,
+            Perk1 = itemData.Perk1,
+            Perk2 = itemData.Perk2,
+            Perk3 = itemData.Perk3,
             IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
             ShortId = ShortId.Generate(new GenerationOptions(true, false, 8))
         };
@@ -374,16 +389,12 @@ public class OrderService : IOrderService
             .Include(x => x.Character)
             .AsQueryable();
         //var test = queryable.ToList();
-        if (isValidAttr) queryable = queryable.Where(x => x.Attributes.Contains(attr.ToString()));
-
-
-        if (isValidPerk1) queryable = queryable.Where(x => x.Perks.Contains(perk1.ToString()));
-
-        if (isValidPerk2) queryable = queryable.Where(x => x.Perks.Contains(perk2.ToString()));
-        if (isValidPerk3) queryable = queryable.Where(x => x.Perks.Contains(perk3.ToString()));
+        if (isValidAttr) queryable = queryable.Where(x => x.Attribute1 == attr || x.Attribute2 == attr);
+        if (isValidPerk1) queryable = queryable.Where(x => x.Perk1 == perk1 || x.Perk2 == perk1 || x.Perk3 == perk1);
+        if (isValidPerk2) queryable = queryable.Where(x => x.Perk1 == perk2 || x.Perk2 == perk2 || x.Perk3 == perk2);
+        if (isValidPerk3) queryable = queryable.Where(x => x.Perk1 == perk3 || x.Perk2 == perk3 || x.Perk3 == perk3);
         if (isValidType) queryable = queryable.Where(x => x.ItemType == type);
         if (isValidWorld) queryable = queryable.Where(x => x.Server == server);
-
         if (isValidRarity) queryable = queryable.Where(x => x.Rarity == rarity);
         return queryable.ToList();
     }
@@ -415,7 +426,8 @@ public class OrderService : IOrderService
             RegisterDate = DateTime.Now,
             IsNamed = request.ItemData.IsNamed ?? false,
             GemId = request.ItemData.GemId,
-            Attributes = request.ItemData.AttributeString,
+            Attribute1 = request.ItemData.Attribute1,
+            Attribute2 = request.ItemData.Attribute2,
             CancelledDate = null,
             CompletedDate = null,
             ImageGuid = request.ImageGuid,
@@ -429,7 +441,9 @@ public class OrderService : IOrderService
             LevelRequirement = request.ItemData.LevelRequirement,
             Tier = request.ItemData.LevelRequirement,
             Rarity = request.ItemData.LevelRequirement,
-            Perks = request.ItemData.PerkString
+            Perk1 = request.ItemData.Perk1,
+            Perk2 = request.ItemData.Perk2,
+            Perk3 = request.ItemData.Perk3,
         };
 
 

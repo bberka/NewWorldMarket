@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NewWorld.BiSMarket.Infrastructure;
+using NewWorldMarket.Infrastructure;
 
 #nullable disable
 
-namespace NewWorld.BiSMarket.Infrastructure.Migrations
+namespace NewWorldMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
     partial class MarketDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.BlockedUser", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.BlockedUser", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("BlockedUsers");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Character", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -85,7 +85,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("Character");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.ErrorLog", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.ErrorLog", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("ErrorLogs");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Image", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Image", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.LoginLog", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.LoginLog", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -197,16 +197,17 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("LoginLogs");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Order", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Order", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Attributes")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                    b.Property<int>("Attribute1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Attribute2")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CancelledDate")
                         .HasColumnType("datetime2");
@@ -258,10 +259,14 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Property<int>("LevelRequirement")
                         .HasColumnType("int");
 
-                    b.Property<string>("Perks")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                    b.Property<int>("Perk1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Perk2")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Perk3")
+                        .HasColumnType("int");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -298,7 +303,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.OrderRequest", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.OrderRequest", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -331,7 +336,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("OrderRequests");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.SecurityLog", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.SecurityLog", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -366,7 +371,7 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("SecurityLogs");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.User", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -418,9 +423,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.BlockedUser", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.BlockedUser", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -429,9 +434,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Character", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany("Characters")
                         .HasForeignKey("UserGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -440,9 +445,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Image", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Image", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany("Images")
                         .HasForeignKey("UserGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -451,9 +456,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.LoginLog", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.LoginLog", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -462,15 +467,15 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Order", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Order", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Character", "Character")
+                    b.HasOne("NewWorldMarket.Core.Entity.Character", "Character")
                         .WithMany("Orders")
                         .HasForeignKey("CharacterGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Image", "Image")
+                    b.HasOne("NewWorldMarket.Core.Entity.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -481,15 +486,15 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.OrderRequest", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.OrderRequest", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Character", "Character")
+                    b.HasOne("NewWorldMarket.Core.Entity.Character", "Character")
                         .WithMany("OrderRequests")
                         .HasForeignKey("CharacterGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.Order", "Order")
+                    b.HasOne("NewWorldMarket.Core.Entity.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -500,9 +505,9 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.SecurityLog", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.SecurityLog", b =>
                 {
-                    b.HasOne("NewWorld.BiSMarket.Core.Entity.User", "User")
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -511,14 +516,14 @@ namespace NewWorld.BiSMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.Character", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.Character", b =>
                 {
                     b.Navigation("OrderRequests");
 
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("NewWorld.BiSMarket.Core.Entity.User", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.User", b =>
                 {
                     b.Navigation("Characters");
 

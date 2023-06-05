@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using NewWorld.BiSMarket.Core
-@using NewWorld.BiSMarket.Core.Constants
-@model List<NewWorld.BiSMarket.Core.Entity.Character>
+﻿@model List<Character>
 @{
     ViewData["Title"] = "Characters";
 }
@@ -49,7 +46,7 @@
                                 <a class="dropdown-item dropdown-item-custom btn-remove-character text-danger" data-guid="@item.Guid" data-character-name="@item.Name">Remove</a>
 
                             </li>
-                            
+
                         </ul>
                     </div>
                     @*<a class="btn btn-success btn-verify-character" href="~/Account/VerifyCharacter/@item.Guid">Verify</a>*@

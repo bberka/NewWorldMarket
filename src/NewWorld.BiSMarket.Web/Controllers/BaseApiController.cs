@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace NewWorld.BiSMarket.Web.Controllers;
+namespace NewWorldMarket.Web.Controllers;
 
 [ApiController]
 [Route("/api/[controller]/[action]")]

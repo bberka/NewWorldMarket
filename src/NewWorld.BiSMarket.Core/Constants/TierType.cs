@@ -1,4 +1,4 @@
-﻿namespace NewWorld.BiSMarket.Core.Constants;
+﻿namespace NewWorldMarket.Core.Constants;
 
 public enum TierType
 {

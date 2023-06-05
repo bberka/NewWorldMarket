@@ -1,15 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using NewWorld.BiSMarket.Core;
+using NewWorldMarket.Core.Tools;
 
 Console.WriteLine("Hello, World!");
 
 //PerkOcrExport.Export(@"C:\Users\kkass\OneDrive\Masaüstü\perks", @"C:\Users\kkass\OneDrive\Masaüstü\perks\export.txt");
 
-var path = @"C:\Users\kkass\OneDrive\Masaüstü\NWITems\6.png";
+var path = @"C:\Users\kkass\OneDrive\Masaüstü\NWITems\7.png";
 var imageBytes = File.ReadAllBytes(path);
-var ocr = ItemImageOcrV3.Create(imageBytes);
-ocr.SaveAsImages(@"C:\Users\kkass\OneDrive\Masaüstü\outputOCR\");
+var ocr = ItemImageOcrV4.Create(imageBytes);
+//ocr.SaveAsImages(@"C:\Users\kkass\OneDrive\Masaüstü\outputOCR\");
 var result = ocr.Read();
 
 //var path2 = @"C:\Users\kkass\OneDrive\Masaüstü\NWITems\4.png";

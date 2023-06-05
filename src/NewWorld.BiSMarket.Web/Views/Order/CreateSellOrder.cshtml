@@ -1,100 +1,267 @@
-﻿@using NewWorld.BiSMarket.Core.Constants
-@using NewWorld.BiSMarket.Core
-@model NewWorld.BiSMarket.Core.Models.CreateSellOrder
+﻿
+
+@model NewWorldMarket.Core.Models.CreateSellOrder
 
 @{
     ViewData["Title"] = "Create Sell Order";
-    var isReadItemType = Model.ItemType != -1;
-    var isReadAttributes = !string.IsNullOrEmpty(Model.Attributes);
-    var isReadPerks = !string.IsNullOrEmpty(Model.Perks);
-    var isReadGems = Model.GemId != -1;
-    var isReadGearScore = Model.GearScore != -1;
-    var isReadLevelReq = Model.LevelRequirement != -1;
-    var isReadRarity = Model.Rarity != -1;
-    var isReadTier = Model.Tier != -1;
-
 
 
 }
 
 <div class="container ">
-    <div class="row">
+<div class="row">
 
-        <div class="col-md-4 text-light">
-            <h1 class="text-light">Create Sell Order</h1>
-            <hr class="text-light"/>
+<div class="col-md-4 text-light">
+    <h1 class="text-light">Create Sell Order</h1>
+    <hr class="text-light"/>
 
-            <form asp-action="CreateSellOrder">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @*<input asp-for="UserGuid" class="form-control" />
-            <div class="form-group py-2">
-                <label asp-for="UserGuid" class="control-label"></label>
-                <span asp-validation-for="UserGuid" class="text-danger"></span>
-            </div>*@
-                <input asp-for="ImageGuid" class="form-control d-none"/>
-                <input asp-for="ImageBytesBase64String" class="form-control d-none"/>
+    <form asp-action="CreateSellOrder">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <input asp-for="ImageGuid" class="form-control d-none"/>
+      
+      @* <input asp-for="Perk1" class="form-control d-none"/>
+        <input asp-for="Perk2" class="form-control d-none"/>
+        <input asp-for="Perk3" class="form-control d-none"/>*@
+        <div class="form-group py-2">
+            <label asp-for="CharacterGuid" class="control-label"></label>
+            <select class="form-control" asp-for="CharacterGuid">
+                @foreach (var item in Model.CharactersListForView)
+                {
+                    var region = ServerMgr.This.GetRegion(item.Region).Value;
+                    var server = ServerMgr.This.GetServer(item.Server).Value;
+                    <option value="@item.Guid">@($"{item.Name} {region.Name}:{server.Name}")</option>
+                }
+            </select>
+            <span asp-validation-for="CharacterGuid" class="text-danger"></span>
+        </div>
 
-                <div class="form-group py-2">
-                    <label asp-for="CharacterGuid" class="control-label"></label>
-                    <select class="form-control" asp-for="CharacterGuid">
-                        @foreach (var item in Model.CharactersListForView)
-                        {
-                            var region = ServerMgr.This.GetRegion(item.Region).Value;
-                            var server = ServerMgr.This.GetServer(item.Server).Value;
-                            <option value="@item.Guid">@($"{item.Name} {region.Name}:{server.Name}")</option>
-                        }
-                    </select>
-                    <span asp-validation-for="CharacterGuid" class="text-danger"></span>
-                </div>
+        <div class="form-group py-2">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" type="number" class="form-control"/>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
 
-                @*<div class="form-group py-2">
-                <label asp-for="CharacterGuid" class="control-label"></label>
-                <span asp-validation-for="CharacterGuid" class="text-danger"></span>
-            </div>*@
-                @*      <div class="form-group py-2">
-                <label asp-for="ImageGuid" class="control-label"></label>
-                <span asp-validation-for="ImageGuid" class="text-danger"></span>
-            </div>*@
-                <div class="form-group py-2">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" type="number" class="form-control"/>
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                @*<div class="form-group py-2">
-                    <label asp-for="EstimatedDeliveryTimeHour" class="control-label"></label>
-                    <input asp-for="EstimatedDeliveryTimeHour" class="form-control"/>
-                    <span asp-validation-for="EstimatedDeliveryTimeHour" class="text-danger"></span>
+        <div class="form-group py-2">
+            <label asp-for="ItemType" class="control-label"></label>
+            <select class="form-control" asp-for="ItemType">
+                <option value="-1" selected disabled>Select Item Type</option>
+                @foreach (var item in Enum.GetValues<ItemType>())
+                {
+                    <option value="@((int)item)">@item.ToString().Replace("_", " ")</option>
+                }
+            </select>
+            <span asp-validation-for="ItemType" class="text-danger"></span>
+        </div>
+        <div class="form-group py-2">
+            <label class="control-label">Attribute 1</label>
+            <select class="form-control" asp-for="Attribute1">
+                <option value="-1" selected disabled>None</option>
+                @foreach (var item in Enum.GetValues<AttributeType>())
+                {
+                    <option value="@((int)item)">@item.ToString().Replace("_", " ")</option>
+                }
+            </select>
+            <span asp-validation-for="Attribute1" class="text-danger"></span>
+
+        </div>
+      <div class="form-group py-2">
+          <label class="control-label">Attribute 2</label>
+
+          <select class="form-control" asp-for="Attribute2">
+              <option value="-1" selected>None</option>
+              @foreach (var item in Enum.GetValues<AttributeType>())
+              {
+                  <option value="@((int)item)">@item.ToString().Replace("_", " ")</option>
+              }
+          </select>
+          <span asp-validation-for="Attribute2" class="text-danger"></span>
+      </div>
+      <div class="form-group py-2">
+          <label class="control-label" asp-for="Perk1"></label>
+          <select class="form-control" asp-for="Perk1">
+              <option value="-1" selected disabled>None</option>
+              @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+              {
+                  <option value="@item.Id">@item.EnglishName</option>
+              }
+          </select>
+          <span asp-validation-for="Perk1" class="text-danger"></span>
+      </div>
+      <div class="form-group py-2">
+          <label class="control-label" asp-for="Perk2"></label>
+          <select class="form-control" asp-for="Perk2">
+              <option value="-1" selected disabled>None</option>
+              @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+              {
+                  <option value="@item.Id">@item.EnglishName</option>
+              }
+          </select>
+          <span asp-validation-for="Perk2" class="text-danger"></span>
+      </div>
+      <div class="form-group py-2">
+          <label class="control-label" asp-for="Perk3"></label>
+          <select class="form-control" asp-for="Perk3">
+              <option value="-1" selected>None</option>
+              @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+              {
+                  <option value="@item.Id">@item.EnglishName</option>
+              }
+          </select>
+          <span asp-validation-for="Perk3" class="text-danger"></span>
+      </div>
+@*        <div class="form-group py-2">
+            <label asp-for="Perk1" class="control-label"></label>
+            <div class="btn-group dropdown " data-selection-limit="1" id="dd-perks">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-perk" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Perk 1
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    <li>
+                        <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                    </li>
+                    @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom btn-filter-perk" data-value="@item.Id">@item.EnglishName</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <span asp-validation-for="Perk1" class="text-danger"></span>
+        </div>
+        <div class="form-group py-2">
+            <label asp-for="Perk2" class="control-label"></label>
+            <div class="btn-group dropdown " data-selection-limit="1" id="dd-perks">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-dd-perk" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Perk 2
+                </button>
+                <ul class="dropdown-menu bg-dark ">
+                    <li>
+                        <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                    </li>
+                    @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+                    {
+                        <li>
+                            <a class="dropdown-item dropdown-item-custom btn-filter-perk" data-value="@item.Id">@item.EnglishName</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <span asp-validation-for="Perk2" class="text-danger"></span>
+        </div>
+    <div class="form-group py-2">
+        <label asp-for="Perk3" class="control-label"></label>
+        <div class="btn-group dropdown " data-selection-limit="1" id="dd-perks">
+            <button type="button" class="btn btn-primary dropdown-toggle btn-dd-perk" data-mdb-toggle="dropdown" aria-expanded="false">
+                Perk 3
+            </button>
+            <ul class="dropdown-menu bg-dark ">
+                <li>
+                    <input type="text" id="search-dropdown" class="form-control bg-dark text-light border-0 rounded-5" placeholder="Search...">
+                </li>
+                @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
+                {
+                    <li>
+                        <a class="dropdown-item dropdown-item-custom btn-filter-perk" data-value="@item.Id">@item.EnglishName</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <span asp-validation-for="Perk3" class="text-danger"></span>
+    </div>
+
+*@
+
+
+
+        <div class="form-group py-2">
+            <label asp-for="Rarity" class="control-label"></label>
+            <select class="form-control" asp-for="Rarity">
+                <option value="-1" selected disabled>Select Rarity</option>
+                @foreach (var item in Enum.GetValues<RarityType>())
+                {
+                    <option value="@((int)item)">@item.ToString()</option>
+                }
+            </select>
+            <span asp-validation-for="Rarity" class="text-danger"></span>
+        </div>
+
+
+
+
+        <div class="form-group py-2">
+            <label asp-for="GearScore" class="control-label"></label>
+            <input asp-for="GearScore" min="590" max="600" class="form-control"/>
+            <span asp-validation-for="GearScore" class="text-danger"></span>
+        </div>
+
+      <div class="form-group form-check">
+          <label class="form-check-label">
+              <input class="form-check-input" asp-for="Confirmation"/> @Html.DisplayNameFor(model => model.Confirmation)
+          </label>
+      </div>
+        <div class="form-group pt-2">
+            <input type="submit" value="Confirm" class="btn btn-success m-0"/>
+        </div>
+    </form>
+</div>
+
+<div class="col">
+    <img width="400vh" src="~/api/Image/Get/@Model.ImageGuid"/>
+</div>
+</div>
+
+
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+            
+            
+@*<div class="form-group py-2 
+@if (isReadLevelReq) { <text>d-none</text>}
+                    ">
+                    <label asp-for="LevelRequirement" class="control-label"></label>
+                    <input asp-for="LevelRequirement" readonly class="form-control"/>
+                    <span asp-validation-for="LevelRequirement" class="text-danger"></span>
                 </div>*@
-                <div class="form-group py-2
-@if (isReadItemType) { <text>d-none</text>}
+
+@*<div class="form-group py-2 d-none">
+            <label asp-for="UniqueHash" class="control-label"></label>
+            <input asp-for="UniqueHash" readonly class="form-control"/>
+            <span asp-validation-for="UniqueHash" class="text-danger"></span>
+        </div>*@
+        
+@*<div class="form-group py-2
+@if (isReadTier) { <text>d-none</text>}
 ">
-                    <label asp-for="ItemType" class="control-label"></label>
-                    <select class="form-control" asp-for="ItemType">
-                        @foreach (var item in Enum.GetValues<ItemType>())
+                    <label asp-for="Tier" class="control-label"></label>
+                    <select class="form-control" asp-for="Tier">
+                        @foreach (var item in Enum.GetValues<TierType>())
                         {
-                            <option value="@((int)item)">@item.ToString().Replace("_", " ")</option>
+                            <option value="@((int)item)">@item.ToString()</option>
                         }
                     </select>
-                    <span asp-validation-for="ItemType" class="text-danger"></span>
-                </div>
-                <div class="form-group py-2
-@if (isReadAttributes) { <text>d-none</text>}
-">
-                    <label asp-for="Attributes" class="control-label"></label>
-                    <input asp-for="Attributes" class="form-control"/>
-                    <span asp-validation-for="Attributes" class="text-danger"></span>
-                </div>
-
-
-                <div class="form-group py-2
-@if (isReadPerks) { <text>d-none</text>}
-">
-                    <label asp-for="Perks" class="control-label"></label>
-                    <input asp-for="Perks" class="form-control"/>
-                    <span asp-validation-for="Perks" class="text-danger"></span>
-                </div>
-
-                @*<div class="form-group py-2
+                    <span asp-validation-for="Tier" class="text-danger"></span>
+                </div>*@
+@*<div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsGemChangeable"/> @Html.DisplayNameFor(model => model.IsGemChangeable)
+                    </label>
+                </div>*@
+@*@if (Model.IsNamed == null)
+                {
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsNamed"/> @Html.DisplayNameFor(model => model.IsNamed)
+                        </label>
+                    </div>
+                }*@
+                
+@*<div class="form-group py-2
 @if (isReadGems) { <text>d-none</text>}
 ">
                     <label asp-for="GemId" class="control-label"></label>
@@ -108,127 +275,9 @@
                     </select>
                     <span asp-validation-for="GemId" class="text-danger"></span>
                 </div>*@
-
-
-                @*<div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsGemChangeable"/> @Html.DisplayNameFor(model => model.IsGemChangeable)
-                    </label>
+                
+@*<div class="form-group py-2">
+                    <label asp-for="EstimatedDeliveryTimeHour" class="control-label"></label>
+                    <input asp-for="EstimatedDeliveryTimeHour" class="form-control"/>
+                    <span asp-validation-for="EstimatedDeliveryTimeHour" class="text-danger"></span>
                 </div>*@
-                @*@if (Model.IsNamed == null)
-                {
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsNamed"/> @Html.DisplayNameFor(model => model.IsNamed)
-                        </label>
-                    </div>
-                }*@
-
-
-                <div class="form-group py-2
-@if (isReadRarity) { <text>d-none</text>}
-">
-                    <label asp-for="Rarity" class="control-label"></label>
-                    <select class="form-control" asp-for="Rarity">
-                        @foreach (var item in Enum.GetValues<RarityType>())
-                        {
-                            <option value="@((int)item)">@item.ToString()</option>
-                        }
-                    </select>
-                    <span asp-validation-for="Rarity" class="text-danger"></span>
-                </div>
-
-                @*<div class="form-group py-2
-@if (isReadTier) { <text>d-none</text>}
-">
-                    <label asp-for="Tier" class="control-label"></label>
-                    <select class="form-control" asp-for="Tier">
-                        @foreach (var item in Enum.GetValues<TierType>())
-                        {
-                            <option value="@((int)item)">@item.ToString()</option>
-                        }
-                    </select>
-                    <span asp-validation-for="Tier" class="text-danger"></span>
-                </div>*@
-
-
-                <div class="form-group py-2
-@if (isReadGearScore) { <text>d-none</text>}
-">
-                    <label asp-for="GearScore" class="control-label"></label>
-                    <input asp-for="GearScore" value="590" min="590" max="625" class="form-control"/>
-                    <span asp-validation-for="GearScore" class="text-danger"></span>
-                </div>
-
-                @*<div class="form-group py-2 
-@if (isReadLevelReq) { <text>d-none</text>}
-                    ">
-                    <label asp-for="LevelRequirement" class="control-label"></label>
-                    <input asp-for="LevelRequirement" readonly class="form-control"/>
-                    <span asp-validation-for="LevelRequirement" class="text-danger"></span>
-                </div>*@
-
-                <div class="form-group py-2">
-                    <label asp-for="UniqueHash" class="control-label"></label>
-                    <input asp-for="UniqueHash" readonly class="form-control"/>
-                    <span asp-validation-for="UniqueHash" class="text-danger"></span>
-                </div>
-                <div class="form-group pt-2">
-                    <input type="submit" value="Confirm" class="btn btn-success m-0"/>
-                </div>
-            </form>
-        </div>
-        <div class="col text-light">
-            <h1 class="text-light">Image Read Result</h1>
-            <hr class="text-light"/>
-            <div class="form-group py-2">
-                <label asp-for="ItemType" class="control-label"></label>
-                <input value="@(((ItemType)Model.ItemType).ToString().Replace("_", " "))" readonly class="form-control"/>
-            </div>
-            @*<div class="form-group py-2">
-                <label asp-for="GemId" class="control-label"></label>
-                <input value="@(GemMgr.This.Get(Model.GemId)?.EnglishName)" readonly class="form-control"/>
-            </div>*@
-            <div class="form-group py-2">
-                <label asp-for="GearScore" class="control-label"></label>
-                <input value="@if (Model.GearScore == -1){<text>Could not be read</text>}else {@Model.GearScore}" readonly class="form-control"/>
-            </div>
-            @*<div class="form-group py-2">
-                <label asp-for="LevelRequirement" class="control-label"></label>
-                <input value="@Model.LevelRequirement" readonly class="form-control"/>
-            </div>*@
-            @*<div class="form-group py-2">
-                <label asp-for="IsNamed" class="control-label"></label>
-                <input value="@Model.IsNamed" readonly class="form-control"/>
-            </div>*@
-
-            <div class="form-group py-2">
-                <label asp-for="Rarity" class="control-label"></label>
-                <input value="@(((RarityType)Model.Rarity).ToString())" readonly class="form-control"/>
-            </div>
-            @*<div class="form-group py-2">
-                <label asp-for="Tier" class="control-label"></label>
-                <input value="@(((TierType)Model.Tier).ToString())" readonly class="form-control"/>
-            </div>*@
-            <div class="form-group py-2">
-                <label asp-for="Perks" class="control-label"></label>
-                <textarea readonly class="form-control" style="height: 120px;">@PerkMgr.This.ParsePerkFormattedText(Model.Perks)</textarea>
-            </div>
-            <div class="form-group py-2">
-                <label asp-for="Attributes" class="control-label"></label>
-                <textarea readonly class="form-control" style="height: 90px;">@AttributeMgr.This.ParseAttributeFormattedText(Model.Attributes)</textarea>
-            </div>
-        </div>
-
-        <div class="col">
-            <img width="400vh" src="@Model.GetImageUrl()"/>
-        </div>
-    </div>
-
-
-</div>
-
-
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}

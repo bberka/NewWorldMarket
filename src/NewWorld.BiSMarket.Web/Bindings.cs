@@ -1,8 +1,4 @@
-﻿using NewWorld.BiSMarket.Business.Services;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Infrastructure;
-
-namespace NewWorld.BiSMarket.Web;
+﻿namespace NewWorldMarket.Web;
 
 public static class Bindings
 {

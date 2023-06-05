@@ -1,7 +1,7 @@
 ﻿using EasMe.Logging;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace NewWorld.BiSMarket.Web.Filters;
+namespace NewWorldMarket.Web.Filters;
 
 internal class ExceptionHandleFilter : IExceptionFilter
 {

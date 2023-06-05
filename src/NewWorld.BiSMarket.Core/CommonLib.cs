@@ -2,10 +2,9 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
-using NewWorld.BiSMarket.Core.Constants;
-using Image = System.Drawing.Image;
+using NewWorldMarket.Core.Constants;
 
-namespace NewWorld.BiSMarket.Core;
+namespace NewWorldMarket.Core;
 
 public static class CommonLib
 {

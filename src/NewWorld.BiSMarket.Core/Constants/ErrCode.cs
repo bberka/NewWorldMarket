@@ -1,4 +1,4 @@
-﻿namespace NewWorld.BiSMarket.Core.Constants;
+﻿namespace NewWorldMarket.Core.Constants;
 
 public enum ErrCode
 {
@@ -20,5 +20,8 @@ public enum ErrCode
     OcrTierNotFound,
     OcrTierParseError,
     OcrGemNotFound,
-    OcrPerkNotFound
+    OcrPerkNotFound,
+    OcrGearScoreReadError,
+    OcrGearScoreTooHighError,
+    OcrGearScoreTooLowError
 }

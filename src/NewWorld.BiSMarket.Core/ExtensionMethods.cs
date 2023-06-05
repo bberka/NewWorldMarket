@@ -1,6 +1,6 @@
-﻿using NewWorld.BiSMarket.Core.Constants;
+﻿using NewWorldMarket.Core.Constants;
 
-namespace NewWorld.BiSMarket.Core;
+namespace NewWorldMarket.Core;
 
 public static class ExtensionMethods
 {

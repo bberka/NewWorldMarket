@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NewWorld.BiSMarket.Core.Properties {
+namespace NewWorldMarket.Core.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NewWorld.BiSMarket.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NewWorld.BiSMarket.Core.Properties.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NewWorldMarket.Core.Properties.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,42 +61,52 @@ namespace NewWorld.BiSMarket.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abyssal IV
-        ///Electrified IV
-        ///Empowered IV
-        ///Ignited IV
-        ///Frozen IV
-        ///Arboreal IV
-        ///Brash IV
-        ///Opportunist IV
-        ///Retaliate IV
-        ///Exhilarate IV
-        ///Cruel IV
-        ///Gambit IV
-        ///Rally IV
-        ///Abyssal Ward IV
-        ///Fire Ward IV
-        ///Lightning Ward IV
-        ///Arcane Ward IV
-        ///Ice Ward IV
-        ///Nature Ward IV
-        ///Slash Ward IV
-        ///Strike Ward IV
-        ///Thrust Ward IV
-        ///Physical Ward IV
-        ///Wilderness Ward IV
-        ///Elemental Ward IV
-        ///Spectral Ward IV
+        ///   Looks up a localized string similar to Empty
+        ///Abyssal
+        ///Electrified
+        ///Empowered
+        ///Ignited
+        ///Frozen
+        ///Arborea
+        ///Brash
+        ///Opportunist
+        ///Retaliate
+        ///Exhilarate
+        ///Cruel
+        ///Gambit
+        ///Rally
+        ///Abyssal Ward
+        ///Fire Ward
+        ///Lightning Ward
+        ///Arcane Ward
+        ///Ice Ward
+        ///Nature Ward
+        ///Slash Ward
+        ///Strike Ward
+        ///Thrust Ward
+        ///Physical Ward
+        ///Wilderness Ward
+        ///Elemental Ward
+        ///Spectral Ward
         ///Acid Resistance
-        ///Abyssal III
-        ///Electrified III
-        ///Empowered III
-        ///Ignited III
-        ///Frozen III
-        ///Arboreal III
-        ///Brash III
-        ///Opportunist III
-        ///Re [rest of string was truncated]&quot;;.
+        ///Abyssal
+        ///Electrified
+        ///Empowered
+        ///Ignited
+        ///Frozen
+        ///Arboreal
+        ///BrashI
+        ///Opportunist
+        ///Retaliate
+        ///Exhilarate
+        ///Cruel
+        ///Gambit
+        ///Rally
+        ///Abyssal Ward
+        ///Fire Ward
+        ///Lightning Ward
+        ///Arcane Ward
+        ///Ice Wa [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GemList {
             get {

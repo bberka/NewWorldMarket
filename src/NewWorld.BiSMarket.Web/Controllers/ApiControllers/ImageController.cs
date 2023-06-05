@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewWorld.BiSMarket.Core.Abstract;
 
-namespace NewWorld.BiSMarket.Web.Controllers.ApiControllers;
+namespace NewWorldMarket.Web.Controllers.ApiControllers;
 
 public class ImageController : BaseApiController
 {

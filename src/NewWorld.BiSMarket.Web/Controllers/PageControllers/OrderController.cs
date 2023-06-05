@@ -1,11 +1,8 @@
 ﻿using EasMe.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Entity;
-using NewWorld.BiSMarket.Core.Models;
 
-namespace NewWorld.BiSMarket.Web.Controllers.PageControllers;
+namespace NewWorldMarket.Web.Controllers.PageControllers;
 
 [Authorize]
 public class OrderController : Controller
@@ -68,7 +65,8 @@ public class OrderController : Controller
         {
             CharactersListForView = characters.Data ?? new List<Character>(),
             GearScore = item.GearScore,
-            Attributes = item.AttributeString,
+            Attribute1 = item.Attribute1,
+            Attribute2 = item.Attribute2,
             IsNamed = item.IsNamed ?? false,
             ItemType = item.ItemType,
             LevelRequirement = item.LevelRequirement,
@@ -76,10 +74,12 @@ public class OrderController : Controller
             GemId = item.GemId,
             Rarity = item.Rarity,
             Tier = item.Tier,
-            Perks = item.PerkString,
+            Perk1 = item.Perk1,
+            Perk2 = item.Perk2,
+            Perk3 = item.Perk3,
             UserGuid = user.Guid,
-            ImageGuid = imageGuid,
-            ImageBytesBase64String = image.Data.Bytes.ToBase64String()
+            ImageGuid = imageGuid
+            //ImageBytesBase64String = image.Data.Bytes.ToBase64String()
         };
         return View(createBuyOrder);
     }

@@ -1,11 +1,11 @@
 ﻿using EasMe.EntityFrameworkCore.V2;
 using EasMe.Result;
-using NewWorld.BiSMarket.Core;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Constants;
-using NewWorld.BiSMarket.Core.Entity;
+using NewWorldMarket.Core;
+using NewWorldMarket.Core.Abstract;
+using NewWorldMarket.Core.Constants;
+using NewWorldMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Infrastructure;
+namespace NewWorldMarket.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {

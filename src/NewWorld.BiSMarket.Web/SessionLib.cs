@@ -1,9 +1,8 @@
 ﻿using System.Security.Claims;
 using EasMe;
 using Newtonsoft.Json;
-using NewWorld.BiSMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Web;
+namespace NewWorldMarket.Web;
 
 public class SessionLib
 {

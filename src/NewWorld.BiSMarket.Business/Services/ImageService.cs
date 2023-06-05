@@ -1,4 +1,11 @@
-﻿namespace NewWorld.BiSMarket.Business.Services;
+﻿using NewWorldMarket.Core;
+using NewWorldMarket.Core.Abstract;
+using NewWorldMarket.Core.Constants;
+using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Core.Models;
+using NewWorldMarket.Core.Tools;
+
+namespace NewWorldMarket.Business.Services;
 
 public class ImageService : IImageService
 {
@@ -31,7 +38,7 @@ public class ImageService : IImageService
         using var ms = new MemoryStream();
         file.CopyTo(ms);
         var fileBytes = ms.ToArray();
-        var ocr = ItemImageOcrV3.Create(fileBytes);
+        var ocr = ItemImageOcrV4.Create(fileBytes);
         var readResult = ocr.Read();
         if (!readResult.IsSuccess) return Result.Warn(ErrCode.OcrReadError.ToMessage(), readResult.Errors.ToList());
         //var bmpImage = new Bitmap(ms);

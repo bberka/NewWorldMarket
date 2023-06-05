@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
 
-namespace NewWorld.BiSMarket.Core.Entity;
+namespace NewWorldMarket.Core.Entity;
 
 public class Image : IEntity
 {

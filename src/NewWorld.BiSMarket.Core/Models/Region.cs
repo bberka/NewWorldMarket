@@ -1,4 +1,4 @@
-﻿namespace NewWorld.BiSMarket.Core.Models;
+﻿namespace NewWorldMarket.Core.Models;
 
 public readonly struct Region
 {

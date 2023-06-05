@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Models;
 
-namespace NewWorld.BiSMarket.Web.Controllers.PageControllers;
+namespace NewWorldMarket.Web.Controllers.PageControllers;
 
 [Authorize]
 public class AccountController : Controller
@@ -101,6 +99,7 @@ public class AccountController : Controller
             ModelState.AddModelError("", result.ErrorCode);
             return View(request);
         }
+
         return RedirectToAction("Logout", "Account");
     }
 

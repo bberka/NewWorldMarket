@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NewWorld.BiSMarket.Core.Entity;
+namespace NewWorldMarket.Core.Entity;
 
 public class LoginLog
 {

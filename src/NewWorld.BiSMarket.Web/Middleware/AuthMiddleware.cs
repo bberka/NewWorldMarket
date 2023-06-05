@@ -3,7 +3,7 @@ using EasMe.Extensions;
 using EasMe.Logging;
 using EasMe.Result;
 
-namespace NewWorld.BiSMarket.Web.Middleware;
+namespace NewWorldMarket.Web.Middleware;
 
 public class AuthMiddleware
 {

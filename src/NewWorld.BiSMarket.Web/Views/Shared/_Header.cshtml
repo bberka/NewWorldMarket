@@ -1,11 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using NewWorld.BiSMarket.Core.Constants
 <header>
 
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-color-dark border-bottom box-shadow mb-3">
         <div class="container-fluid">
             <a class="navbar-brand text-secondary" asp-area="" asp-controller="Home" asp-action="Index">
-                New World Market 
+                New World Market
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -30,8 +29,8 @@
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <li class="nav-item px-2">
-                            <div class="btn-group dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <div class="btn-group dropdown dd-menu-ignore">
+                                <button type="button" class="btn btn-primary dropdown-toggle dd-menu-ignore" data-mdb-toggle="dropdown" aria-expanded="false">
                                     Order
                                 </button>
                                 <ul class="dropdown-menu bg-dark ">
@@ -46,8 +45,8 @@
                             </div>
                         </li>
                         <li class="nav-item px-2">
-                            <div class="btn-group dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <div class="btn-group dropdown dd-menu-ignore">
+                                <button type="button" class="btn btn-primary dropdown-toggle dd-menu-ignore" data-mdb-toggle="dropdown" aria-expanded="false">
                                     Hello @User.Identity.Name
                                 </button>
                                 <ul class="dropdown-menu bg-dark ">

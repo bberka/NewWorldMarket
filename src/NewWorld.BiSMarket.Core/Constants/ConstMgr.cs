@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
-using IronOcr;
-using NewWorld.BiSMarket.Core.Models;
-using Color = IronSoftware.Drawing.Color;
+using NewWorldMarket.Core.Models;
 
-namespace NewWorld.BiSMarket.Core.Constants;
+namespace NewWorldMarket.Core.Constants;
 
 public static class ConstMgr
 {
@@ -28,20 +26,23 @@ public static class ConstMgr
     public const float MaxPriceLimit = 500_000.000F;
 
     public const int MaxDeliveryTime = 48;
-    public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
+    public const int MinGearScore = 590;
+    public const int MaxGearScore = 600;
 
-    public static IReadOnlyCollection<Color> ItemTooltipTextColorList = new List<Color>
-    {
-        new(14, 127, 201), //Blue - Perks and attribute color
-        new(255, 255, 255), //White - Desc
-        new(169, 169, 169), //Gray - Some of the texts in desc
-        new(255, 255, 113), //Bright Yellow - Legendary text
-        new(255, 174, 60), // Orange - Legendary item name text
-        new(255, 106, 106), // Red-ish - When GearScore is lower than equipped item
-        new(250, 186, 250), // Bright Pink - Epic text
-        new(255, 73, 255), // Pink  - Epic item name text
-        new(60, 243, 184) // Bright Green - When GearScore is higher than equipped item
-    };
+    //public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
+
+    //public static IReadOnlyCollection<Color> ItemTooltipTextColorList = new List<Color>
+    //{
+    //    new(14, 127, 201), //Blue - Perks and attribute color
+    //    new(255, 255, 255), //White - Desc
+    //    new(169, 169, 169), //Gray - Some of the texts in desc
+    //    new(255, 255, 113), //Bright Yellow - Legendary text
+    //    new(255, 174, 60), // Orange - Legendary item name text
+    //    new(255, 106, 106), // Red-ish - When GearScore is lower than equipped item
+    //    new(250, 186, 250), // Bright Pink - Epic text
+    //    new(255, 73, 255), // Pink  - Epic item name text
+    //    new(60, 243, 184) // Bright Green - When GearScore is higher than equipped item
+    //};
 
 
     public static IReadOnlyCollection<Region> Regions = new List<Region>
@@ -100,10 +101,7 @@ public static class ConstMgr
     {
         get
         {
-            if (Version?.StartsWith("0.") == true)
-            {
-                return $"v{Version} (beta)";
-            }
+            if (Version?.StartsWith("0.") == true) return $"v{Version} (beta)";
             return $"v{Version}";
         }
     }

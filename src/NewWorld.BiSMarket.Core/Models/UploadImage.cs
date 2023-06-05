@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace NewWorld.BiSMarket.Core.Models;
+namespace NewWorldMarket.Core.Models;
 
 public class UploadImage
 {

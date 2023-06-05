@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NewWorld.BiSMarket.Core.Models;
+namespace NewWorldMarket.Core.Models;
 
 public class AddCharacter
 {

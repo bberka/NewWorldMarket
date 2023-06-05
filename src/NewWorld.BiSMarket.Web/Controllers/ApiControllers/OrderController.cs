@@ -1,10 +1,8 @@
 ﻿using EasMe.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Web.Controllers.ApiControllers;
+namespace NewWorldMarket.Web.Controllers.ApiControllers;
 
 public class OrderController : BaseApiController
 {

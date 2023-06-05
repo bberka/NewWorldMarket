@@ -1,9 +1,9 @@
 ﻿using EasMe.Result;
 using Microsoft.AspNetCore.Http;
-using NewWorld.BiSMarket.Core.Models;
-using Image = NewWorld.BiSMarket.Core.Entity.Image;
+using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Core.Models;
 
-namespace NewWorld.BiSMarket.Core.Abstract;
+namespace NewWorldMarket.Core.Abstract;
 
 public interface IImageService
 {

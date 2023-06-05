@@ -3,11 +3,17 @@ using EasMe.Extensions;
 using EasMe.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using NewWorld.BiSMarket.Infrastructure;
-using NewWorld.BiSMarket.Web;
-using NewWorld.BiSMarket.Web.Middleware;
+using NewWorldMarket.Web;
+using NewWorldMarket.Web.Filters;
+using NewWorldMarket.Web.Middleware;
 using WebMarkupMin.AspNetCore6;
 
+var isArgsContainDbCreate = args.Any(x => x == "dbcreate");
+if (isArgsContainDbCreate)
+{
+    MarketDbContext.EnsureCreated();
+    Environment.Exit(0);
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -108,7 +114,7 @@ app.UseSession();
 app.UseMiddleware<AuthMiddleware>();
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 
@@ -145,6 +151,5 @@ AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledException
     }
 };
 
-MarketDbContext.EnsureCreated();
 
 app.Run();

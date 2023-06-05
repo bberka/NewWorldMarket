@@ -1,7 +1,7 @@
 ﻿using EasMe;
-using NewWorld.BiSMarket.Core.Constants;
+using NewWorldMarket.Core.Constants;
 
-namespace NewWorld.BiSMarket.Core.Models;
+namespace NewWorldMarket.Core.Models;
 
 public class Category
 {

@@ -1,6 +1,11 @@
-﻿
+﻿using NewWorldMarket.Core;
+using NewWorldMarket.Core.Abstract;
+using NewWorldMarket.Core.Constants;
+using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Core.Models;
+using NewWorldMarket.Core.Tools;
 
-namespace NewWorld.BiSMarket.Business.Services;
+namespace NewWorldMarket.Business.Services;
 
 public class UserService : IUserService
 {

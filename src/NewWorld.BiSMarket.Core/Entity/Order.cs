@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
 
-namespace NewWorld.BiSMarket.Core.Entity;
+namespace NewWorldMarket.Core.Entity;
 
 public class Order : IEntity
 {
@@ -41,11 +41,15 @@ public class Order : IEntity
 
     public int ItemType { get; set; }
 
-    /// <summary>
-    ///     Format: (AttributeType:AttributeValue,AttributeType:AttributeValue)
-    /// </summary>
-    [MaxLength(12)]
-    public string Attributes { get; set; } = string.Empty;
+    ///// <summary>
+    /////     Format: (AttributeType:AttributeValue,AttributeType:AttributeValue)
+    ///// </summary>
+    ////[MaxLength(12)]
+    public int Attribute1 { get; set; } = -1;
+    public int Attribute2 { get; set; } = -1;
+    public int Perk1 { get; set; } = -1;
+    public int Perk2 { get; set; } = -1;
+    public int Perk3 { get; set; } = -1;
 
     /// <summary>
     ///     GemList.txt GemLineNumber
@@ -61,10 +65,10 @@ public class Order : IEntity
     /// <summary>
     ///     Format: PerkList.txt (PerkLineNumber,PerkLineNumber,PerkLineNumber)
     /// </summary>
-    [MaxLength(12)]
-    public string Perks { get; set; } = string.Empty;
-
+    //[MaxLength(12)]
+    //public string Perks { get; set; } = string.Empty;
     public bool IsNamed { get; set; } = false;
+
     public int Rarity { get; set; } = 0;
     public int Tier { get; set; } = 0;
     public int GearScore { get; set; } = 0;

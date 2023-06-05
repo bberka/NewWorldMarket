@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using EasMe;
+﻿using EasMe;
 using EasMe.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using NewWorld.BiSMarket.Core.Abstract;
-using NewWorld.BiSMarket.Core.Models;
-using NewWorld.BiSMarket.Web.Models;
+using System.Diagnostics;
+using NewWorldMarket.Web.Models;
 
-namespace NewWorld.BiSMarket.Web.Controllers.PageControllers;
+namespace NewWorldMarket.Web.Controllers.PageControllers;
 
 public class HomeController : Controller
 {
@@ -70,25 +68,27 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
     [HttpGet]
     [Route("/FAQ")]
     public IActionResult FAQ()
     {
         return View();
     }
+
     [HttpGet]
     [Route("/Donation")]
     public IActionResult Donation()
     {
         return View();
     }
+
     [HttpGet]
     [Route("/Discord")]
     public IActionResult Discord()
     {
         var discordUrl = EasConfig.GetString("DiscordUrl");
-        if(discordUrl.IsNullOrEmpty()) return RedirectToAction("Index");
+        if (discordUrl.IsNullOrEmpty()) return RedirectToAction("Index");
         return Redirect(discordUrl!);
     }
     //[HttpGet]

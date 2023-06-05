@@ -1,6 +1,6 @@
-﻿using NewWorld.BiSMarket.Core.Entity;
+﻿using NewWorldMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Core.Models;
+namespace NewWorldMarket.Core.Models;
 
 public class ActiveOrderData
 {

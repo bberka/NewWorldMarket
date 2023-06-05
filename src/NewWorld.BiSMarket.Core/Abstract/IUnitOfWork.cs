@@ -1,9 +1,8 @@
 ﻿using EasMe.EntityFrameworkCore.V2;
 using EasMe.Result;
-using NewWorld.BiSMarket.Core.Entity;
-using Image = NewWorld.BiSMarket.Core.Entity.Image;
+using NewWorldMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Core.Abstract;
+namespace NewWorldMarket.Core.Abstract;
 
 public interface IUnitOfWork
 {

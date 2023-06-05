@@ -1,6 +1,6 @@
 ﻿using EasMe;
 
-namespace NewWorld.BiSMarket.Core.Models;
+namespace NewWorldMarket.Core.Models;
 
 public class ItemV3
 {
@@ -12,11 +12,11 @@ public class ItemV3
     /// </summary>
     public int GemId { get; set; } = -1;
 
-    public int Attribute_1 { get; set; } = -1;
-    public int Attribute_2 { get; set; } = -1;
-    public int Perk_1 { get; set; } = -1;
-    public int Perk_2 { get; set; } = -1;
-    public int Perk_3 { get; set; } = -1;
+    public int Attribute1 { get; set; } = -1;
+    public int Attribute2 { get; set; } = -1;
+    public int Perk1 { get; set; } = -1;
+    public int Perk2 { get; set; } = -1;
+    public int Perk3 { get; set; } = -1;
     public bool? IsNamed { get; set; } = null;
     public int Rarity { get; set; } = -1;
     public int Tier { get; set; } = -1;
@@ -28,6 +28,6 @@ public class ItemV3
     /// </summary>
     public string UniqueHash => $"{ItemType}|{AttributeString}|{PerkString}".XXHashAsHexString();
 
-    public string AttributeString => $"{Attribute_1},{Attribute_2}";
-    public string PerkString => $"{Perk_1},{Perk_2},{Perk_3}";
+    internal string AttributeString => $"{Attribute1},{Attribute2}";
+    internal string PerkString => $"{Perk1},{Perk2},{Perk3}";
 }

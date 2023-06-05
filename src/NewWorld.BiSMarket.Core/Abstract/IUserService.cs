@@ -1,8 +1,8 @@
 ﻿using EasMe.Result;
-using NewWorld.BiSMarket.Core.Entity;
-using NewWorld.BiSMarket.Core.Models;
+using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Core.Models;
 
-namespace NewWorld.BiSMarket.Core.Abstract;
+namespace NewWorldMarket.Core.Abstract;
 
 public interface IUserService
 {

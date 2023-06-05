@@ -1,9 +1,9 @@
 ﻿using EasMe;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NewWorld.BiSMarket.Core.Entity;
+using NewWorldMarket.Core.Entity;
 
-namespace NewWorld.BiSMarket.Infrastructure;
+namespace NewWorldMarket.Infrastructure;
 
 public class MarketDbContext : DbContext
 {
@@ -19,8 +19,11 @@ public class MarketDbContext : DbContext
     public static bool EnsureCreated()
     {
         using var context = new MarketDbContext();
-        return context.Database.EnsureCreated();
+        context.Database.EnsureDeleted();
+        context.Database.Migrate();
+        return true;
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(EasConfig.GetConnectionString("MARKET_DB"));

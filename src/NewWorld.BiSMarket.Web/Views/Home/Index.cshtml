@@ -1,8 +1,7 @@
-﻿@using NewWorld.BiSMarket.Core
-@using NewWorld.BiSMarket.Core.Constants
-@model NewWorld.BiSMarket.Core.Models.ActiveOrderData
+﻿
+@model ActiveOrderData
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
 
@@ -223,8 +222,8 @@
                 <td>@ServerMgr.This.GetRegion(item.Region)?.Name</td>
                 <td>@ServerMgr.This.GetServer(item.Server)?.Name</td>
                 <td>@item.GearScore</td>
-                <td>@Html.Raw(AttributeMgr.This.ParseAttributeFormattedTextHtmlRaw(item.Attributes))</td>
-                <td>@Html.Raw(PerkMgr.This.ParsePerkFormattedTextHtmlRaw(item.Perks))</td>
+                <td>@Html.Raw(AttributeMgr.This.GetAsViewText(item.Attribute1,item.Attribute2,"<br/>"))</td>
+                <td>@Html.Raw(PerkMgr.This.GetAsViewText(item.Perk1,item.Perk2,item.Perk3,"<br/>"))</td>
                 <td>@item.Price.ConvertPriceToReadableString()</td>
                 @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
                 <td>@item.ShortId</td>
@@ -291,15 +290,3 @@
 
 
 </div>
-
-@section Scripts {
-    <script src="~/js/image-tooltip.js"></script>
-    <script src="~/js/searchable-dropdown.js"></script>
-    <script src="~/js/order.js"></script>
-
-}
-
-@section Css {
-    <link rel="stylesheet" href="~/css/image-tooltip.css"/>
-    <link rel="stylesheet" href="~/css/searchable-dropdown.css"/>
-}
