@@ -48,4 +48,10 @@
     <ProjectReference Include="..\NewWorldMarket.Infrastructure\NewWorldMarket.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TessData\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

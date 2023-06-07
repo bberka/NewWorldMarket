@@ -41,12 +41,24 @@ public class OrderService : IOrderService
         if (request.GearScore < ConstMgr.MinGearScore)
             return Result.Warn($"Gear score cannot be less than {ConstMgr.MinGearScore}.");
         //This hash check can be improved and its not tested so it may not be working correctly
-        var exists = _unitOfWork.OrderRepository.Any(x => (x.CharacterGuid == request.CharacterGuid
-                                                           && x.Hash == request.UniqueHash
-                                                           && !x.CancelledDate.HasValue
-                                                           && !x.CompletedDate.HasValue
-                                                           && x.ExpirationDate > DateTime.Now)
-                                                          || x.ImageGuid == request.ImageGuid);
+        var image = _unitOfWork.ImageRepository.GetById(request.ImageGuid);
+        if (image == null)
+            return Result.Warn("Image not found.");
+        var itemData = image.OcrItemDataResult.FromJsonString<ItemV3>();
+        if (itemData == null)
+            return Result.Warn("Item data not found.");
+        var exists = _unitOfWork.OrderRepository.Any(x =>
+            (x.Hash == itemData.UniqueHash
+             && !x.CancelledDate.HasValue
+             && !x.CompletedDate.HasValue
+             && x.ExpirationDate > DateTime.Now
+             && x.CharacterGuid == request.CharacterGuid)
+            ||
+            ( !x.CancelledDate.HasValue
+             && !x.CompletedDate.HasValue
+             && x.ExpirationDate > DateTime.Now
+             && x.ImageGuid == request.ImageGuid)
+            );
         if (exists)
             return Result.Warn(
                 "It looks like you already listed the same item, if you think this is a mistake contact us.");
@@ -71,22 +83,18 @@ public class OrderService : IOrderService
                         && x.ExpirationDate > DateTime.Now);
         if (currentOrders >= ConstMgr.DefaultOrderCountLimit)
             return Result.Warn($"You can only list {ConstMgr.DefaultOrderCountLimit} items at a time.");
-        var image = _unitOfWork.ImageRepository.GetById(request.ImageGuid);
-        if (image == null)
-            return Result.Warn("Image not found.");
-        var itemData = image.OcrItemDataResult.FromJsonString<ItemV3>();
-        if (itemData == null)
-            return Result.Warn("Item data not found.");
-        if (itemData.ItemType == -1) itemData.ItemType = request.ItemType;
-        if (itemData.LevelRequirement == -1) itemData.LevelRequirement = request.LevelRequirement;
-        if (itemData.Tier == -1) itemData.Tier = request.Tier;
-        if (itemData.Rarity == -1) itemData.Rarity = request.Rarity;
-        //if(itemData.PerkString == string.Empty) itemData.PerkString = request.Perks;
-        //if(itemData.AttributeString == string.Empty) itemData.Attributes = request.Attributes;
-        if (itemData.GemId == -1) itemData.GemId = request.GemId;
-        //itemData.IsGemChangeable = request.IsGemChangeable;
-        if (itemData.IsNamed == null) itemData.IsNamed = request.IsNamed;
-        if (itemData.GearScore == -1) itemData.GearScore = request.GearScore;
+        
+        //if (itemData.ItemType == -1) itemData.ItemType = request.ItemType;
+        //if (itemData.LevelRequirement == -1) itemData.LevelRequirement = request.LevelRequirement;
+        //if (itemData.Tier == -1) itemData.Tier = request.Tier;
+        //if (itemData.Rarity == -1) itemData.Rarity = request.Rarity;
+
+        ////if(itemData.PerkString == string.Empty) itemData.PerkString = request.Perks;
+        ////if(itemData.AttributeString == string.Empty) itemData.Attributes = request.Attributes;
+        //if (itemData.GemId == -1) itemData.GemId = request.GemId;
+        ////itemData.IsGemChangeable = request.IsGemChangeable;
+        //if (itemData.IsNamed == null) itemData.IsNamed = request.IsNamed;
+        //if (itemData.GearScore == -1) itemData.GearScore = request.GearScore;
 
 
         var oq = new Order
@@ -101,24 +109,24 @@ public class OrderService : IOrderService
             RegisterDate = DateTime.Now,
             IsNamed = itemData.IsNamed ?? false,
             GemId = itemData.GemId,
-            Attribute1 = itemData.Attribute1,
-            Attribute2 = itemData.Attribute2,
+            Attribute1 = request.Attribute1,
+            Attribute2 = request.Attribute2,
             CancelledDate = null,
             CompletedDate = null,
             ImageGuid = request.ImageGuid,
             EstimatedDeliveryTimeHour = request.EstimatedDeliveryTimeHour,
             ExpirationDate = DateTime.Now.AddDays(14),
-            GearScore = itemData.GearScore,
+            GearScore = request.GearScore,
             IsGemChangeable = true,
             IsValid = true,
-            ItemType = itemData.ItemType,
+            ItemType = request.ItemType,
             LastUpdateDate = null,
             LevelRequirement = itemData.LevelRequirement,
             Tier = itemData.Tier,
-            Rarity = itemData.Rarity,
-            Perk1 = itemData.Perk1,
-            Perk2 = itemData.Perk2,
-            Perk3 = itemData.Perk3,
+            Rarity = request.Rarity,
+            Perk1 = request.Perk1,
+            Perk2 = request.Perk2,
+            Perk3 = request.Perk3,
             IsLimitedToVerifiedUsers = false, //TODO: implement verified user stuff
             ShortId = ShortId.Generate(new GenerationOptions(true, false, 8))
         };

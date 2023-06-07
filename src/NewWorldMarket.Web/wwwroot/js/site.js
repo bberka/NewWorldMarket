@@ -263,3 +263,11 @@ function ClearFilter() {
 
 
 }
+
+        function WriteClipboard(text) {
+            navigator.clipboard.writeText(text);
+}
+
+        function CreatePmMessage(seller,price,itemName, orderId) {
+            WriteClipboard(`Hello ${seller}, i want to purchase the ${itemName} for ${price} amount of coins that you have listed at new-world.market website. The order id of the listing is ${orderId}.`);
+        }

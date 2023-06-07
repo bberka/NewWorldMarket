@@ -59,7 +59,7 @@ public class CreateSellOrder
     public int LevelRequirement { get; set; } = -1;
 
     //public string ImageBytesBase64String { get; set; }
-    public string UniqueHash => $"{ItemType}|{AttributeString}|{PerkString}".XXHashAsHexString();
+    //public string UniqueHash => $"{ItemType}|{AttributeString}|{PerkString}".XXHashAsHexString();
 
     public string AttributeString
     {

@@ -203,6 +203,7 @@
             <th scope="col">Price</th>
             @*<th scope="col">Delivery In</th>*@
             <th scope="col">Order Id</th>
+            <th scope="col">Actions</th>
 
             @*<th scope="col">Actions</th>*@
         </tr>
@@ -227,6 +228,31 @@
                 <td>@item.Price.ConvertPriceToReadableString()</td>
                 @*<td>@item.EstimatedDeliveryTimeHour hour(s)</td>*@
                 <td>@item.ShortId</td>
+                <td>
+                    <div class="btn-group dropdown dd-menu-ignore">
+                        <button type="button" class="btn btn-primary dropdown-toggle dd-menu-ignore" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu bg-dark ">
+                           
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom text-success" onclick="CreatePmMessage('@item.Character.Name','@item.Price.ConvertPriceToReadableString()','@ItemMgr.This.GetItemTypeName(item.ItemType)?.Name','@item.ShortId')">Copy Message Text</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom text-success" onclick="WriteClipboard('@item.Character.Name')">Copy Seller Name</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom text-success" onclick="WriteClipboard('@item.ShortId')">Copy Order Id</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item dropdown-item-custom text-danger" href="~/Report?guid=@item.Guid&id=@item.ShortId">Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
 
                 @* <td>
                             <a class="btn btn-secondary">Order</a>

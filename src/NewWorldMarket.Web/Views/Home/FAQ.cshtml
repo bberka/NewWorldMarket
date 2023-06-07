@@ -9,7 +9,7 @@
 <div class="wrap-collabsible">
     <input id="collapsible-1" class="toggle" type="checkbox">
     <label for="collapsible-1" class="lbl-toggle">
-        What is New World Market and why we made it ?
+        What is New World Market and why i made it ?
     </label>
     <div class="collapsible-content">
         <div class="content-inner">
@@ -53,14 +53,14 @@
                         Be aware that item screenshot must be like in the <a href="#">example</a>
                     </li>
                     <li>
-                        In create <a href="#">sell order section</a> you need to upload the screenshot to the website.
+                        In create <a asp-action="CreateSellOrder" asp-controller="Order">sell order section</a> you need to upload the screenshot to the website.
                     </li>
                     <li>
                         This may take a while since the system is going to be processing the image and retrieving the item information from the image.
 
                     </li>
                     <li>
-                        There may be some issues with how the current version of the system is processing the image. You can report the issue in the <a href="#">discord server</a>
+                        There may be some issues with how the current version of the system is processing the image. You can report the issue in the <a href="@LinkMgr.DiscordUrl">discord server</a>
 
                     </li>
                     <li>
@@ -68,7 +68,7 @@
 
                     </li>
                     <li>
-                        You can see your order in the <a href="#">my orders section</a>.
+                        You can see your order in the <a asp-controller="Account" asp-action="MyOrders">my orders section</a>.
 
                     </li>
                     <li>
@@ -121,7 +121,7 @@
                         We have a discord channel for fast and quick communication.
                     </li>
                     <li>
-                        You can join the <a href="#">discord server</a> and report the issue or suggest a feature.
+                        You can join the <a href="@LinkMgr.DiscordUrl">discord server</a> and report the issue or suggest a feature.
                     </li>
                 </ul>
 
@@ -140,7 +140,7 @@
             <p>
                 <ul>
                     <li>
-                        You can contact us through <a href="#">discord server</a> and report the issue. We will solve it as soon as possible.
+                        You can contact us through <a href="@LinkMgr.DiscordUrl">discord server</a> and report the issue. We will solve it as soon as possible.
                     </li>
                 </ul>
             </p>
@@ -212,10 +212,10 @@
 
                     </li>
                     <li>
-                        You can report bugs or suggest features through <a href="#">discord server</a>.
+                        You can report bugs or suggest features through <a href="@LinkMgr.DiscordUrl">discord server</a>.
                     </li>
                     <li>
-                        You can support me financially you can do it through <a href="#">Patreon</a> or <a href="#">Buy me a coffee</a> websites.
+                        You can support me financially you can do it through <a href="@LinkMgr.PatreonUrl">Patreon</a> or <a href="@LinkMgr.BuyMeCoffeeUrlUrl">Buy me a coffee</a> websites.
                     </li>
                     <li>
                         You can also contribute to the project by helping me with the development if you have the knowledge.
@@ -257,7 +257,7 @@
             <p>
                 <ul>
                     <li>
-                        Yes it is. You can find the source code in the <a href="#">github repository</a>.
+                        Yes it is. You can find the source code in the <a href="@LinkMgr.GithubUrl">github repository</a>.
                     </li>
                 </ul>
             </p>
