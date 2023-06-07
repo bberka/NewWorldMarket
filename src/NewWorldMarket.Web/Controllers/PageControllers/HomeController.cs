@@ -62,7 +62,7 @@ public class HomeController : Controller
     [Route("/Contact")]
     public IActionResult Contact()
     {
-        return View();
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
@@ -76,6 +76,8 @@ public class HomeController : Controller
     [Route("/Donation")]
     public IActionResult Donation()
     {
+        return RedirectToAction("Index", "Home");
+
         return View();
     }
 
