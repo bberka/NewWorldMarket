@@ -1,4 +1,4 @@
-# NewWorldMarket
+# New World Market
 New World Market for listing best in slot equip items.
 
 ### Warning
