@@ -15,6 +15,7 @@ public class MarketDbContext : DbContext
     public DbSet<ErrorLog> ErrorLogs { get; set; }
     public DbSet<LoginLog> LoginLogs { get; set; }
     public DbSet<SecurityLog> SecurityLogs { get; set; }
+    public DbSet<OrderReport> OrderReports { get; set; }
 
     public static bool EnsureCreated()
     {

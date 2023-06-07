@@ -139,4 +139,14 @@ public static class CommonLib
 
         return resizedImageBytes;
     }
+
+    public static string GetReportTypeString(OrderReportType orderReportType)
+    {
+        if(orderReportType == OrderReportType.ItemDataMismatch)
+            return "Item information does not match with picture";
+        if(orderReportType == OrderReportType.ItemPictureInvalid)
+            return "Item picture is invalid";
+        return "Unknown";
+    }
+
 }

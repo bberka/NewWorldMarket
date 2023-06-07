@@ -39,9 +39,9 @@ public class AuthMiddleware
         var isApiRequest = uri.Contains("/api/");
         if (status >= 400 && isApiRequest)
         {
-            context.Response.StatusCode = 200;
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(Result.Error("Status Code Error: " + status).ToJsonString());
+            //context.Response.StatusCode = 200;
+            //context.Response.ContentType = "application/json";
+            //await context.Response.WriteAsync(Result.Error("Status Code Error: " + status).ToJsonString());
 
             //logger.Error($"[{status}] {uri}");
         }

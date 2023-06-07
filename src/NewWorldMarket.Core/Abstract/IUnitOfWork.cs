@@ -11,5 +11,7 @@ public interface IUnitOfWork
     public IGenericRepository<OrderRequest> OrderRequestRepository { get; set; }
     public IGenericRepository<Image> ImageRepository { get; set; }
     public IGenericRepository<Character> CharacterRepository { get; set; }
+    public IGenericRepository<OrderReport> OrderReportRepository { get; set; }
+
     public Result Save();
 }

@@ -8,17 +8,20 @@ namespace NewWorldMarket.Web.Controllers.PageControllers;
 public class OrderController : Controller
 {
     private readonly IImageService _imageService;
+    private readonly IOrderReportService _orderReportService;
     private readonly IOrderService _orderService;
     private readonly IUserService _userService;
 
     public OrderController(
         IUserService userService,
         IOrderService orderService,
-        IImageService imageService)
+        IImageService imageService,
+        IOrderReportService orderReportService)
     {
         _userService = userService;
         _orderService = orderService;
         _imageService = imageService;
+        _orderReportService = orderReportService;
     }
 
     [HttpGet]
@@ -102,21 +105,24 @@ public class OrderController : Controller
     }
 
 
-    [HttpGet]
-    public IActionResult CreateBuyOrder()
-    {
-        var user = SessionLib.This.GetUser();
-        var characters = _userService.GetCharacters(user.Guid);
-        var createBuyOrder = new CreateBuyOrder
-        {
-            CharactersListForView = characters.Data ?? new List<Character>()
-        };
-        return View(createBuyOrder);
-    }
+    //[HttpGet]
+    //public IActionResult CreateBuyOrder()
+    //{
+    //    var user = SessionLib.This.GetUser();
+    //    var characters = _userService.GetCharacters(user.Guid);
+    //    var createBuyOrder = new CreateBuyOrder
+    //    {
+    //        CharactersListForView = characters.Data ?? new List<Character>()
+    //    };
+    //    return View(createBuyOrder);
+    //}
 
-    [HttpPost]
-    public IActionResult CreateBuyOrder(CreateBuyOrder request)
-    {
-        throw new NotImplementedException();
-    }
+    //[HttpPost]
+    //public IActionResult CreateBuyOrder(CreateBuyOrder request)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+  
+    
 }

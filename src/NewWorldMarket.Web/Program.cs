@@ -1,7 +1,9 @@
 using EasMe;
 using EasMe.Extensions;
 using EasMe.Logging;
+using EasMe.Result;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NewWorldMarket.Web;
 using NewWorldMarket.Web.Filters;
@@ -18,7 +20,20 @@ if (isArgsContainDbCreate)
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = c =>
+    {
+        var errors = c.ModelState.Values
+            .Where(v => v.Errors.Count > 0)
+            .SelectMany(v => v.Errors)
+            .Select(v => v.ErrorMessage)
+            .ToArray();
+        var firstError = errors.FirstOrDefault();
+        return new OkObjectResult(Result.Warn(firstError));
+    };
+});
+
 builder.Services.AddInfrastructureDependencies();
 builder.Services.AddBusinessDependencies();
 
@@ -61,6 +76,7 @@ builder.Services
         };
     });
 
+builder.Services.AddResponseCaching();
 builder.Services.AddAuthorization();
 
 builder.Services.AddMemoryCache();
@@ -122,9 +138,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseCookiePolicy();
-
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseResponseCaching();
 
 app.MapControllerRoute(
     name: "default",

@@ -6,9 +6,6 @@ public static class Bindings
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddDbContext<MarketDbContext>();
-        serviceCollection.AddScoped<IImageService, ImageService>();
-        serviceCollection.AddScoped<IOrderService, OrderService>();
-        serviceCollection.AddScoped<IUserService, UserService>();
         return serviceCollection;
     }
 
@@ -17,6 +14,7 @@ public static class Bindings
         serviceCollection.AddScoped<IImageService, ImageService>();
         serviceCollection.AddScoped<IOrderService, OrderService>();
         serviceCollection.AddScoped<IUserService, UserService>();
+        serviceCollection.AddScoped<IOrderReportService, OrderReportService>();
         return serviceCollection;
     }
 }

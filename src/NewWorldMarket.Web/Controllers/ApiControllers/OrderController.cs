@@ -7,10 +7,12 @@ namespace NewWorldMarket.Web.Controllers.ApiControllers;
 public class OrderController : BaseApiController
 {
     private readonly IOrderService _orderService;
+    private readonly IOrderReportService _orderReportService;
 
-    public OrderController(IOrderService orderService)
+    public OrderController(IOrderService orderService,IOrderReportService orderReportService)
     {
         _orderService = orderService;
+        _orderReportService = orderReportService;
     }
 
     [HttpGet]
@@ -59,5 +61,11 @@ public class OrderController : BaseApiController
         var user = SessionLib.This.GetUser()!;
         var cancelResult = _orderService.UpdateOrderPrice(user.Guid, guid, price);
         return Ok(cancelResult);
+    }
+    [HttpPost]
+    [AllowAnonymous]
+    public ActionResult<Result> Report(CreateOrderReport report)
+    {
+        return _orderReportService.CreateReport(SessionLib.This.GetUser()?.Guid, report);
     }
 }

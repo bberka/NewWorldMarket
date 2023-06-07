@@ -19,4 +19,10 @@ public static class DomainResult
         public static Result ErrCancelled => Result.Error("Order is cancelled");
         public static Result Cancelled => Result.Error("Order is cancelled successfully");
     }
+    public static class User
+    {
+        public static Result ErrNotFound => Result.Error("User not found");
+
+        
+    }
 }

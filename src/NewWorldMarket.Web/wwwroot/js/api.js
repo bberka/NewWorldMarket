@@ -5,60 +5,75 @@
     $(".btn-update-order").click(UpdateOrder);
     $(".btn-remove-character").click(RemoveCharacter);
     $(".btn-activate-order").click(ActivateOrder);
+    $(".btn-report-order").click(ReportOrder);
 
 
 });
 
-//function LoginForm() {
-//    Swal.fire({
-//        title: '<strong>Login</strong>',
-//        html: `
-//        <input class="form-control" id="Username" class="pt-2" placeholder="Username"/>
-//        <br/>
-//        <input class="form-control" id="Password" class="pt-2" placeholder="Password"/>
-//        `,
-//        background: '#fff',
-//        showCancelButton: true,
-//        focusConfirm: false,
-//        confirmButtonText: 'Login',
-//        cancelButtonText: 'Cancel',
-//    });
-//}
+function ReportOrder(e) {
+    var orderGuid = $(e.target).data("order-guid");
+    var orderId = $(e.target).data("order-id");
+    Swal.fire({
+        icon: "warning",
+        title: "Order Report",
+        html: `
+              <h5>You are creating report for order: ${orderId}</h5>
+              <div class="text-center">
+                  <textarea id="order-report-message" class="m-auto p-auto form-control bg-dark text-light border-0 w-75" style="height:100px" type="text" placeholder="Reason"></textarea>
+              </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+        preConfirm: (login) => {
+            var input = document.getElementById("order-report-message");
+            var message = input.value;
+            var body = {
+                OrderGuid: orderGuid,
+                Message: message
+            };
+            return fetch(`../api/Order/Report`,
+                    {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json"
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        }
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    //console.log(data);
+                    if (data.isSuccess) {
+                        return;
+                    }
+                    throw new Error(data.errorCode);
 
-//function RegisterForm() {
-//    Swal.fire({
-//        title: 'Submit your Github username',
-//        input: 'text',
-//        inputAttributes: {
-//            autocapitalize: 'off'
-//        },
-//        showCancelButton: true,
-//        confirmButtonText: 'Look up',
-//        showLoaderOnConfirm: true,
-//        preConfirm: (login) => {
-//            return fetch(`//api.github.com/users/${login}`)
-//                .then(response => {
-//                    if (!response.ok) {
-//                        throw new Error(response.statusText)
-//                    }
-//                    return response.json()
-//                })
-//                .catch(error => {
-//                    Swal.showValidationMessage(
-//                        `Request failed: ${error}`
-//                    )
-//                })
-//        },
-//        allowOutsideClick: () => !Swal.isLoading()
-//    }).then((result) => {
-//        if (result.isConfirmed) {
-//            Swal.fire({
-//                title: `${result.value.login}'s avatar`,
-//                imageUrl: result.value.avatar_url
-//            })
-//        }
-//    });
-//}
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error.message}`
+                    );
+                });
+        }
+
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+
+            Swal.fire(`You have successfully created report for order: <b>${orderId}`,
+                    "",
+                    "success")
+                .then(() => {
+                    //refresh page
+                    //location.reload();
+
+
+                });
+        }
+    });
+}
+
+
 function ActivateOrder(event) {
     var guid = $(event.target).data("guid");
     const orderId = $(event.target).data("order-id");

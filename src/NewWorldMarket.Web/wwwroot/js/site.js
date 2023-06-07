@@ -9,9 +9,9 @@ $(document).ready(function() {
         var $dropdownMenu = $dropdown.find(".dropdown-menu");
         $dropdownMenu.on("click",
             ".dropdown-item:not(.disabled)",
-            function () {
+            function() {
                 //if has class ignore, skip dd-menu-ignore
-                
+
                 const isAlreadySelected = $(this).hasClass("active-dropdown");
                 const selectionLimit = $dropdown.data("selection-limit");
                 const isAllowMultipleSelection = selectionLimit !== 1;
@@ -87,6 +87,7 @@ $(document).ready(function() {
 
 
 });
+
 
 function ApplyFilterAndSearch() {
     const filter = GetFilter();
@@ -264,10 +265,12 @@ function ClearFilter() {
 
 }
 
-        function WriteClipboard(text) {
-            navigator.clipboard.writeText(text);
+function WriteClipboard(text) {
+    navigator.clipboard.writeText(text);
 }
 
-        function CreatePmMessage(seller,price,itemName, orderId) {
-            WriteClipboard(`Hello ${seller}, i want to purchase the ${itemName} for ${price} amount of coins that you have listed at new-world.market website. The order id of the listing is ${orderId}.`);
-        }
+function CreatePmMessage(seller, price, itemName, orderId) {
+    WriteClipboard(
+        `Hello ${seller}, i want to purchase the ${itemName} for ${price
+        } coins that you have listed at new-world.market website. The order id of the listing is ${orderId}.`);
+}

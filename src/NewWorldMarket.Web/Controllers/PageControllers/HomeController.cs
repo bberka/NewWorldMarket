@@ -50,11 +50,7 @@ public class HomeController : Controller
         return View(model);
     }
 
-    [Route("/{statusCode}")]
-    public IActionResult ErrorCode(int statusCode)
-    {
-        return View();
-    }
+  
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

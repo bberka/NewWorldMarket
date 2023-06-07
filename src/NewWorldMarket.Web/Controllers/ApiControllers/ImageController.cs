@@ -13,6 +13,7 @@ public class ImageController : BaseApiController
 
     [HttpGet]
     [Route("/api/Image/Get/{guid}")]
+    [ResponseCache(Duration = 6000,VaryByQueryKeys = new[]{ "guid"})]
     public IActionResult Get(Guid guid)
     {
         var image = _imageService.GetImage(guid);
@@ -22,6 +23,7 @@ public class ImageController : BaseApiController
 
     [HttpGet]
     [Route("/api/Image/GetIcon/{guid}")]
+    [ResponseCache(Duration = 6000, VaryByQueryKeys = new[] { "guid" })]
     public IActionResult GetIcon(Guid guid)
     {
         var image = _imageService.GetImage(guid);

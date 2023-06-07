@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewWorldMarket.Infrastructure;
 
@@ -11,9 +12,11 @@ using NewWorldMarket.Infrastructure;
 namespace NewWorldMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    partial class MarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230607155834_mg-2")]
+    partial class mg2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,7 +329,7 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UserGuid")
+                    b.Property<Guid>("UserGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Guid");
@@ -531,7 +534,9 @@ namespace NewWorldMarket.Infrastructure.Migrations
 
                     b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany("OrderReports")
-                        .HasForeignKey("UserGuid");
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 

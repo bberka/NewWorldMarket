@@ -36,4 +36,5 @@ public class User : IEntity
 
     public ICollection<Character> Characters { get; set; } = new List<Character>();
     public ICollection<Image> Images { get; set; } = new List<Image>();
+    public ICollection<OrderReport> OrderReports { get; set; } = new List<OrderReport>();
 }
