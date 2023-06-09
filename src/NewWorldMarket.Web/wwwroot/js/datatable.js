@@ -13,8 +13,13 @@
             $(this).attr("id", tableId);
         }
         tableIdList.push(tableId);
-        const table = new DataTable(`#${tableId}`);
-        tableList.push(table);
+        //if table element table-disable-search class
+        var isSearchDisabled = $(this).hasClass("table-disable-search");
+        $('#' + tableId).dataTable({
+            "searching": !isSearchDisabled
+        });
+        //const table = new DataTable(`#${tableId}`);
+        //tableList.push(table);
         count++;
 
     });

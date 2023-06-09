@@ -1,6 +1,8 @@
-﻿using EasMe.Result;
+﻿using EasMe.Extensions;
+using EasMe.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 
 namespace NewWorldMarket.Web.Controllers.ApiControllers;
 
@@ -67,5 +69,19 @@ public class OrderController : BaseApiController
     public ActionResult<Result> Report(CreateOrderReport report)
     {
         return _orderReportService.CreateReport(SessionLib.This.GetUser()?.Guid, report);
+    }
+    [HttpGet]
+    public IActionResult GetSellOrders(
+        [FromQuery] int attr = -1,
+        [FromQuery] int perk1 = -1,
+        [FromQuery] int perk2 = -1,
+        [FromQuery] int perk3 = -1,
+        [FromQuery] int item = -1,
+        [FromQuery] int server = -1,
+        [FromQuery] int rarity = -1
+    )
+    {
+        var result = _orderService.GetFilteredActiveOrders(attr, perk1, perk2, perk3, item, server, rarity);
+        return Ok(Serializer.ToJson(result.Data));
     }
 }

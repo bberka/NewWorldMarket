@@ -404,7 +404,7 @@ public class OrderService : IOrderService
         if (isValidType) queryable = queryable.Where(x => x.ItemType == type);
         if (isValidWorld) queryable = queryable.Where(x => x.Server == server);
         if (isValidRarity) queryable = queryable.Where(x => x.Rarity == rarity);
-        return queryable.ToList();
+        return queryable.Take(100).ToList();
     }
 
 
