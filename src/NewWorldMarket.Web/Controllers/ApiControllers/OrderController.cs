@@ -6,6 +6,7 @@ using NuGet.Protocol;
 
 namespace NewWorldMarket.Web.Controllers.ApiControllers;
 
+[Authorize]
 public class OrderController : BaseApiController
 {
     private readonly IOrderService _orderService;
@@ -30,7 +31,6 @@ public class OrderController : BaseApiController
     //}
 
     [HttpGet]
-    [Authorize]
     public IActionResult CancelOrder(Guid guid)
     {
         var user = SessionLib.This.GetUser()!;
@@ -39,7 +39,6 @@ public class OrderController : BaseApiController
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult CompleteOrder(Guid guid)
     {
         var user = SessionLib.This.GetUser()!;
@@ -48,7 +47,6 @@ public class OrderController : BaseApiController
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult ActivateOrder(Guid guid)
     {
         var user = SessionLib.This.GetUser()!;
@@ -57,7 +55,6 @@ public class OrderController : BaseApiController
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult UpdateOrderPrice(Guid guid, float price)
     {
         var user = SessionLib.This.GetUser()!;

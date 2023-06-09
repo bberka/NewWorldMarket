@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NewWorldMarket.Web.Controllers.ApiControllers;
 
+[Authorize]
 public class AccountController : BaseApiController
 {
     private readonly IUserService _userService;

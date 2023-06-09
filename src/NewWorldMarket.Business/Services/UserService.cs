@@ -41,6 +41,7 @@ public class UserService : IUserService
         userEntity.Email = request.Email;
         userEntity.PasswordHash = request.Password.MD5Hash().ToBase64String();
         userEntity.RegisterDate = DateTime.Now;
+        userEntity.LastLoginDate = DateTime.Now;
         _unitOfWork.UserRepository.Insert(userEntity);
         var result = _unitOfWork.Save();
         if (result.IsFailure) return Result.Error(ErrCode.InternalDbError.ToMessage());
