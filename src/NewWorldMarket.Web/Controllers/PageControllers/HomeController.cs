@@ -62,6 +62,7 @@ public class HomeController : Controller
     [Route("/Contact")]
     public IActionResult Contact()
     {
+        return View();
         return RedirectToAction("Index", "Home");
     }
 
