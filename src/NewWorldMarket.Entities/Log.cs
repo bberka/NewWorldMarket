@@ -9,7 +9,9 @@ public class Log : IEntity
     public Guid Guid { get; set; }
     public DateTime RegisterDate { get; set; } = DateTime.Now;
     public Guid? UserGuid { get; set; }
-    public int LogType { get; set; }
+    public bool SuccessStatus { get; set; } = false;
+    public int Severity { get; set; } = 0;
+    public int ActionType { get; set; }
 
     [MaxLength(1000)] 
     public string Message { get; set; } = string.Empty;

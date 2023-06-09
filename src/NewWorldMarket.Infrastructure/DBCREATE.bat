@@ -1,1 +1,1 @@
-start NewWorld.BiSMarket.Web.exe dbcreate
+start NewWorldMarket.Web.exe dbcreate
