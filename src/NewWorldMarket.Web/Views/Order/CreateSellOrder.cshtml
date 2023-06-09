@@ -24,7 +24,7 @@
         <input asp-for="Perk3" class="form-control d-none"/>*@
         <div class="form-group py-2">
             <label asp-for="CharacterGuid" class="control-label"></label>
-            <select class="form-control" asp-for="CharacterGuid">
+            <select class="form-control bg-dark text-light" asp-for="CharacterGuid">
                 @foreach (var item in Model.CharactersListForView)
                 {
                     var region = ServerMgr.This.GetRegion(item.Region).Value;
@@ -37,13 +37,13 @@
 
         <div class="form-group py-2">
             <label asp-for="Price" class="control-label"></label>
-            <input asp-for="Price" type="number" class="form-control"/>
+            <input asp-for="Price" type="number" class="form-control bg-dark text-light"/>
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
 
         <div class="form-group py-2">
             <label asp-for="ItemType" class="control-label"></label>
-            <select class="form-control" asp-for="ItemType">
+            <select class="form-control bg-dark text-light" asp-for="ItemType">
                 <option value="-1" selected disabled>Select Item Type</option>
                 @foreach (var item in Enum.GetValues<ItemType>())
                 {
@@ -54,7 +54,7 @@
         </div>
         <div class="form-group py-2">
             <label class="control-label">Attribute 1</label>
-            <select class="form-control" asp-for="Attribute1">
+            <select class="form-control bg-dark text-light" asp-for="Attribute1">
                 <option value="-1" selected disabled>None</option>
                 @foreach (var item in Enum.GetValues<AttributeType>())
                 {
@@ -67,7 +67,7 @@
       <div class="form-group py-2">
           <label class="control-label">Attribute 2</label>
 
-          <select class="form-control" asp-for="Attribute2">
+          <select class="form-control bg-dark text-light" asp-for="Attribute2">
               <option value="-1" selected>None</option>
               @foreach (var item in Enum.GetValues<AttributeType>())
               {
@@ -78,7 +78,7 @@
       </div>
       <div class="form-group py-2">
           <label class="control-label" asp-for="Perk1"></label>
-          <select class="form-control" asp-for="Perk1">
+          <select class="form-control bg-dark text-light" asp-for="Perk1">
               <option value="-1" selected disabled>None</option>
               @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
               {
@@ -89,7 +89,7 @@
       </div>
       <div class="form-group py-2">
           <label class="control-label" asp-for="Perk2"></label>
-          <select class="form-control" asp-for="Perk2">
+          <select class="form-control bg-dark text-light" asp-for="Perk2">
               <option value="-1" selected disabled>None</option>
               @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
               {
@@ -100,7 +100,7 @@
       </div>
       <div class="form-group py-2">
           <label class="control-label" asp-for="Perk3"></label>
-          <select class="form-control" asp-for="Perk3">
+          <select class="form-control bg-dark text-light" asp-for="Perk3">
               <option value="-1" selected>None</option>
               @foreach (var item in PerkMgr.This.Perks.OrderBy(x => x.EnglishName))
               {
@@ -176,7 +176,7 @@
 
         <div class="form-group py-2">
             <label asp-for="Rarity" class="control-label"></label>
-            <select class="form-control" asp-for="Rarity">
+            <select class="form-control bg-dark text-light" asp-for="Rarity">
                 <option value="-1" selected disabled>Select Rarity</option>
                 @foreach (var item in Enum.GetValues<RarityType>())
                 {
@@ -191,7 +191,7 @@
 
         <div class="form-group py-2">
             <label asp-for="GearScore" class="control-label"></label>
-            <input asp-for="GearScore" min="590" max="600" class="form-control"/>
+            <input asp-for="GearScore" min="590" max="600" class="form-control bg-dark text-light"/>
             <span asp-validation-for="GearScore" class="text-danger"></span>
         </div>
 
@@ -200,7 +200,7 @@
               <input class="form-check-input" asp-for="Confirmation"/> @Html.DisplayNameFor(model => model.Confirmation)
           </label>
       </div>
-        <div class="form-group pt-2">
+        <div class="form-group pt-4">
             <input type="submit" value="Confirm" class="btn btn-success m-0"/>
         </div>
     </form>
@@ -217,10 +217,12 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/create-sell-order.js"></script>
+
 }
 
-            
-            
+
+
 @*<div class="form-group py-2 
 @if (isReadLevelReq) { <text>d-none</text>}
                     ">
@@ -234,7 +236,7 @@
             <input asp-for="UniqueHash" readonly class="form-control"/>
             <span asp-validation-for="UniqueHash" class="text-danger"></span>
         </div>*@
-        
+
 @*<div class="form-group py-2
 @if (isReadTier) { <text>d-none</text>}
 ">
@@ -260,7 +262,7 @@
                         </label>
                     </div>
                 }*@
-                
+
 @*<div class="form-group py-2
 @if (isReadGems) { <text>d-none</text>}
 ">
@@ -275,7 +277,7 @@
                     </select>
                     <span asp-validation-for="GemId" class="text-danger"></span>
                 </div>*@
-                
+
 @*<div class="form-group py-2">
                     <label asp-for="EstimatedDeliveryTimeHour" class="control-label"></label>
                     <input asp-for="EstimatedDeliveryTimeHour" class="form-control"/>

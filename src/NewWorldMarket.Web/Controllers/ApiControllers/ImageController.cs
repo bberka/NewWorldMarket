@@ -37,8 +37,8 @@ public class ImageController : BaseApiController
     public IActionResult GetIcon(Guid guid)
     {
         var result = _imageService.GetImage(guid);
-        _fileLogger.Log(ActionType.ImageGet, result.Severity, result.ErrorCode);
-        _logService.Log(ActionType.ImageGet, result.Severity, result.ErrorCode);
+        //_fileLogger.Log(ActionType.ImageGet, result.Severity, result.ErrorCode);
+        //_logService.Log(ActionType.ImageGet, result.Severity, result.ErrorCode);
         if (result.IsSuccess) return File(result.Data!.SmallIconBytes, result.Data.ContentType);
         return BadRequest();
     }
