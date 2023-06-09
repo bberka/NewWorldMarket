@@ -3,16 +3,24 @@ using EasMe.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using NewWorldMarket.Web.Models;
+using NewWorldMarket.Core.Constants;
 
 namespace NewWorldMarket.Web.Controllers.PageControllers;
 
 public class HomeController : Controller
 {
     private readonly IOrderService _orderService;
+    private readonly IFileLogger _fileLogger;
+    private readonly ILogService _logService;
 
-    public HomeController(IOrderService orderService)
+    public HomeController(
+        IOrderService orderService,
+        IFileLogger fileLogger,
+        ILogService logService)
     {
         _orderService = orderService;
+        _fileLogger = fileLogger;
+        _logService = logService;
     }
 
     //[Route("/")]
@@ -46,6 +54,8 @@ public class HomeController : Controller
     {
         var model = new ActiveOrderData();
         var result = _orderService.GetFilteredActiveOrders(attr, perk1, perk2, perk3, item, server, rarity);
+        _fileLogger.Log(ActionType.OrderGet, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.OrderGet, result.Severity, result.ErrorCode);
         if (result.IsSuccess) model.SellOrderList = result.Data!;
         return View(model);
     }

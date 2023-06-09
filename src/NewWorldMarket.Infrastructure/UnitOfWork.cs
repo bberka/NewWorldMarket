@@ -67,7 +67,13 @@ public class UnitOfWork : IUnitOfWork
         finally
         {
             transaction.Dispose();
-            _context.Dispose();
+            //_context.Dispose();
         }
+    }
+
+    public async Task<Result> SaveAsync()
+    {
+        var task = Task.Run(Save);
+        return await task;
     }
 }

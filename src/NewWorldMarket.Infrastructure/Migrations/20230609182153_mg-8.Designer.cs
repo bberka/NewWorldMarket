@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewWorldMarket.Infrastructure;
 
@@ -11,9 +12,11 @@ using NewWorldMarket.Infrastructure;
 namespace NewWorldMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    partial class MarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609182153_mg-8")]
+    partial class mg8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,8 +240,8 @@ namespace NewWorldMarket.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserAgent")
-                        .HasMaxLength(258)
-                        .HasColumnType("nvarchar(258)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<Guid?>("UserGuid")
                         .HasColumnType("uniqueidentifier");

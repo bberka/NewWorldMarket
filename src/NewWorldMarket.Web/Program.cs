@@ -16,6 +16,9 @@ if (isArgsContainDbCreate)
     MarketDbContext.EnsureCreated();
     Environment.Exit(0);
 }
+#if DEBUG
+AssemblyActionExtractor.ExtractEnumFromControllerActions();
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
 

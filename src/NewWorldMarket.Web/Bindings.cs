@@ -15,6 +15,8 @@ public static class Bindings
         serviceCollection.AddScoped<IOrderService, OrderService>();
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IOrderReportService, OrderReportService>();
+        serviceCollection.AddScoped<ILogService, LogService>();
+        serviceCollection.AddScoped<IFileLogger, FileLogger>();
         return serviceCollection;
     }
 }

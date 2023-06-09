@@ -1,5 +1,6 @@
 ﻿using EasMe.EntityFrameworkCore.V2;
 using EasMe.Result;
+using Google.Apis.Auth.OAuth2;
 using NewWorldMarket.Entities;
 
 namespace NewWorldMarket.Core.Abstract;
@@ -17,6 +18,6 @@ public interface IUnitOfWork
     public IGenericRepository<BlockedUser> BlockedUserRepository { get; set; }
     public IGenericRepository<EmailVerificationToken> EmailVerificationTokenRepository { get; set; }
     public IGenericRepository<ResetPasswordToken> ResetPasswordTokenRepository { get; set; }
-
-    public Result Save();
+    Result Save();
+    Task<Result> SaveAsync();
 }

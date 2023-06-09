@@ -35,6 +35,9 @@ public class ImageService : IImageService
         var fileExtension = Path.GetExtension(file.FileName);
         if (fileExtension is not ".png" and not ".jpg" and not ".jpeg")
             return Result.Warn("File extension is not supported. Supported extensions png,jpg,jpeg");
+        var isAbleToUpload = _unitOfWork.ImageRepository.Any(x => x.UserGuid == userGuid 
+                                                                  && x.RegisterDate.AddSeconds(15) > DateTime.Now);
+        if (isAbleToUpload) return Result.Warn("You are uploading images too fast, please wait and try again.");
         using var ms = new MemoryStream();
         file.CopyTo(ms);
         var fileBytes = ms.ToArray();

@@ -3,12 +3,10 @@
 public enum ActionType
 {
     None,
-    Login = 100,
-    Logout,
-    Register,
-
-
-    AccountGetOrders = 200,
+    AccountLogin = 100,
+    AccountLogout,
+    AccountRegister,
+    AccountGetOrders,
     AccountGetCharacters,
     AccountVerifyEmail,
     AccountChangePassword,
@@ -21,30 +19,28 @@ public enum ActionType
     AccountLinkSteam,
     AccountUnlinkDiscord,
     AccountUnlinkSteam,
-    AccountGet,
+    AccountSettings,
 
-    BuyOrderCreate = 300,
-    BuyOrderUpdate,
-    BuyOrderCancel,
-    BuyOrderExpire,
-    BuyOrderReport,
-    BuyOrderGet,
-
-
-    SellOrderCreate = 400,
-    SellOrderUpdate,
-    SellOrderCancel,
-    SellOrderExpire,
-    SellOrderReport,
-    SellOrderGet,
-
-    EmailSend = 500,
+    OrderCreate = 300,
+    OrderUpdate,
+    OrderCancel,
+    OrderExpire,
+    OrderReport,
+    OrderGet,
+    OrderComplete,
+    OrderActivate,
+    
+    EmailSend = 400,
     EmailSendEmailVerification,
     EmailSendPasswordReset,
     EmailSendPasswordChanged,
     EmailSendOrderCancel,
 
-
+    ImageGet = 500,
+    ImageUpload,
+    ImageDelete,
+    ImageUpdate,
+    
 
 
 

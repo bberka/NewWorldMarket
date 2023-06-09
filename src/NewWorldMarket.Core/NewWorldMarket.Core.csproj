@@ -14,6 +14,8 @@
 	<ItemGroup>
 		<PackageReference Include="Google.Cloud.RecaptchaEnterprise.V1" Version="2.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.5" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
@@ -29,8 +31,14 @@
 		<Reference Include="EasMe.EntityFrameworkCore">
 		  <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.EntityFrameworkCore.dll</HintPath>
 		</Reference>
+		<Reference Include="EasMe.Logging">
+		  <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Logging.dll</HintPath>
+		</Reference>
 		<Reference Include="EasMe.Result">
 			<HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Result.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+		  <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\6.0.14\ref\net6.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

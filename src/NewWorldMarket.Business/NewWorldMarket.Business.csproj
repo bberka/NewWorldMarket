@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="shortid" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewWorldMarket.Core\NewWorldMarket.Core.csproj" />
+    <ProjectReference Include="..\NewWorldMarket.Infrastructure\NewWorldMarket.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,9 @@
     </Reference>
     <Reference Include="EasMe.EntityFrameworkCore">
       <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="EasMe.Logging">
+      <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Logging.dll</HintPath>
     </Reference>
     <Reference Include="EasMe.Result">
       <HintPath>..\..\..\..\..\build\easme\Release\net6.0\EasMe.Result.dll</HintPath>

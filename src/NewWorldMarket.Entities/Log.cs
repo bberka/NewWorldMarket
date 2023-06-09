@@ -15,6 +15,8 @@ public class Log : IEntity
 
     [MaxLength(1000)] 
     public string Message { get; set; } = string.Empty;
+    [MaxLength(5000)]
+    public string? Data { get; set; } 
 
     [MaxLength(64)]
     public string? RemoteIpAddress { get; set; }
@@ -24,7 +26,7 @@ public class Log : IEntity
     public string? XForwardedForIpAddress { get; set; }
     [MaxLength(64)]
     public string? CfConnectingIpAddress { get; set; }
-    [MaxLength(128)]
+    [MaxLength(258)]
     public string? UserAgent { get; set; }
 
     //Virtual

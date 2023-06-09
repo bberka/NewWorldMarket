@@ -1,8 +1,10 @@
 ﻿using System.Security.Claims;
 using EasMe;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using NewWorldMarket.Entities;
 
-namespace NewWorldMarket.Web;
+namespace NewWorldMarket.Core.Tools;
 
 public class SessionLib
 {
@@ -26,8 +28,8 @@ public class SessionLib
 
     public User? GetUser()
     {
-        var context = new HttpContextAccessor();
-        if (context.HttpContext?.User.Identity is not ClaimsIdentity identity) return null;
+        var context = HttpContextHelper.Current;
+        if (context?.User.Identity is not ClaimsIdentity identity) return null;
         var json = identity.FindFirst("UserJson")?.Value;
         if (json is null) return null;
         var user = JsonConvert.DeserializeObject<User>(json);
@@ -36,7 +38,8 @@ public class SessionLib
 
     public void SetUser(User user)
     {
-        var context = new HttpContextAccessor();
+        var context = HttpContextHelper.Current;
+
         var json = JsonConvert.SerializeObject(user, Formatting.Indented,
             new JsonSerializerSettings
             {
@@ -48,19 +51,20 @@ public class SessionLib
             { ClaimTypes.Name, user.Username }
         };
         var token = _jwt.GenerateJwtToken(dic, 1440);
-        context.HttpContext?.Session.SetString("token", token);
+        context?.Session.SetString("token", token);
     }
 
     public void ClearSession()
     {
-        var context = new HttpContextAccessor();
-        context.HttpContext?.Session.Remove("token");
+        var context = HttpContextHelper.Current;
+
+        context?.Session.Remove("token");
     }
 
     public bool IsAuthenticated()
     {
-        var context = new HttpContextAccessor();
-        var isAuthenticated = context.HttpContext?.User?.Identity?.IsAuthenticated;
+        var context = HttpContextHelper.Current;
+        var isAuthenticated = context?.User?.Identity?.IsAuthenticated;
         if (isAuthenticated is null) return false;
         return true;
     }

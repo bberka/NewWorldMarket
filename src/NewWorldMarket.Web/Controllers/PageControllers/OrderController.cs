@@ -1,6 +1,8 @@
 ﻿using EasMe.Extensions;
+using EasMe.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewWorldMarket.Core.Constants;
 
 namespace NewWorldMarket.Web.Controllers.PageControllers;
 
@@ -9,19 +11,25 @@ public class OrderController : Controller
 {
     private readonly IImageService _imageService;
     private readonly IOrderReportService _orderReportService;
+    private readonly IFileLogger _fileLogger;
+    private readonly ILogService _logService;
     private readonly IOrderService _orderService;
     private readonly IUserService _userService;
-
+    private static readonly IEasLog _logger = EasLogFactory.CreateLogger();
     public OrderController(
         IUserService userService,
         IOrderService orderService,
         IImageService imageService,
-        IOrderReportService orderReportService)
+        IOrderReportService orderReportService,
+        IFileLogger fileLogger,
+        ILogService logService)
     {
         _userService = userService;
         _orderService = orderService;
         _imageService = imageService;
         _orderReportService = orderReportService;
+        _fileLogger = fileLogger;
+        _logService = logService;
     }
 
     [HttpGet]
@@ -34,10 +42,12 @@ public class OrderController : Controller
     public IActionResult UploadItemImage(UploadImage image)
     {
         var user = SessionLib.This.GetUser();
-        var uploadResult = _imageService.UploadItemImageAndGetImageGuid(user.Guid, image.FormFile);
-        if (uploadResult.IsFailure)
+        var result = _imageService.UploadItemImageAndGetImageGuid(user.Guid, image.FormFile);
+        _fileLogger.Log(ActionType.ImageUpload, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.ImageUpload, result.Severity, result.ErrorCode);
+        if (result.IsFailure)
         {
-            ModelState.AddModelError("", uploadResult.ErrorCode);
+            ModelState.AddModelError("", result.ErrorCode);
 
             //foreach (var item in uploadResult.Errors)
             //{
@@ -48,7 +58,7 @@ public class OrderController : Controller
 
         return RedirectToAction("CreateSellOrder", new
         {
-            imageGuid = uploadResult.Data
+            imageGuid = result.Data
         });
     }
 
@@ -93,6 +103,8 @@ public class OrderController : Controller
         var user = SessionLib.This.GetUser();
         request.UserGuid = user.Guid;
         var result = _orderService.CreateSellOrder(request);
+        _fileLogger.Log(ActionType.OrderCreate, result.Severity, result.ErrorCode, request.ImageGuid);
+        _logService.Log(ActionType.OrderCreate, result.Severity, result.ErrorCode, request.ImageGuid);
         if (result.IsFailure)
         {
             var characters = _userService.GetCharacters(user.Guid);

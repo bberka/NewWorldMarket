@@ -21,7 +21,9 @@ public class MarketDbContext : DbContext
     public static bool EnsureCreated()
     {
         using var context = new MarketDbContext();
-        context.Database.EnsureDeleted();
+        Console.WriteLine("Ensuring database exists...");
+        context.Database.EnsureCreated();
+        Console.WriteLine("Migrating database...");
         context.Database.Migrate();
         return true;
     }

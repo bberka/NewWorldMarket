@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EasMe.Logging;
+using EasMe.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewWorldMarket.Core.Constants;
+using static Google.Cloud.RecaptchaEnterprise.V1.AccountVerificationInfo.Types;
 
 namespace NewWorldMarket.Web.Controllers.PageControllers;
 
@@ -7,12 +11,20 @@ namespace NewWorldMarket.Web.Controllers.PageControllers;
 public class AccountController : Controller
 {
     private readonly IOrderService _orderService;
+    private readonly ILogService _logService;
+    private readonly IFileLogger _fileLogger;
     private readonly IUserService _userService;
-
-    public AccountController(IUserService userService, IOrderService orderService)
+    private static readonly IEasLog _logger = EasLogFactory.CreateLogger();
+    public AccountController(
+        IUserService userService, 
+        IOrderService orderService,
+        ILogService logService,
+        IFileLogger fileLogger)
     {
         _userService = userService;
         _orderService = orderService;
+        _logService = logService;
+        _fileLogger = fileLogger;
     }
 
     [HttpGet]
@@ -27,14 +39,15 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult Login(Login request)
     {
-        var loginResult = _userService.Login(request.Username, request.Password);
-        if (loginResult.IsFailure)
+        var result = _userService.Login(request.Username, request.Password);
+        _fileLogger.Log(ActionType.AccountLogin, result.Severity, result.ErrorCode, request.Username);
+        _logService.Log(ActionType.AccountLogin, result.Severity, result.ErrorCode, request.Username);
+        if (result.IsFailure)
         {
-            ModelState.AddModelError("", loginResult.ErrorCode);
+            ModelState.AddModelError("", result.ErrorCode);
             return View(request);
         }
-
-        SessionLib.This.SetUser(loginResult.Data);
+        SessionLib.This.SetUser(result.Data);
         return RedirectToAction("Index", "Home"); //redirect to account page
     }
 
@@ -50,20 +63,24 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult Register(Register request)
     {
-        var registerResult = _userService.Register(request);
-        if (registerResult.IsFailure)
+        var result = _userService.Register(request);
+        _fileLogger.Log(ActionType.AccountRegister, result.Severity, result.ErrorCode, request.Username);
+        _logService.Log(ActionType.AccountRegister, result.Severity, result.ErrorCode, request.Username);
+        if (result.IsFailure)
         {
-            ModelState.AddModelError("", registerResult.ErrorCode);
+            ModelState.AddModelError("", result.ErrorCode);
             return View(request);
         }
 
-        SessionLib.This.SetUser(registerResult.Data);
+        SessionLib.This.SetUser(result.Data);
         return RedirectToAction("Index", "Home"); //redirect to account page
     }
 
     [HttpGet]
     public IActionResult Logout()
     {
+        _fileLogger.Log(ActionType.AccountLogout);
+        _logService.Log(ActionType.AccountLogout);
         SessionLib.This.ClearSession();
         return RedirectToAction("Index", "Home"); //redirect to account page
     }
@@ -72,6 +89,8 @@ public class AccountController : Controller
     public IActionResult Settings()
     {
         var user = SessionLib.This.GetUser();
+        _fileLogger.Log(ActionType.AccountSettings);
+        _logService.Log(ActionType.AccountSettings);
         return View(user);
     }
 
@@ -79,8 +98,10 @@ public class AccountController : Controller
     public IActionResult MyOrders()
     {
         var user = SessionLib.This.GetUser();
-        var orderData = _orderService.GetUserOrderData(user!.Guid);
-        return View(orderData.Data);
+        var result = _orderService.GetUserOrderData(user!.Guid);
+        _fileLogger.Log(ActionType.AccountGetOrders, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.AccountGetOrders, result.Severity, result.ErrorCode);
+        return View(result.Data);
     }
 
     [HttpGet]
@@ -94,12 +115,13 @@ public class AccountController : Controller
     {
         var user = SessionLib.This.GetUser();
         var result = _userService.ChangePassword(user!.Guid, request);
+        _fileLogger.Log(ActionType.AccountChangePassword, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.AccountChangePassword, result.Severity, result.ErrorCode);
         if (result.IsFailure)
         {
             ModelState.AddModelError("", result.ErrorCode);
             return View(request);
         }
-
         return RedirectToAction("Logout", "Account");
     }
 
@@ -107,8 +129,10 @@ public class AccountController : Controller
     public IActionResult Characters()
     {
         var user = SessionLib.This.GetUser();
-        var characters = _userService.GetCharacters(user!.Guid);
-        return View(characters.Data);
+        var result = _userService.GetCharacters(user!.Guid);
+        _fileLogger.Log(ActionType.AccountGetCharacters, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.AccountGetCharacters, result.Severity, result.ErrorCode);
+        return View(result.Data);
     }
 
     [HttpGet]
@@ -122,10 +146,12 @@ public class AccountController : Controller
     {
         var user = SessionLib.This.GetUser();
         request.UserGuid = user!.Guid;
-        var registerResult = _userService.AddCharacter(request);
-        if (registerResult.IsFailure)
+        var result = _userService.AddCharacter(request);
+        _fileLogger.Log(ActionType.AccountAddCharacter, result.Severity, result.ErrorCode);
+        _logService.Log(ActionType.AccountAddCharacter, result.Severity, result.ErrorCode);
+        if (result.IsFailure)
         {
-            ModelState.AddModelError("", registerResult.ErrorCode);
+            ModelState.AddModelError("", result.ErrorCode);
             return View(request);
         }
 
