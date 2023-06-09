@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EasMe.EntityFrameworkCore;
 
 namespace NewWorldMarket.Core.Entity;
 
-public class NotificationSetting
+public class NotificationSetting : IEntity
 {
     [Key]
     public Guid UserGuid { get; set; }

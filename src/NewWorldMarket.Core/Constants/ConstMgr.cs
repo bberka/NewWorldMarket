@@ -29,6 +29,11 @@ public static class ConstMgr
     public const int MinGearScore = 590;
     public const int MaxGearScore = 600;
 
+    public const int EmailVerificationTokenLength = 128;
+    public const int EmailVerificationTokenExpireMinutes = 60;
+
+    public const int ResetPasswordTokenLength = 128;
+    public const int ResetPasswordTokenExpireMinutes = 15;
     //public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
 
     //public static IReadOnlyCollection<Color> ItemTooltipTextColorList = new List<Color>

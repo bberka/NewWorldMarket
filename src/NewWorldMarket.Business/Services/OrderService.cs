@@ -469,7 +469,7 @@ public class OrderService : IOrderService
         var order = _unitOfWork.OrderRepository.GetFirstOrDefault(x => x.Guid == request.OrderGuid);
         if (order == null)
             return Result.Warn("Order not found.");
-        if (!order.IsViewable)
+        if (!order.IsViewable())
             return Result.Warn("This order is not available.");
         var requesterUser = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Guid == request.UserGuid);
         if (requesterUser == null)
@@ -533,9 +533,9 @@ public class OrderService : IOrderService
         //    if (orderRequest.Order == null)
         //        return Result.Warn("Order not found.");
         //}
-        if (orderRequest.IsCancelled)
+        if (orderRequest.IsCancelled())
             return Result.Warn("Order request is cancelled already");
-        if (orderRequest.IsCompleted)
+        if (orderRequest.IsCompleted())
             return Result.Warn("You can not cancel a completed order request.");
         orderRequest.CancelDate = DateTime.Now;
         _unitOfWork.OrderRequestRepository.Update(orderRequest);

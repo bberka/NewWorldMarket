@@ -14,6 +14,9 @@ public class MarketDbContext : DbContext
     public DbSet<Image> Images { get; set; }
     public DbSet<Log> Logs { get; set; }
     public DbSet<OrderReport> OrderReports { get; set; }
+    public DbSet<BlockedIpAddress> BlockedIpAddresses { get; set; }
+    public DbSet<EmailVerificationToken> EmailVerificationTokens { get; set; }
+    public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
 
     public static bool EnsureCreated()
     {

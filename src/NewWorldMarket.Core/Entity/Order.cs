@@ -20,10 +20,7 @@ public class Order : IEntity
     public DateTime ExpirationDate { get; set; }
     public DateTime? CompletedDate { get; set; }
     public DateTime? CancelledDate { get; set; }
-    public bool IsExpired => ExpirationDate != null && ExpirationDate < DateTime.Now;
-    public bool IsCancelled => CancelledDate != null;
-    public bool IsCompleted => CompletedDate != null;
-    public bool IsViewable => !IsExpired && !IsCancelled && !IsCompleted && IsValid;
+
 
     public bool IsLimitedToVerifiedUsers { get; set; } = false;
 
@@ -75,4 +72,11 @@ public class Order : IEntity
     public int LevelRequirement { get; set; } = 0;
 
     [MaxLength(512)] public string Hash { get; set; } = string.Empty;
+
+
+    public bool IsCancelled() => CancelledDate != null;
+    public bool IsCompleted() => CompletedDate != null;
+    public bool IsExpired() => ExpirationDate != null && ExpirationDate < DateTime.Now;
+    public bool IsViewable() => !IsExpired() && !IsCancelled() && !IsCompleted() && IsValid;
+
 }

@@ -13,6 +13,10 @@ public interface IUnitOfWork
     public IGenericRepository<Character> CharacterRepository { get; set; }
     public IGenericRepository<OrderReport> OrderReportRepository { get; set; }
     public IGenericRepository<Log> LogRepository { get; set; }
+    public IGenericRepository<BlockedIpAddress> BlockedIpAddressRepository { get; set; }
+    public IGenericRepository<BlockedUser> BlockedUserRepository { get; set; }
+    public IGenericRepository<EmailVerificationToken> EmailVerificationTokenRepository { get; set; }
+    public IGenericRepository<ResetPasswordToken> ResetPasswordTokenRepository { get; set; }
 
     public Result Save();
 }
