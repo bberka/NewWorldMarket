@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>0.1.4.2</Version>
+		<Version>0.1.4.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Google.Cloud.RecaptchaEnterprise.V1" Version="2.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.5" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

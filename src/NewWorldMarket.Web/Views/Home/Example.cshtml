@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Example";
+}
+
+<div class="container ">
+    <h1 class="text-light">Item Screenshot Examples</h1>
+
+    <hr class=" text-light"/>
+    <div class="row">
+        <div class="col">
+            <img src="~/img/example-2.png" style="width: 455px;" alt="item screenshot example"/>
+        </div>
+        <div class="col">
+            <img src="~/img/example-3.png" style="width: 455px;" alt="item screenshot example"/>
+
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col">
+           <img src="~/img/example-4.png" style="width: 455px;" alt="item screenshot example"/>
+
+        </div>
+        <div class="col">
+           <img src="~/img/example-1.png" style="width: 455px;" alt="item screenshot example"/>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -89,6 +89,12 @@ public class HomeController : Controller
         if (discordUrl.IsNullOrEmpty()) return RedirectToAction("Index");
         return Redirect(discordUrl!);
     }
+    [HttpGet]
+    [Route("/Example")]
+    public IActionResult Example()
+    {
+        return View();
+    }
     //[HttpGet]
     //[Route("/About")]
     //public IActionResult About()
