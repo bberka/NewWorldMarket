@@ -1,6 +1,6 @@
 ﻿using EasMe.Result;
-using NewWorldMarket.Core.Entity;
 using NewWorldMarket.Core.Models;
+using NewWorldMarket.Entities;
 
 namespace NewWorldMarket.Core.Abstract;
 

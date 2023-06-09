@@ -1,4 +1,4 @@
-﻿global using NewWorldMarket.Core.Entity;
+﻿global using NewWorldMarket.Entities;
 global using NewWorldMarket.Core.Tools;
 global using NewWorldMarket.Core.Abstract;
 global using NewWorldMarket.Core.Models;

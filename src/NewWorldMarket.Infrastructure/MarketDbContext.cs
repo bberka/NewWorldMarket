@@ -1,7 +1,7 @@
 ﻿using EasMe;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Entities;
 
 namespace NewWorldMarket.Infrastructure;
 

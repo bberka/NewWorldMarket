@@ -3,7 +3,7 @@ using EasMe.Result;
 using NewWorldMarket.Core;
 using NewWorldMarket.Core.Abstract;
 using NewWorldMarket.Core.Constants;
-using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Entities;
 
 namespace NewWorldMarket.Infrastructure;
 

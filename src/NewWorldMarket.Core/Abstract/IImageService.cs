@@ -1,6 +1,6 @@
 ﻿using EasMe.Result;
 using Microsoft.AspNetCore.Http;
-using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Entities;
 using NewWorldMarket.Core.Models;
 
 namespace NewWorldMarket.Core.Abstract;

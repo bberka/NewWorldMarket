@@ -1,7 +1,7 @@
 ﻿using NewWorldMarket.Core;
 using NewWorldMarket.Core.Abstract;
 using NewWorldMarket.Core.Constants;
-using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Entities;
 using NewWorldMarket.Core.Models;
 
 namespace NewWorldMarket.Business.Services;

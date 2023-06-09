@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
-using NewWorldMarket.Core.Constants;
 
-namespace NewWorldMarket.Core.Entity;
+namespace NewWorldMarket.Entities;
 
-public class EmailVerificationToken : IEntity
+public class ResetPasswordToken : IEntity
 {
     [Key]
     public Guid Guid { get; set; }
     public DateTime RegisterDate { get; set; } = DateTime.Now;
     public DateTime ExpireDate { get; set; }
     public Guid UserGuid { get; set; }
-    [MaxLength(ConstMgr.EmailVerificationTokenLength)]
+    [MaxLength(128)]
     public string Token { get; set; } = string.Empty;
     public bool IsUsed { get; set; }
     public bool IsExpired() => DateTime.Now > ExpireDate;

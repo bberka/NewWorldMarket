@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe;
-using NewWorldMarket.Core.Entity;
+using NewWorldMarket.Entities;
 
 namespace NewWorldMarket.Core.Models;
 

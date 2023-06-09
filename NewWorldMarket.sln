@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewWorldMarket.ConsoleTest"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewWorldMarket.Web", "src\NewWorldMarket.Web\NewWorldMarket.Web.csproj", "{EE0CF195-5BBD-4673-8D4C-37901FF2AB95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewWorldMarket.Discord.Bot", "src\NewWorldMarket.Discord.Bot\NewWorldMarket.Discord.Bot.csproj", "{8618DBB1-20D9-43BF-B875-8C15790B7F91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewWorldMarket.Entities", "src\NewWorldMarket.Entities\NewWorldMarket.Entities.csproj", "{B6E58ACD-FBEF-4619-821A-92709050B6FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{EE0CF195-5BBD-4673-8D4C-37901FF2AB95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE0CF195-5BBD-4673-8D4C-37901FF2AB95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE0CF195-5BBD-4673-8D4C-37901FF2AB95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8618DBB1-20D9-43BF-B875-8C15790B7F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8618DBB1-20D9-43BF-B875-8C15790B7F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8618DBB1-20D9-43BF-B875-8C15790B7F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8618DBB1-20D9-43BF-B875-8C15790B7F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6E58ACD-FBEF-4619-821A-92709050B6FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E58ACD-FBEF-4619-821A-92709050B6FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E58ACD-FBEF-4619-821A-92709050B6FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E58ACD-FBEF-4619-821A-92709050B6FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -34,6 +34,7 @@ public static class ConstMgr
 
     public const int ResetPasswordTokenLength = 128;
     public const int ResetPasswordTokenExpireMinutes = 15;
+    public const string ApiSecretHeaderName = "NWM-Api-Key";
     //public static OcrLanguage DefaultOcrLanguage = OcrLanguage.EnglishBest;
 
     //public static IReadOnlyCollection<Color> ItemTooltipTextColorList = new List<Color>

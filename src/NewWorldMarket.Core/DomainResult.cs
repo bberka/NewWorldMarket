@@ -8,6 +8,7 @@ public static class DomainResult
     public static Result InvalidOperation => Result.Error("ErrInvalidOperation");
     public static Result NotFound => Result.Error("ErrNotFound");
     public static Result InvalidRequest => Result.Error("ErrInvalidRequest");
+    public static Result NotImplemented => Result.Error("ErrNotImplemented");
 
     public static class Order
     {

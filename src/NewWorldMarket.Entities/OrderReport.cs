@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
-using NewWorldMarket.Core.Constants;
 
-namespace NewWorldMarket.Core.Entity;
+namespace NewWorldMarket.Entities;
 
 public class OrderReport : IEntity
 {
@@ -15,7 +14,7 @@ public class OrderReport : IEntity
     public DateTime RegisterDate { get; set; } = DateTime.Now;
     [MaxLength(1000)]
     public string Message { get; set; }
-    public int State { get; set; } = (int)OrderReportState.Pending;
+    public int State { get; set; } = 0; //Pending state
     public int Type { get; set; }
 
     public DateTime? LastUpdateDate { get; set; }

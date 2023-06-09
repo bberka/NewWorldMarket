@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
 
-namespace NewWorldMarket.Core.Entity;
+namespace NewWorldMarket.Entities;
 
 public class User : IEntity
 {

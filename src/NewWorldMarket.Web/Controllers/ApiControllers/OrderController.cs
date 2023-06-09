@@ -17,17 +17,17 @@ public class OrderController : BaseApiController
         _orderReportService = orderReportService;
     }
 
-    [HttpGet]
-    public ActionResult<ResultData<List<Order>>> GetMainPageSellOrders(int page)
-    {
-        return _orderService.GetMainPageSellOrders(page: page);
-    }
+    //[HttpGet]
+    //public ActionResult<ResultData<List<Order>>> GetMainPageSellOrders(int page)
+    //{
+    //    return _orderService.GetMainPageSellOrders(page: page);
+    //}
 
-    [HttpGet]
-    public ActionResult<ResultData<List<Order>>> GetMainPageBuyOrders(int page)
-    {
-        return _orderService.GetMainPageBuyOrders(page: page);
-    }
+    //[HttpGet]
+    //public ActionResult<ResultData<List<Order>>> GetMainPageBuyOrders(int page)
+    //{
+    //    return _orderService.GetMainPageBuyOrders(page: page);
+    //}
 
     [HttpGet]
     [Authorize]
@@ -71,18 +71,18 @@ public class OrderController : BaseApiController
         var info = HttpContext.GetInfo();
         return _orderReportService.CreateReport(SessionLib.This.GetUser()?.Guid, report, info);
     }
-    [HttpGet]
-    public IActionResult GetSellOrders(
-        [FromQuery] int attr = -1,
-        [FromQuery] int perk1 = -1,
-        [FromQuery] int perk2 = -1,
-        [FromQuery] int perk3 = -1,
-        [FromQuery] int item = -1,
-        [FromQuery] int server = -1,
-        [FromQuery] int rarity = -1
-    )
-    {
-        var result = _orderService.GetFilteredActiveOrders(attr, perk1, perk2, perk3, item, server, rarity);
-        return Ok(Serializer.ToJson(result.Data));
-    }
+    //[HttpGet]
+    //public IActionResult GetSellOrders(
+    //    [FromQuery] int attr = -1,
+    //    [FromQuery] int perk1 = -1,
+    //    [FromQuery] int perk2 = -1,
+    //    [FromQuery] int perk3 = -1,
+    //    [FromQuery] int item = -1,
+    //    [FromQuery] int server = -1,
+    //    [FromQuery] int rarity = -1
+    //)
+    //{
+    //    var result = _orderService.GetFilteredActiveOrders(attr, perk1, perk2, perk3, item, server, rarity);
+    //    return Ok(Serializer.ToJson(result.Data));
+    //}
 }
