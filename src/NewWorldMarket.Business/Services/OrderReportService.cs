@@ -14,7 +14,7 @@ public class OrderReportService : IOrderReportService
     {
         _unitOfWork = unitOfWork;
     }
-    public Result CreateReport(Guid? userGuid, CreateOrderReport request)
+    public Result CreateReport(Guid? userGuid, CreateOrderReport request, RequestInformation information)
     {
         
         if (userGuid is not null)
@@ -39,6 +39,13 @@ public class OrderReportService : IOrderReportService
             Message = request.Message,
             Type = (int)OrderReportType.None,
             State = (int)OrderReportState.Pending,
+            RegisterDate = DateTime.Now,
+            LastUpdateDate = null,
+            CfConnectingIpAddress = information.CfConnectingIpAddress,
+            RemoteIpAddress = information.RemoteIpAddress,
+            UserAgent = information.UserAgent,
+            XForwardedForIpAddress = information.XForwardedForIpAddress,
+            XRealIpAddress = information.XRealIpAddress
         };
         _unitOfWork.OrderReportRepository.Insert(orderReport);
         var result = _unitOfWork.Save();

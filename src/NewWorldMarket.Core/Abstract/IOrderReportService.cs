@@ -5,5 +5,5 @@ namespace NewWorldMarket.Core.Abstract;
 
 public interface IOrderReportService
 {
-    Result CreateReport(Guid? userGuid, CreateOrderReport request);
+    Result CreateReport(Guid? userGuid, CreateOrderReport request,RequestInformation information);
 }

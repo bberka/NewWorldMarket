@@ -68,7 +68,8 @@ public class OrderController : BaseApiController
     [AllowAnonymous]
     public ActionResult<Result> Report(CreateOrderReport report)
     {
-        return _orderReportService.CreateReport(SessionLib.This.GetUser()?.Guid, report);
+        var info = HttpContext.GetInfo();
+        return _orderReportService.CreateReport(SessionLib.This.GetUser()?.Guid, report, info);
     }
     [HttpGet]
     public IActionResult GetSellOrders(

@@ -12,9 +12,7 @@ public class MarketDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<BlockedUser> BlockedUsers { get; set; }
     public DbSet<Image> Images { get; set; }
-    public DbSet<ErrorLog> ErrorLogs { get; set; }
-    public DbSet<LoginLog> LoginLogs { get; set; }
-    public DbSet<SecurityLog> SecurityLogs { get; set; }
+    public DbSet<Log> Logs { get; set; }
     public DbSet<OrderReport> OrderReports { get; set; }
 
     public static bool EnsureCreated()

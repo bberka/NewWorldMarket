@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewWorldMarket.Infrastructure;
 
@@ -11,9 +12,11 @@ using NewWorldMarket.Infrastructure;
 namespace NewWorldMarket.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    partial class MarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609140823_mg-4")]
+    partial class mg4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +88,40 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.ToTable("Character");
                 });
 
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.ErrorLog", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Exception")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("LogType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Guid");
+
+                    b.ToTable("ErrorLogs");
+                });
+
             modelBuilder.Entity("NewWorldMarket.Core.Entity.Image", b =>
                 {
                     b.Property<Guid>("Guid")
@@ -128,13 +165,13 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("NewWorldMarket.Core.Entity.Log", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.LoginLog", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CfConnectingIpAddress")
+                    b.Property<string>("IpAddress")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -143,36 +180,24 @@ namespace NewWorldMarket.Infrastructure.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("RemoteIpAddress")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("UserAgent")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid?>("UserGuid")
+                    b.Property<Guid>("UserGuid")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("XForwardedForIpAddress")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("XRealIpAddress")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Guid");
 
                     b.HasIndex("UserGuid");
 
-                    b.ToTable("Logs");
+                    b.ToTable("LoginLogs");
                 });
 
             modelBuilder.Entity("NewWorldMarket.Core.Entity.Order", b =>
@@ -372,6 +397,41 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.ToTable("OrderRequests");
                 });
 
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.SecurityLog", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("LogType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Guid");
+
+                    b.HasIndex("UserGuid");
+
+                    b.ToTable("SecurityLogs");
+                });
+
             modelBuilder.Entity("NewWorldMarket.Core.Entity.User", b =>
                 {
                     b.Property<Guid>("Guid")
@@ -457,11 +517,13 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NewWorldMarket.Core.Entity.Log", b =>
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.LoginLog", b =>
                 {
                     b.HasOne("NewWorldMarket.Core.Entity.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserGuid");
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -519,6 +581,17 @@ namespace NewWorldMarket.Infrastructure.Migrations
                     b.Navigation("Character");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("NewWorldMarket.Core.Entity.SecurityLog", b =>
+                {
+                    b.HasOne("NewWorldMarket.Core.Entity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("NewWorldMarket.Core.Entity.Character", b =>

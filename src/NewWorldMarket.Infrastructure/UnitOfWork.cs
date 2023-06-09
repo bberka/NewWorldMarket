@@ -20,6 +20,7 @@ public class UnitOfWork : IUnitOfWork
         ImageRepository = new GenericRepository<Image, MarketDbContext>(_context);
         CharacterRepository = new GenericRepository<Character, MarketDbContext>(_context);
         OrderReportRepository = new GenericRepository<OrderReport, MarketDbContext>(_context);
+        LogRepository = new GenericRepository<Log, MarketDbContext>(_context);
     }
 
     public IGenericRepository<OrderRequest> OrderCompleteRequestRepository { get; set; }
@@ -29,6 +30,7 @@ public class UnitOfWork : IUnitOfWork
     public IGenericRepository<Image> ImageRepository { get; set; }
     public IGenericRepository<Character> CharacterRepository { get; set; }
     public IGenericRepository<OrderReport> OrderReportRepository { get; set; }
+    public IGenericRepository<Log> LogRepository { get; set; }
 
     public Result Save()
     {
