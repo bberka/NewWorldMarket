@@ -35,6 +35,8 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult UploadItemImage()
     {
+        var hasCharacters = _userService.HasAnyCharacters(SessionLib.This.GetUser().Guid);
+        if (!hasCharacters) return RedirectToAction("AddCharacter", "Account");
         return View();
     }
 

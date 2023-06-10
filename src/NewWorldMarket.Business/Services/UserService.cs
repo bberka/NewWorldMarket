@@ -207,4 +207,9 @@ public class UserService : IUserService
     {
         throw new NotImplementedException();
     }
+
+    public bool HasAnyCharacters(Guid guid)
+    {
+        return _unitOfWork.CharacterRepository.Any(x => x.UserGuid == guid && !x.DeletedDate.HasValue);
+    }
 }

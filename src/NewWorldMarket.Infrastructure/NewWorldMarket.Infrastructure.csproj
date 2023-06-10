@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DBCREATE.bat">
+    <None Update="DB-MIGRATE.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

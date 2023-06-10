@@ -21,4 +21,5 @@ public interface IUserService
     Result ChangeDiscordId(Guid userGuid, string discordId);
     Result VerifyEmail(string token);
     Result SendVerificationEmail(Guid userGuid);
+    bool HasAnyCharacters(Guid guid);
 }
